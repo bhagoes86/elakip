@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-class ActivityController extends Controller
+class ActivityController extends AdminController
 {
     /**
      * Display a listing of the resource.

@@ -1,13 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\Privy;
+namespace App\Http\Controllers\Privy\Dirjen;
 
+use App\Http\Controllers\Privy\AdminController;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-class PositionController extends Controller
+class IndicatorAgreementController extends AdminController
 {
     /**
      * Display a listing of the resource.
