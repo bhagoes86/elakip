@@ -1,20 +1,21 @@
-{!! Form::model($program, [
-    'route' => ['renstra.program.update',
-        $program->plan->id,
-        $program->id
+{!! Form::model($target, [
+    'route' => ['renstra.program.sasaran.update',
+        $id['plan'],
+        $id['program'],
+        $id['target']
     ],
     'method'    => 'PUT',
     'id'        => 'form-'.$viewId.'-edit',
     'class'     => 'app-form-edit',
-    'data-table' => $viewId . '-datatables',
+    'data-table' => $viewId . '-sasaran-datatables',
     'data-modal-id' => $viewId
 ]) !!}
 
 <div class="alert-wrapper"></div>
 
 <div class="form-group">
-    <label for="name">Progam name</label>
-    {!! Form::text('name', null, ['class'=>"form-control", 'placeholder'=>"Progam name", 'id'=>"name"]) !!}
+    <label for="name">Nama sasaran</label>
+    {!! Form::textarea('name', null, ['class'=>"form-control autosize", 'rows' => null, 'placeholder'=>"Nama sasaran", 'id'=>"name"]) !!}
 </div>
 
 <button type="submit" class="btn btn-info btn-block btn-lg save">
@@ -27,4 +28,6 @@
     "use strict";
 
     updateForm();
+    autosize($('textarea'));
+
 </script>

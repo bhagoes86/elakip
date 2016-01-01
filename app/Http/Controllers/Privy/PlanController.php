@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Privy;
 
+use App\Models\Plan;
+use Datatables;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -9,6 +11,7 @@ use App\Http\Controllers\Controller;
 
 class PlanController extends AdminController
 {
+    protected $identifier = 'rencana-strategis';
     /**
      * Display a listing of the resource.
      *
@@ -16,7 +19,7 @@ class PlanController extends AdminController
      */
     public function index()
     {
-        //
+        return view('private.plan.index');
     }
 
     /**
@@ -83,5 +86,16 @@ class PlanController extends AdminController
     public function destroy($id)
     {
         //
+    }
+
+    public function data()
+    {
+        $plans = Plan::with('period')->get();
+
+        return Datatables::of($plans)
+            ->addColumn('title', function ($data) {
+                return '<a href="'.route('renstra.program.index', $data->id).'">'.$data->period->year_begin.' - '.$data->period->year_end.'</a>';
+            })
+            ->make(true);
     }
 }

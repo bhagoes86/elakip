@@ -11,21 +11,52 @@ Route::group([
     'namespace' => 'Privy'
 ], function () {
 
-    get('dashboard', 'DashboardController@index');
+    get('dashboard', [
+        'uses' => 'DashboardController@index',
+        'as' => 'dashboard'
+    ]);
+
+    resource('user', 'UserController');
+
+    resource('position', 'PositionController');
 
     resource('media', 'MediaController');
 
+    resource('page', 'PageController');
+
     resource('periode', 'PeriodController');
 
+    get('renstra/data', [
+        'uses'  => 'PlanController@data',
+        'as'    => 'renstra.data'
+    ]);
     resource('renstra', 'PlanController');
 
-    resource('renstra.program', 'ProgramController');
+    get('renstra/program/data', [
+        'uses'  => 'ProgramController@data',
+        'as'    => 'renstra.program.data'
+    ]);
+    resource('renstra.program', 'ProgramController', [
+        'except'    => ['create', 'show']
+    ]);
 
     // Dirjen
+    get('renstra/program/sasaran/data', [
+        'uses'  => 'Dirjen\TargetController@data',
+        'as'    => 'renstra.program.sasaran.data'
+    ]);
     resource('renstra.program.sasaran', 'Dirjen\TargetController');
+    get('renstra/program/sasaran/indikator/data', [
+        'uses'  => 'Dirjen\IndicatorController@data',
+        'as'    => 'renstra.program.sasaran.indikator.data'
+    ]);
     resource('renstra.program.sasaran.indikator', 'Dirjen\IndicatorController');
 
     // Direktorat
+    get('renstra/program/kegiatan/data', [
+        'uses'  => 'ActivityController@data',
+        'as'    => 'renstra.program.kegiatan.data'
+    ]);
     resource('renstra.program.kegiatan', 'ActivityController');
     resource('renstra.program.kegiatan.sasaran', 'TargetController');
     resource('renstra.program.kegiatan.sasaran.indikator', 'IndicatorController');
@@ -45,8 +76,14 @@ Route::group([
     resource('capaian/fisik', 'PhysicAchievementController');
     resource('capaian/anggaran', 'BudgetAchievementController');
 
-    get('capaian/renstra/fisik', 'Period\PhysicAchievementController@index');
-    get('capaian/renstra/anggaran', 'Period\BudgetAchievementController@index');
+    get('capaian/renstra/fisik', [
+        'uses'  => 'Period\PhysicAchievementController@index',
+        'as'    => 'capaian.renstra.fisik.index'
+    ]);
+    get('capaian/renstra/anggaran', [
+        'uses'  => 'Period\BudgetAchievementController@index',
+        'as'    => 'capaian.renstra.anggaran.index'
+    ]);
 
     resource('kegiatan.evaluasi', 'EvaluationController');
 });

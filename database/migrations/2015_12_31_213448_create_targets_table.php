@@ -14,7 +14,9 @@ class CreateTargetsTable extends Migration
     {
         Schema::create('targets', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('activity_id');
+            //$table->unsignedInteger('activity_id');
+            $table->enum('type', ['program','activity']);
+            $table->unsignedInteger('type_id');
             $table->string('name');
             $table->timestamps();
         });

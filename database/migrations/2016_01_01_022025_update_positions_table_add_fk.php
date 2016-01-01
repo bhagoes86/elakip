@@ -38,8 +38,8 @@ class UpdatePositionsTableAddFk extends Migration
     public function down()
     {
         Schema::table(self::TABLE, function (Blueprint $table) {
-            $table->dropForeign('user_units_unit_id_foreign');
-            $table->dropForeign('user_units_user_id_foreign');
+            $table->dropForeign('positions_unit_id_foreign');
+            $table->dropForeign('positions_user_id_foreign');
         });
     }
 }

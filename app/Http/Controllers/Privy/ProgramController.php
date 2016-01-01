@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers\Privy;
 
+use App\Models\Plan;
+use App\Models\Program;
+use Datatables;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -9,24 +12,22 @@ use App\Http\Controllers\Controller;
 
 class ProgramController extends AdminController
 {
+    protected $roles = [
+        'name'  => 'required'
+    ];
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($planId)
     {
-        //
-    }
+        $plan = Plan::with('period')
+            ->find($planId);
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return view('private.program.index')
+            ->with('plan', $plan);
     }
 
     /**
@@ -35,20 +36,16 @@ class ProgramController extends AdminController
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $planId)
     {
-        //
-    }
+        $this->validate($request, $this->roles);
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
+        $plan = Plan::find($planId);
+        $plan->programs()->save(new Program([
+            'name'  => $request->get('name')
+        ]));
+
+        return $plan->programs;
     }
 
     /**
@@ -57,9 +54,13 @@ class ProgramController extends AdminController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($planId, $id)
     {
-        //
+        $program = Program::with('plan')
+            ->find($id);
+
+        return view('private.program.edit')
+            ->with('program', $program);
     }
 
     /**
@@ -69,9 +70,13 @@ class ProgramController extends AdminController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $planId, $id)
     {
-        //
+        $this->validate($request, $this->roles);
+
+        $program = Program::find($id);
+        $program->name = $request->get('name');
+        return (int) $program->save();
     }
 
     /**
@@ -80,8 +85,40 @@ class ProgramController extends AdminController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($planId, $id)
     {
-        //
+        return (int) Program::destroy($id);
+    }
+
+    /**
+     * @param Request $request
+     * @return mixed
+     * @author Fathur Rohman <fathur@dragoncapital.center>
+     */
+    public function data(Request $request)
+    {
+        $planId = $request->get('plan');
+
+        $plans = Plan::find($planId);
+
+        return Datatables::of($plans->programs)
+            ->editColumn('name', function ($data) use ($planId) {
+                return '<a href="'.route('renstra.program.kegiatan.index', [$planId, $data->id]).'">'.$data->name.'</a>';
+            })
+            ->addColumn('action', function ($data) use ($planId) {
+                return view('private._partials.action.1')
+
+                    ->with('edit_action', 'showEdit(this)')
+                    ->with('edit_data', 'data-modal-id='.$this->identifier.'
+                        data-title=Edit
+                        data-url='.route('renstra.program.edit', [$planId, $data->id]))
+
+                    ->with('destroy_action', 'confirmDelete(this)')
+                    ->with('destroy_data', 'data-table='.$this->identifier.'-datatables
+                        data-token='.csrf_token().'
+                        data-url='.route('renstra.program.destroy', [$planId, $data->id]))
+
+                    ->render();
+            })->make(true);
     }
 }

@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-class DashboardController extends AdminController
+class PositionController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +16,7 @@ class DashboardController extends AdminController
      */
     public function index()
     {
-        return view('private.dashboard.index');
+        //
     }
 
     /**

@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Activity extends Model
 {
+    protected $fillable = ['program_id','unit_id','name'];
+
     public function evaluations()
     {
         return $this->hasMany(Evaluation::class);

@@ -26,6 +26,9 @@ class DatabaseSeeder extends Seeder
         if(DB::table('users')->count() == 0)
             $this->call(UserTableSeeder::class);
 
+        if(DB::table('periods')->count() == 0)
+            $this->call(PeriodTableSeeder::class);
+
         Model::reguard();
     }
 }

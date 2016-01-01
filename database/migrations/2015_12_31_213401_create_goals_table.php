@@ -16,8 +16,8 @@ class CreateGoalsTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('indicator_id');
             $table->unsignedInteger('year');
-            $table->unsignedInteger('total_target');
-            $table->string('unit_target');
+            $table->unsignedInteger('count');
+            //$table->string('unit_target');
             $table->timestamps();
         });
     }

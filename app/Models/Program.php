@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Program extends Model
 {
+    protected $fillable = ['name'];
+
     public function plan()
     {
         return $this->belongsTo(Plan::class);

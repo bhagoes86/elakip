@@ -3,9 +3,9 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class UpdateTargetsTableAddFk extends Migration
+class UpdateProgramsTableAddFk extends Migration
 {
-    const TABLE = 'targets';
+    const TABLE = 'programs';
 
     /**
      * Run the migrations.
@@ -16,10 +16,12 @@ class UpdateTargetsTableAddFk extends Migration
     {
         Schema::table(self::TABLE, function (Blueprint $table) {
 
-            $table->foreign('activity_id')
+            $table->foreign('plan_id')
                 ->references('id')
-                ->on('activities')
+                ->on('plans')
                 ->onDelete('cascade');
+
+
         });
     }
 
@@ -31,7 +33,7 @@ class UpdateTargetsTableAddFk extends Migration
     public function down()
     {
         Schema::table(self::TABLE, function (Blueprint $table) {
-            $table->dropForeign('targets_activity_id_foreign');
+            $table->dropForeign('programs_plan_id_foreign');
         });
     }
 }

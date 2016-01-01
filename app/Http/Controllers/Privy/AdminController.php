@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Privy;
 
 
 use App\Http\Controllers\Controller;
+use App\Models\Role;
 use App\Models\User;
 
 class AdminController extends Controller {
@@ -19,7 +20,7 @@ class AdminController extends Controller {
 
         if(\Auth::check()) {
             $authenticatedUser = \Auth::user();
-            $user = User::with('roles')->find($authenticatedUser->id);
+            $user = User::with('role')->find($authenticatedUser->id);
             view()->share('authUser', $user);
         }
         // if(!$this->hasAccess())

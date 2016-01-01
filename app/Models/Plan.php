@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Plan extends Model
 {
+    protected $fillable = ['period_id'];
+
     public function period()
     {
         return $this->belongsTo(Period::class);

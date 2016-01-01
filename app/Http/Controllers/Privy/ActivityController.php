@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers\Privy;
 
+use App\Models\Activity;
+use App\Models\Program;
+use App\Models\Unit;
+use Datatables;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -9,14 +13,28 @@ use App\Http\Controllers\Controller;
 
 class ActivityController extends AdminController
 {
+    protected $roles = [];
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($planId, $programId)
     {
-        //
+        $program = Program::with(['plan' => function ($query) {
+            $query->with('period');
+        }])->find($programId);
+
+        $units_arr = [];
+        foreach (Unit::all() as $unit) {
+            $units_arr[$unit->id] = $unit->name;
+        }
+
+
+        return view('private.activity.index')
+            ->with('program', $program)
+            ->with('units', $units_arr);
     }
 
     /**
@@ -35,9 +53,15 @@ class ActivityController extends AdminController
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $planId, $programId)
     {
-        //
+        $program = Program::find($programId);
+        $program->activities()->save(new Activity([
+            'name'  => $request->get('name'),
+            'unit_id'  => $request->get('unit_id')
+        ]));
+
+        return $program->activities;
     }
 
     /**
@@ -80,8 +104,40 @@ class ActivityController extends AdminController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($planId, $programId, $activityId)
     {
-        //
+        return (int) Activity::destroy($activityId);
+    }
+
+    public function data(Request $request)
+    {
+        $programId = $request->get('program');
+        $planId = $request->get('plan');
+        $type = $request->get('type');
+
+        $program = Program::with(['activities' => function ($query) {
+            $query->with('unit');
+        }])
+            ->find($programId);
+
+        return Datatables::of($program->activities)
+            //          ->editColumn('name', function ($data) {
+//            })
+            ->addColumn('action', function ($data) use ($programId, $planId) {
+                return view('private._partials.action.1')
+
+                    ->with('edit_action', 'showEdit(this)')
+                    ->with('edit_data', 'data-modal-id='.$this->identifier.'
+                        data-title=Edit
+                        data-url='.route('renstra.program.kegiatan.edit', [$planId, $programId, $data->id]))
+
+                    ->with('destroy_action', 'confirmDelete(this)')
+                    ->with('destroy_data', 'data-table='.$this->identifier.'-kegiatan-datatables
+                        data-token='.csrf_token().'
+                        data-url='.route('renstra.program.kegiatan.destroy', [$planId, $programId, $data->id]))
+
+                    ->render();
+            })
+            ->make(true);
     }
 }

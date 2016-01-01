@@ -42,8 +42,8 @@ class UpdateAgreementsTableAddFk extends Migration
     {
         Schema::table(self::TABLE, function (Blueprint $table) {
             $table->dropForeign('agreements_period_id_foreign');
-            $table->dropForeign('agreements_first_user_unit_id_foreign');
-            $table->dropForeign('agreements_second_user_unit_id_foreign');
+            $table->dropForeign('agreements_first_position_id_foreign');
+            $table->dropForeign('agreements_second_position_id_foreign');
         });
     }
 }
