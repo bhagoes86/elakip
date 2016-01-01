@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\User;
+
 return [
 
     /*
@@ -28,7 +30,7 @@ return [
     |
     */
 
-    'model' => App\User::class,
+    'model' => User::class,
 
     /*
     |--------------------------------------------------------------------------

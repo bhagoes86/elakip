@@ -21,14 +21,14 @@ class UpdateAgreementsTableAddFk extends Migration
                 ->on('periods')
                 ->onDelete('cascade');
 
-            $table->foreign('first_user_unit_id')
+            $table->foreign('first_position_id')
                 ->references('id')
-                ->on('user_units')
+                ->on('positions')
                 ->onDelete('cascade');
 
-            $table->foreign('second_user_unit_id')
+            $table->foreign('second_position_id')
                 ->references('id')
-                ->on('user_units')
+                ->on('positions')
                 ->onDelete('cascade');
         });
     }

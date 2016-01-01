@@ -15,8 +15,8 @@ class CreateAgreementsTable extends Migration
         Schema::create('agreements', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('period_id');
-            $table->unsignedInteger('first_user_unit_id');
-            $table->unsignedInteger('second_user_unit_id');
+            $table->unsignedInteger('first_position_id');
+            $table->unsignedInteger('second_position_id');
             $table->unsignedInteger('year');
             $table->date('date');
             $table->enum('type', ['program','activity']);

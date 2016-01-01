@@ -3,9 +3,9 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class UpdateUserUnitTableAddFk extends Migration
+class UpdatePositionsTableAddFk extends Migration
 {
-    const TABLE = 'user_units';
+    const TABLE = 'positions';
 
     /**
      * Run the migrations.

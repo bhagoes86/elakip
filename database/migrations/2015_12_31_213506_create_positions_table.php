@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUserUnitsTable extends Migration
+class CreatePositionsTable extends Migration
 {
    /**
      * Run the migrations.
@@ -12,7 +12,7 @@ class CreateUserUnitsTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_units', function (Blueprint $table) {
+        Schema::create('positions', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('unit_id');
             $table->unsignedInteger('user_id');
@@ -29,6 +29,6 @@ class CreateUserUnitsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('user_units');
+        Schema::drop('positions');
     }
 }

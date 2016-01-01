@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
@@ -13,6 +14,7 @@ class UserTableSeeder extends Seeder
     public function run()
     {
         User::create([
+            'role_id'   => Role::where('name','Administrator')->first()->id,
             'username'  => 'admin',
             'email'     => 'admin@silap-kinerja.com',
             'name'      => 'Administrator',
