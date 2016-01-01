@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Privy;
 
+use App\Models\Agreement;
+use App\Models\Plan;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -9,79 +11,65 @@ use App\Http\Controllers\Controller;
 
 class ProgramAgreementController extends AdminController
 {
+    const DIRJEN_ID = 1;
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($agreementId)
     {
-        //
+        return view('private.program_agreement.index')
+            ->with('id', [
+                'agreement' => $agreementId
+            ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function data(Request $request)
     {
-        //
-    }
+        $agreementId = $request->get('agreement');
+        $agreement = Agreement::with([
+            'firstPosition' => function ($query) {
+                $query->with([
+                    'unit',
+                    'user'
+                ]);
+            },
+            'secondPosition'    => function ($query) {
+                $query->with([
+                    'unit',
+                    'user'
+                ]);
+            },
+        ])->find($agreementId);
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+        $plan = Plan::with(['programs' => function ($query) {
+            $query->with(['activities' => function ($query) {
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
+            }]);
+        }])->find($agreement->plan_id);
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
+        return \Datatables::of($plan->programs)
+            ->editColumn('name', function ($data) use ($agreement) {
+                if($agreement->firstPosition->unit->id == self::DIRJEN_ID)
+                {
+                    return '<a href="'.route('pk.program.sasaran.index', [
+                        $agreement->id,
+                        $data->id
+                    ]).'">'.$data->name.'</a>';
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
+                }
+                else
+                {
+                    return '<a href="'.route('pk.program.kegiatan.index', [
+                        $agreement->id,
+                        $data->id
+                    ]).'">'.$data->name.'</a>';
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+                }
+            })
+            ->make(true);
+
     }
 }

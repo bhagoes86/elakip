@@ -16,9 +16,9 @@ class UpdateAgreementsTableAddFk extends Migration
     {
         Schema::table(self::TABLE, function (Blueprint $table) {
 
-            $table->foreign('period_id')
+            $table->foreign('plan_id')
                 ->references('id')
-                ->on('periods')
+                ->on('plans')
                 ->onDelete('cascade');
 
             $table->foreign('first_position_id')

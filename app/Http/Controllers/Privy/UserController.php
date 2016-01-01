@@ -22,8 +22,13 @@ class UserController extends AdminController
      */
     public function index()
     {
-        return view('private.user.index');
+        $roles = [];
+        foreach (Role::all() as $role) {
+            $roles[$role->id] = $role->name;
+        }
 
+        return view('private.user.index')
+            ->with('roles', $roles);
     }
 
     /**
@@ -45,7 +50,8 @@ class UserController extends AdminController
             'username'  => $request->get('username'),
             'email'     => $request->get('email'),
             'password'  => \Hash::make($request->get('password')),
-            'name'     => $request->get('name')
+            'name'     => $request->get('name'),
+            'role_id'     => $request->get('role_id')
         ]);
     }
 
@@ -189,52 +195,5 @@ class UserController extends AdminController
         $user->roles()->sync([$role]);
 
         return \Redirect::route('user.edit', $id);
-    }
-
-    /**
-     * @param Request $request
-     * @return string
-     * @author Fathur Rohman <fathur@dragoncapital.center>
-     */
-    public function getUserInYear(Request $request)
-    {
-        $year = $request->get('year');
-
-        $users = UserUnit::with(['user','unit','year'])
-            ->where('year_id', $year)
-            // ->whereNotIn('unit_id', [self::DITJEN_UNIT_ID])
-            ->get();
-
-        $html = '<option>- Pilih satu -</option>';
-
-        foreach ($users as $user) {
-            $html .= '<option value="'.$user->user_id.'" data-unit-id="'.$user->unit->id.'">'.$user->user->name . ' (' . $user->position . ' ' . $user->year->year . ' - ' . $user->unit->name . ')'.'</option>';
-        }
-
-        return $html;
-    }
-
-    /**
-     * @param Request $request
-     * @return string
-     * @author Fathur Rohman <fathur@dragoncapital.center>
-     */
-    public function getDitjenInYear(Request $request)
-    {
-        $year = $request->get('year');
-
-        $users = UserUnit::with(['user','unit','year'])
-            ->where('year_id', $year)
-            // ->where('unit_id', self::DITJEN_UNIT_ID)
-            ->get();
-
-        $html = '<option>- Pilih satu -</option>';
-
-
-        foreach ($users as $user) {
-            $html .= '<option value="'.$user->user_id.'">'.$user->user->name . ' (' . $user->position . ' ' . $user->year->year . ' - ' . $user->unit->name . ')'.'</option>';
-        }
-
-        return $html;
     }
 }

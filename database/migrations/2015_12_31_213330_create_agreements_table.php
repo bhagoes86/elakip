@@ -14,7 +14,7 @@ class CreateAgreementsTable extends Migration
     {
         Schema::create('agreements', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('period_id');
+            $table->unsignedInteger('plan_id');
             $table->unsignedInteger('first_position_id');
             $table->unsignedInteger('second_position_id');
             $table->unsignedInteger('year');

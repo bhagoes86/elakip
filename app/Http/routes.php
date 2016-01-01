@@ -16,8 +16,17 @@ Route::group([
         'as' => 'dashboard'
     ]);
 
+    get('user/data', ['uses'  => 'UserController@data', 'as'    => 'user.data']);
+    get('user/password/{id}/edit', ['uses' => 'UserController@getPassword', 'as' => 'user.password.edit']);
+    put('user/password/{id}', ['uses' => 'UserController@putPassword', 'as' => 'user.password.update']);
+    put('user/role/{id}', ['uses' => 'UserController@putRole', 'as' => 'user.role.update']);
     resource('user', 'UserController');
 
+    get('position/data', [
+        'uses'  => 'PositionController@data',
+        'as'    => 'position.data'
+    ]);
+    get('position/user/not:{year}', ['uses' => 'PositionController@getSelectUser', 'as' => 'position.user.year']);
     resource('position', 'PositionController');
 
     resource('media', 'MediaController');
@@ -73,15 +82,23 @@ Route::group([
     ]);
     resource('renstra.program.kegiatan.sasaran.indikator', 'IndicatorController');
 
+    get('pk/data', [
+        'uses'  => 'AgreementController@data',
+        'as'    => 'pk.data'
+    ]);
     resource('pk', 'AgreementController');
-    resource('pk.program', 'ProgramAgreementController');
+    get('pk/program/data', 'ProgramAgreementController@data');
+    get('pk/{pk}/program', ['uses' => 'ProgramAgreementController@index', 'as' => 'pk.program.index']);
 
     // Dirjen
-    resource('pk.program.sasaran', 'Dirjen\TargetAgreementController');
-    resource('pk.program.sasaran.indikator', 'Dirjen\IndicatorAgreementController');
+    get('pk/program/sasaran/data', ['uses' => 'Dirjen\TargetAgreementController@data', 'as' => 'pk.program.sasaran.data']);
+    get('pk/{pk}/program/{program}/sasaran', ['uses' => 'Dirjen\TargetAgreementController@index', 'as' => 'pk.program.sasaran.index']);
+    get('pk/program/sasaran/indikator/data', ['uses' => 'Dirjen\IndicatorAgreementController@data', 'as' => 'pk.program.sasaran.indikator.data']);
+    resource('pk.program.sasaran.indikator', 'Dirjen\IndicatorAgreementController', ['only' => ['index', 'edit', 'update']]);
 
     // Direktorat
-    resource('pk.program.kegiatan', 'ActivityAgreementController');
+    get('pk/program/kegiatan/data', ['uses' => 'ActivityAgreementController@data', 'as' => 'pk.program.kegiatan.data']);
+    get('pk/{pk}/program/{program}/kegiatan', ['uses' => 'ActivityAgreementController@index', 'as' => 'pk.program.kegiatan.index']);
     resource('pk.program.kegiatan.sasaran', 'TargetAgreementController');
     resource('pk.program.kegiatan.sasaran.indikator', 'IndicatorAgreementController');
 

@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Position extends Model
 {
+    protected $fillable = ['user_id','unit_id','position','year'];
+
     public function unit()
     {
         return $this->belongsTo(Unit::class);

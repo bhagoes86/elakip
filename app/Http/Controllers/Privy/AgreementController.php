@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers\Privy;
 
+use App\Models\Agreement;
+use App\Models\Period;
+use App\Models\Unit;
+use Datatables;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -16,7 +20,23 @@ class AgreementController extends AdminController
      */
     public function index()
     {
-        //
+
+        $units = [ 0 => 'All'];
+        foreach (Unit::all() as $unit) {
+            $units[$unit->id] = $unit->name;
+        }
+
+        $periods = Period::where('year_begin', 2015)->first();
+        $years = [];
+        $begin = $periods->year_begin;
+        $end = $periods->year_end;
+        for($i=$begin; $i <= $end; $i++) {
+            $years[$i] = $i;
+        }
+
+        return view('private.agreement.index')
+            ->with('units', $units)
+            ->with('years', $years);
     }
 
     /**
@@ -83,5 +103,40 @@ class AgreementController extends AdminController
     public function destroy($id)
     {
         //
+    }
+
+    public function data(Request $request)
+    {
+        $agreements = Agreement::with([
+            'firstPosition' => function ($query) {
+                $query->with([
+                    'unit',
+                    'user'
+                ]);
+            },
+            'secondPosition'    => function ($query) {
+                $query->with([
+                    'unit',
+                    'user'
+                ]);
+            },
+        ])->get();
+
+        return Datatables::of($agreements)
+            ->addColumn('action', function($data){
+                return view('private.agreement.action')
+                    ->with('edit_action', route('pk.edit', $data->id))
+
+                    ->with('destroy_action', 'confirmDelete(this)')
+                    ->with('destroy_data', 'data-table='.$this->identifier.'-datatables
+                        data-token='.csrf_token().'
+                        data-url='.route('pk.destroy', $data->id))
+
+                    ->with('show_action', route('pk.program.index', [$data->id]))
+                    ->render();
+
+            })
+
+            ->make(true);
     }
 }

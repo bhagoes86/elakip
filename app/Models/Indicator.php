@@ -13,8 +13,8 @@ class Indicator extends Model
         return $this->belongsTo(Target::class);
     }
 
-    public function indicatorYears()
+    public function goals()
     {
-        return $this->hasMany(IndicatorYears::class);
+        return $this->hasMany(Goal::class);
     }
 }
