@@ -1,0 +1,19 @@
+.mbot-15 {
+  margin-bottom: 15px;
+}
+
+.mtop-15 {
+  margin-top: 15px;
+}
+
+.ptop-15 {
+  padding-top: 15px;
+}
+
+.pbot-15 {
+  padding-bottom: 15px;
+}
+
+textarea.autosize {
+  resize: none;
+}
