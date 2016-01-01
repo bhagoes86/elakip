@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateIndicatorYearsTable extends Migration
+class CreateGoalsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,7 +12,7 @@ class CreateIndicatorYearsTable extends Migration
      */
     public function up()
     {
-        Schema::create('indicator_years', function (Blueprint $table) {
+        Schema::create('goals', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('indicator_id');
             $table->unsignedInteger('year');
@@ -29,6 +29,6 @@ class CreateIndicatorYearsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('indicator_years');
+        Schema::drop('goals');
     }
 }

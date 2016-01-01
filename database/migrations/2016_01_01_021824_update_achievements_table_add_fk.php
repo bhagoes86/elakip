@@ -16,9 +16,9 @@ class UpdateAchievementsTableAddFk extends Migration
     {
         Schema::table(self::TABLE, function (Blueprint $table) {
 
-            $table->foreign('indicator_year_id')
+            $table->foreign('goal_id')
                 ->references('id')
-                ->on('indicator_years')
+                ->on('goals')
                 ->onDelete('cascade');
         });
     }
@@ -31,7 +31,7 @@ class UpdateAchievementsTableAddFk extends Migration
     public function down()
     {
         Schema::table(self::TABLE, function (Blueprint $table) {
-            $table->dropForeign('achievements_indicator_year_id_foreign');
+            $table->dropForeign('achievements_goal_id_foreign');
         });
     }
 }

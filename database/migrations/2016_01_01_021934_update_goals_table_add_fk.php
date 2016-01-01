@@ -3,9 +3,9 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class UpdateIndicatorYearsTableAddFk extends Migration
+class UpdateGoalsTableAddFk extends Migration
 {
-    const TABLE = 'indicator_years';
+    const TABLE = 'goals';
 
     /**
      * Run the migrations.
@@ -31,7 +31,7 @@ class UpdateIndicatorYearsTableAddFk extends Migration
     public function down()
     {
         Schema::table(self::TABLE, function (Blueprint $table) {
-            $table->dropForeign('indicator_years_indicator_id_foreign');
+            $table->dropForeign('goals_indicator_id_foreign');
         });
     }
 }

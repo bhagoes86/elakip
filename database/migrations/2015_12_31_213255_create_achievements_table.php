@@ -14,7 +14,7 @@ class CreateAchievementsTable extends Migration
     {
         Schema::create('achievements', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('indicator_year_id');
+            $table->unsignedInteger('goal_id');
             $table->enum('quarter', [1,2,3,4]);
             $table->unsignedInteger('plan');
             $table->unsignedInteger('realization');
