@@ -152,7 +152,7 @@
                             <thead>
                             <tr>
                                 <th>Unit</th>
-                                <th>Sasaran</th>
+                                <th>Kegiatan</th>
                                 <th>Action</th>
                             </tr>
                             </thead>
