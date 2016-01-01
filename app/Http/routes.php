@@ -58,7 +58,15 @@ Route::group([
         'as'    => 'renstra.program.kegiatan.data'
     ]);
     resource('renstra.program.kegiatan', 'ActivityController');
+    get('renstra/program/kegiatan/sasaran/data', [
+        'uses'  => 'TargetController@data',
+        'as'    => 'renstra.program.kegiatan.sasaran.data'
+    ]);
     resource('renstra.program.kegiatan.sasaran', 'TargetController');
+    get('renstra/program/kegiatan/sasaran/indikator/data', [
+        'uses'  => 'IndicatorController@data',
+        'as'    => 'renstra.program.kegiatan.sasaran.indikator.data'
+    ]);
     resource('renstra.program.kegiatan.sasaran.indikator', 'IndicatorController');
 
     resource('pk', 'AgreementController');

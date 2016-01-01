@@ -14,13 +14,16 @@ class Target extends Model
         return $this->hasMany(Indicator::class);
     }
 
-    public function scopeProgram($query)
+    public function scopeProgram($query, $id)
     {
-        return $query->where('type', 'program');
+        return $query->where('type', 'program')
+            ->where('type_id', $id);
     }
 
-    public function scopeActivity($query)
+    public function scopeActivity($query, $id)
     {
-        return $query->where('type', 'activity');
+        return $query->where('type', 'activity')
+            ->where('type_id', $id);
+
     }
 }

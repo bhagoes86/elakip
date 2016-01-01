@@ -121,8 +121,9 @@ class ActivityController extends AdminController
             ->find($programId);
 
         return Datatables::of($program->activities)
-            //          ->editColumn('name', function ($data) {
-//            })
+            ->editColumn('name', function ($data) use ($planId, $programId) {
+                return '<a href="'.route('renstra.program.kegiatan.sasaran.index', [$planId, $programId, $data->id]).'">'.$data->name.'</a>';
+            })
             ->addColumn('action', function ($data) use ($programId, $planId) {
                 return view('private._partials.action.1')
 

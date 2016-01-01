@@ -24,7 +24,7 @@
                         <table class="table table-condensed table-striped">
                             <tr>
                                 <th>Periode</th>
-                                <td>: <a href="{{route('renstra.program.index', [$program->id])}}">{{$program->plan->period->year_begin}} - {{$program->plan->period->year_end}}</a></td>
+                                <td>: <a href="{{route('renstra.program.index', [$program->plan->id])}}">{{$program->plan->period->year_begin}} - {{$program->plan->period->year_end}}</a></td>
                             </tr>
                             <tr>
                                 <th>Program</th>
