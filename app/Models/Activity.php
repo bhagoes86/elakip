@@ -6,5 +6,23 @@ use Illuminate\Database\Eloquent\Model;
 
 class Activity extends Model
 {
-    //
+    public function evaluations()
+    {
+        return $this->hasMany(Evaluation::class);
+    }
+
+    public function budget()
+    {
+        return $this->hasOne(Budget::class);
+    }
+
+    public function program()
+    {
+        return $this->belongsTo(Program::class);
+    }
+
+    public function unit()
+    {
+        return $this->belongsTo(Unit::class);
+    }
 }

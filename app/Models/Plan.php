@@ -6,5 +6,18 @@ use Illuminate\Database\Eloquent\Model;
 
 class Plan extends Model
 {
-    //
+    public function period()
+    {
+        return $this->belongsTo(Period::class);
+    }
+
+    public function agreements()
+    {
+        return $this->hasMany(Agreement::class);
+    }
+
+    public function programs()
+    {
+        return $this->hasMany(Program::class);
+    }
 }

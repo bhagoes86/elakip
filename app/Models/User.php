@@ -37,31 +37,13 @@ class User extends Model implements AuthenticatableContract,
      */
     protected $hidden = ['password', 'remember_token'];
 
-    public function units()
+    public function positions()
     {
-        return $this->belongsToMany(Unit::class);
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     * @author Fathur Rohman <fathur@dragoncapital.center>
-     */
-    public function firstAgreement()
-    {
-        return $this->hasMany(Agreement::class, 'first_user_id');
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     * @author Fathur Rohman <fathur@dragoncapital.center>
-     */
-    public function secondAgreement()
-    {
-        return $this->hasMany(Agreement::class, 'second_user_id');
+        return $this->hasMany(Position::class);
     }
 
     public function roles()
     {
-        return $this->belongsToMany(Role::class, 'user_role');
+        return $this->belongsTo(Role::class);
     }
 }

@@ -29,6 +29,6 @@ class CreateIndicatorYearsTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::drop('indicator_years');
     }
 }
