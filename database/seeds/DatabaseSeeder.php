@@ -29,6 +29,9 @@ class DatabaseSeeder extends Seeder
         if(DB::table('periods')->count() == 0)
             $this->call(PeriodTableSeeder::class);
 
+        if(DB::table('plans')->count() == 0)
+            $this->call(PlanTableSeeder::class);
+
         Model::reguard();
     }
 }

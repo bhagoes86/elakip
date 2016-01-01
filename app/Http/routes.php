@@ -22,6 +22,10 @@ Route::group([
 
     resource('media', 'MediaController');
 
+    get('page/data', [
+        'uses'  => 'PageController@data',
+        'as'    => 'page.data'
+    ]);
     resource('page', 'PageController');
 
     resource('periode', 'PeriodController');
