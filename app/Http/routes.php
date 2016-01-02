@@ -20,6 +20,8 @@ Route::group([
     get('user/password/{id}/edit', ['uses' => 'UserController@getPassword', 'as' => 'user.password.edit']);
     put('user/password/{id}', ['uses' => 'UserController@putPassword', 'as' => 'user.password.update']);
     put('user/role/{id}', ['uses' => 'UserController@putRole', 'as' => 'user.role.update']);
+    get('user/year', ['uses' => 'UserController@getUserInYear', 'as' => 'user.year']);
+    get('user/ditjen/year', ['uses' => 'UserController@getDitjenInYear', 'as' => 'user.ditjen.year']);
     resource('user', 'UserController');
 
     get('position/data', [
@@ -86,9 +88,12 @@ Route::group([
         'as'    => 'pk.data'
     ]);
     get('pk/select2', ['uses' => 'AgreementController@getSelect2', 'as' => 'pk.select2']);
-    resource('pk', 'AgreementController');
+    get('pk/{pk}/export', ['uses' => 'AgreementController@getExport', 'as' => 'pk.export']);
+    get('pk/{id}/doc/create', ['uses' => 'AgreementController@getDocumentForm', 'as' => 'pk.doc.create']);
+    post('pk/{id}/doc/create', ['uses' => 'AgreementController@postDocument', 'as' => 'pk.doc.store']);
     get('pk/program/data', 'ProgramAgreementController@data');
     get('pk/{pk}/program', ['uses' => 'ProgramAgreementController@index', 'as' => 'pk.program.index']);
+    resource('pk', 'AgreementController');
 
     // Dirjen
     get('pk/program/sasaran/data', ['uses' => 'Dirjen\TargetAgreementController@data', 'as' => 'pk.program.sasaran.data']);

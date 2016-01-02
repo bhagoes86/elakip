@@ -6,6 +6,11 @@
     </div>
 
     <div class="body-content animated fadeIn">
+        <div class="row mbot-15">
+            <div class="col-md-12">
+                <a href="{{route('pk.create')}}" class="btn btn-success"><i class="fa fa-plus"></i> New</a>
+            </div>
+        </div>
         <div class="row">
 
             <div class="col-md-12">

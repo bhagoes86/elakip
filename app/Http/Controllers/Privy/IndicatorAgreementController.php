@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Privy;
 
+use App\Models\Activity;
 use App\Models\Agreement;
 use App\Models\Goal;
 use App\Models\Target;
@@ -19,13 +20,34 @@ class IndicatorAgreementController extends AdminController
      */
     public function index($agreementId, $programId, $activityId, $targetId)
     {
+        $agreement = Agreement::with([
+            'firstPosition' => function ($query) {
+                $query->with([
+                    'user',
+                    'unit'
+                ]);
+            },
+            'secondPosition' => function ($query) {
+                $query->with([
+                    'user',
+                    'unit'
+                ]);
+            }
+        ])->find($agreementId);
+
+        $activity = Activity::find($activityId);
+        $target = Target::find($targetId);
+
         return view('private.indicator_agreement.index')
             ->with('id', [
                 'agreement' => $agreementId,
                 'program'   => $programId,
                 'activity'  => $activityId,
                 'target'    => $targetId,
-            ]);
+            ])
+            ->with('agreement', $agreement)
+            ->with('target', $target)
+            ->with('activity', $activity);
     }
 
     /**

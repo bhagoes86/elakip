@@ -25,7 +25,7 @@ class UpdatePositionsTableAddFk extends Migration
                 ->on('users')
                 ->onDelete('cascade');
 
-            $table->unique(['unit_id','user_id']);
+            $table->unique(['unit_id','user_id','year']);
 
         });
     }

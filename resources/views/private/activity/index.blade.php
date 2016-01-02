@@ -118,10 +118,14 @@
 
                         <div class="alert-wrapper"></div>
 
+                        @can('choose-unit', null)
                         <div class="form-group">
                             <label for="name">Unit</label>
                             {!! Form::select('unit_id', $units, null, ['class' => 'form-control', 'placeholder' => '[ Pilih Unit ]']) !!}
                         </div>
+                        @else
+                            <input type="hidden" name="unit_id" value="{{$authUser->positions[0]->unit->id}}"/>
+                        @endcan
 
                         <div class="form-group">
                             <label for="name">Nama kegiatan</label>

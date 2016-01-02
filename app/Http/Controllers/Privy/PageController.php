@@ -18,6 +18,9 @@ class PageController extends AdminController
      */
     public function index()
     {
+        if (\Gate::denies('read-page', null))
+            abort(403);
+
         $breadcrumbs = [
             'Content' => [],
             'Page'  => []
@@ -37,6 +40,9 @@ class PageController extends AdminController
     public function edit($id)
     {
         $page = Page::find($id);
+
+        if (\Gate::denies('update-page', $page))
+            abort(403);
 
         $breadcrumbs = [
             'Content' => [],
@@ -68,6 +74,9 @@ class PageController extends AdminController
 
         $page = Page::find($id);
 
+        if (\Gate::denies('update-page', $page))
+            abort(403);
+
         $page->title = $request->get('title');
         $page->content = $request->get('content');
         $page->excerpt = $request->get('excerpt');
@@ -78,6 +87,9 @@ class PageController extends AdminController
 
     public function data()
     {
+        if (\Gate::denies('read-page', null))
+            abort(403);
+
         $years = Page::all();
 
         return Datatables::of($years)

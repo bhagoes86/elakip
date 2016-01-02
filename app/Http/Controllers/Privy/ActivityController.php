@@ -22,6 +22,9 @@ class ActivityController extends AdminController
      */
     public function index($planId, $programId)
     {
+        /*if(\Gate::denies('has-position', null))
+            abort(403);*/
+
         $program = Program::with(['plan' => function ($query) {
             $query->with('period');
         }])->find($programId);
@@ -111,14 +114,22 @@ class ActivityController extends AdminController
 
     public function data(Request $request)
     {
-        $programId = $request->get('program');
-        $planId = $request->get('plan');
-        $type = $request->get('type');
+        $programId  = $request->get('program');
+        $planId     = $request->get('plan');
+        $type       = $request->get('type');
 
         $program = Program::with(['activities' => function ($query) {
             $query->with('unit');
-        }])
-            ->find($programId);
+
+            // Jika operator
+            // dan jika bukan DIRJEN
+            // maka tambah where
+            if( $this->authUser->role->name == 'Operator' AND
+                $this->authUser->positions[0]->unit->id != 1)
+            {
+                $query->where('unit_id', $this->authUser->positions[0]->unit->id);
+            }
+        }])->find($programId);
 
         return Datatables::of($program->activities)
             ->editColumn('name', function ($data) use ($planId, $programId) {

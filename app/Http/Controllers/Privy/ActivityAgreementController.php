@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Privy;
 use App\Models\Activity;
 use App\Models\Agreement;
 use App\Models\Budget;
+use App\Models\Plan;
 use App\Models\Program;
 use Illuminate\Http\Request;
 
@@ -22,11 +23,31 @@ class ActivityAgreementController extends AdminController
      */
     public function index($agreementId, $programId)
     {
+        $agreement = Agreement::with([
+            'firstPosition' => function ($query) {
+                $query->with([
+                    'user',
+                    'unit'
+                ]);
+            },
+            'secondPosition' => function ($query) {
+                $query->with([
+                    'user',
+                    'unit'
+                ]);
+            }
+        ])->find($agreementId);
+
+        $program = Program::find($programId);
+
         return view('private.activity_agreement.index')
             ->with('id', [
                 'agreement' => $agreementId,
                 'program'   => $programId
-            ]);
+            ])
+            ->with('agreement', $agreement)
+            ->with('program', $program);
+
     }
 
     /**

@@ -84,6 +84,7 @@ START @SIDEBAR LEFT
             </a>
         </li>--}}
 
+        @can('read-user', null)
         <li class="submenu">
             <a href="javascript:void(0);">
                 <span class="icon"><i class="fa fa-home"></i></span>
@@ -95,7 +96,9 @@ START @SIDEBAR LEFT
 
             </ul>
         </li>
+        @endcan
 
+        @can('read-user', null)
         <li class="submenu">
             <a href="javascript:void(0);">
                 <span class="icon"><i class="fa fa-home"></i></span>
@@ -108,6 +111,8 @@ START @SIDEBAR LEFT
                 <li><a href="{{route('position.index')}}">Jabatan user</a></li>
             </ul>
         </li>
+        @endcan
+
 
     </ul><!-- /.sidebar-menu -->
     <!--/ End left navigation - menu -->

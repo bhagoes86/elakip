@@ -20,10 +20,27 @@ class ProgramAgreementController extends AdminController
      */
     public function index($agreementId)
     {
+        $agreement = Agreement::with([
+            'firstPosition' => function ($query) {
+                $query->with([
+                    'user',
+                    'unit'
+                ]);
+            },
+            'secondPosition' => function ($query) {
+                $query->with([
+                    'user',
+                    'unit'
+                ]);
+            }
+        ])->find($agreementId);
+
+
         return view('private.program_agreement.index')
             ->with('id', [
                 'agreement' => $agreementId
-            ]);
+            ])
+            ->with('agreement', $agreement);
     }
 
     public function data(Request $request)

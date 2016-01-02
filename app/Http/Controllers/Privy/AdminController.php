@@ -8,12 +8,14 @@ use App\Http\Controllers\Controller;
 use App\Models\Period;
 use App\Models\Role;
 use App\Models\User;
+use Carbon\Carbon;
 
 class AdminController extends Controller {
 
     protected $defaultLanguage;
     protected $identifier = 'view';
     protected $years = [];
+    protected $authUser;
 
     function __construct()
     {
@@ -22,7 +24,17 @@ class AdminController extends Controller {
 
         if(\Auth::check()) {
             $authenticatedUser = \Auth::user();
-            $user = User::with('role')->find($authenticatedUser->id);
+            $user = User::with([
+                'role',
+                'positions' => function($query) {
+                    $query->with(['unit']);
+                    $query->where('year', Carbon::now()->year);
+                }
+            ])->find($authenticatedUser->id);
+
+            //dd($user->toArray());
+
+            $this->authUser = $user;
             view()->share('authUser', $user);
         }
 

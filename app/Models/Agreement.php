@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Agreement extends Model
 {
+    protected $fillable = ['plan_id','year','date',
+        'first_position_id','second_position_id'];
+
     public function media()
     {
         return $this->belongsToMany(Media::class)

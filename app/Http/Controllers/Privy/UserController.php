@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Privy;
 
+use App\Models\Position;
 use App\Models\Role;
 use App\Models\Unit;
 use App\Models\User;
@@ -22,6 +23,9 @@ class UserController extends AdminController
      */
     public function index()
     {
+        if (\Gate::denies('read-user', $this->authUser))
+            abort(403);
+
         $roles = [];
         foreach (Role::all() as $role) {
             $roles[$role->id] = $role->name;
@@ -39,6 +43,9 @@ class UserController extends AdminController
      */
     public function store(Request $request)
     {
+        if (\Gate::denies('create-user', $this->authUser))
+            abort(403);
+
         $this->validate($request, [
             'username'  => 'required|unique:users',
             'email'     => 'required|unique:users',
@@ -63,6 +70,9 @@ class UserController extends AdminController
      */
     public function edit($id)
     {
+        if (\Gate::denies('read-user', $this->authUser))
+            abort(403);
+
         $user = User::find($id);//->with('roles');
 
         $roles = Role::all();
@@ -90,6 +100,8 @@ class UserController extends AdminController
      */
     public function update(Request $request, $id)
     {
+        if (\Gate::denies('update-user', $this->authUser))
+            abort(403);
 
         $this->validate($request, [
             'username'  => 'required',
@@ -115,6 +127,9 @@ class UserController extends AdminController
      */
     public function destroy($id)
     {
+        if (\Gate::denies('delete-user', $this->authUser))
+            abort(403);
+
         return (int) User::destroy($id);
 
     }
@@ -126,6 +141,9 @@ class UserController extends AdminController
      */
     public function data()
     {
+        if (\Gate::denies('read-user', $this->authUser))
+            abort(403);
+
         $years = User::all();
 
         return Datatables::of($years)
@@ -156,6 +174,7 @@ class UserController extends AdminController
      */
     public function getPassword($id)
     {
+
         $user = User::find($id);
         return view('private.user.password')
             ->with('user', $user);
@@ -179,5 +198,47 @@ class UserController extends AdminController
         if($user->save()) {
             return \Redirect::route('user.edit', $user->id);
         }
+    }
+
+    /**
+     * @param Request $request
+     * @return string
+     * @author Fathur Rohman <fathur@dragoncapital.center>
+     */
+    public function getUserInYear(Request $request)
+    {
+        $year = $request->get('year');
+
+        $positions = Position::with(['user','unit'])
+            ->where('year', $year)
+            // ->whereNotIn('unit_id', [self::DITJEN_UNIT_ID])
+            ->get();
+
+        $html = '<option>- Pilih satu -</option>';
+
+        foreach ($positions as $position) {
+            $html .= '<option value="'.$position->id.'" data-unit-id="'.$position->unit->id.'">'.$position->user->name . ' (' . $position->position . ' ' . $position->year . ' - ' . $position->unit->name . ')'.'</option>';
+        }
+
+        return $html;
+    }
+
+    public function getDitjenInYear(Request $request)
+    {
+        $year = $request->get('year');
+
+        $positions = Position::with(['user','unit'])
+            ->where('year', $year)
+            // ->where('unit_id', self::DITJEN_UNIT_ID)
+            ->get();
+
+        $html = '<option>- Pilih satu -</option>';
+
+
+        foreach ($positions as $position) {
+            $html .= '<option value="'.$position->id.'">'.$position->user->name . ' (' . $position->position . ' ' . $position->year . ' - ' . $position->unit->name . ')'.'</option>';
+        }
+
+        return $html;
     }
 }
