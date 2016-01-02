@@ -45,13 +45,9 @@ Route::group([
     ]);
     resource('renstra', 'PlanController');
 
-    get('renstra/program/data', [
-        'uses'  => 'ProgramController@data',
-        'as'    => 'renstra.program.data'
-    ]);
-    resource('renstra.program', 'ProgramController', [
-        'except'    => ['create', 'show']
-    ]);
+    get('program/select2', ['uses' => 'ProgramController@getSelect2', 'as' => 'program.select2']);
+    get('renstra/program/data', ['uses'  => 'ProgramController@data', 'as'    => 'renstra.program.data']);
+    resource('renstra.program', 'ProgramController', ['except'    => ['create', 'show']]);
 
     // Dirjen
     get('renstra/program/sasaran/data', [
@@ -66,11 +62,14 @@ Route::group([
     resource('renstra.program.sasaran.indikator', 'Dirjen\IndicatorController');
 
     // Direktorat
+    get('kegiatan/select2', ['uses' => 'ActivityController@getSelect2', 'as' => 'kegiatan.select2']);
     get('renstra/program/kegiatan/data', [
         'uses'  => 'ActivityController@data',
         'as'    => 'renstra.program.kegiatan.data'
     ]);
     resource('renstra.program.kegiatan', 'ActivityController');
+
+    get('sasaran/select2', ['uses' => 'TargetController@getSelect2', 'as' => 'sasaran.select2']);
     get('renstra/program/kegiatan/sasaran/data', [
         'uses'  => 'TargetController@data',
         'as'    => 'renstra.program.kegiatan.sasaran.data'
@@ -86,6 +85,7 @@ Route::group([
         'uses'  => 'AgreementController@data',
         'as'    => 'pk.data'
     ]);
+    get('pk/select2', ['uses' => 'AgreementController@getSelect2', 'as' => 'pk.select2']);
     resource('pk', 'AgreementController');
     get('pk/program/data', 'ProgramAgreementController@data');
     get('pk/{pk}/program', ['uses' => 'ProgramAgreementController@index', 'as' => 'pk.program.index']);
@@ -98,12 +98,34 @@ Route::group([
 
     // Direktorat
     get('pk/program/kegiatan/data', ['uses' => 'ActivityAgreementController@data', 'as' => 'pk.program.kegiatan.data']);
-    get('pk/{pk}/program/{program}/kegiatan', ['uses' => 'ActivityAgreementController@index', 'as' => 'pk.program.kegiatan.index']);
-    resource('pk.program.kegiatan.sasaran', 'TargetAgreementController');
-    resource('pk.program.kegiatan.sasaran.indikator', 'IndicatorAgreementController');
+    // get('pk/{pk}/program/{program}/kegiatan', ['uses' => 'ActivityAgreementController@index', 'as' => 'pk.program.kegiatan.index']);
+    resource('pk.program.kegiatan', 'ActivityAgreementController', ['only' => ['index','edit','update']]);
+    get('pk/program/kegiatan/sasaran/data', ['uses' => 'TargetAgreementController@data', 'as' => 'pk.program.kegiatan.sasaran.data']);
+    get('pk/{pk}/program/{program}/kegiatan/{kegiatan}/sasaran', ['uses' => 'TargetAgreementController@index', 'as' => 'pk.program.kegiatan.sasaran.index']);
+    get('pk/program/kegiatan/sasaran/indikator/data', ['uses' => 'IndicatorAgreementController@data', 'as' => 'pk.program.kegiatan.sasaran.indikator.data']);
+    resource('pk.program.kegiatan.sasaran.indikator', 'IndicatorAgreementController', ['only' => ['index', 'edit', 'update']]);
 
-    resource('capaian/fisik', 'PhysicAchievementController');
-    resource('capaian/anggaran', 'BudgetAchievementController');
+    get('capaian/media/data', ['uses' => 'PhysicAchievementController@getMediaData', 'as' => 'capaian.media.data']);
+    delete('capaian/{achievementId}/media/{mediaId}/destroy', ['uses' => 'PhysicAchievementController@deleteMedia', 'as' => 'capaian.media.destroy']);
+    get('goal/{goalId}/capaian/{achievementId}', ['uses' => 'PhysicAchievementController@getDocument', 'as' => 'goal.capaian.doc.create']);
+    post('goal/{goalId}/capaian/{achievementId}', ['uses' => 'PhysicAchievementController@postDocument', 'as' => 'goal.capaian.doc.store']);
+    get('capaian/fisik/filter', ['uses' => 'PhysicAchievementController@getFilter', 'as' => 'capaian.fisik.filter']);
+    get('capaian/fisik/filter/indicator', ['uses' => 'PhysicAchievementController@getIndicator', 'as' => 'capaian.fisik.indicator']);
+    get('capaian/fisik/indicator/data', ['uses' => 'PhysicAchievementController@getIndicatorData', 'as' => 'capaian.fisik.indicator.data']);
+    Route::group([
+        'prefix'    => 'capaian/fisik'
+    ], function () {
+        resource('goal.achievement', 'PhysicAchievementController', ['only' => ['index','store']]);
+    });
+
+    get('capaian/anggaran/filter', ['uses' => 'BudgetAchievementController@getFilter', 'as' => 'capaian.anggaran.filter']);
+    get('capaian/anggaran/filter/kegiatan', ['uses' => 'BudgetAchievementController@getActivity', 'as' => 'capaian.anggaran.kegiatan']);
+    put('capaian/anggaran/kegiatan/{budget}', ['uses' => 'BudgetAchievementController@update', 'as' => 'capaian.anggaran.kegiatan.update']);
+    Route::group([
+        'prefix'    => 'capaian/anggaran'
+    ], function () {
+        resource('goal.achievement', 'BudgetAchievementController', ['only' => ['index','store']]);
+    });
 
     get('capaian/renstra/fisik', [
         'uses'  => 'Period\PhysicAchievementController@index',

@@ -141,4 +141,22 @@ class ActivityController extends AdminController
             })
             ->make(true);
     }
+
+    /**
+     * @param Request $request
+     * @return string
+     * @author Fathur Rohman <fathur@dragoncapital.center>
+     */
+    public function getSelect2(Request $request)
+    {
+        $program = $request->get('program');
+        $program = Program::find($program);
+
+        $options = '<option>-Select One-</option>';
+        foreach ($program->activities as $activity) {
+            $options .= '<option value="'.$activity->id.'">'. $activity->name. '</option>';
+        }
+
+        return $options;
+    }
 }

@@ -6,9 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Achievement extends Model
 {
-    public function indicatorYear()
+    protected $fillable = ['goal_id','quarter','plan','realization'];
+
+    public function goal()
     {
-        return $this->belongsTo(IndicatorYears::class);
+        return $this->belongsTo(Goal::class);
     }
 
     public function media()

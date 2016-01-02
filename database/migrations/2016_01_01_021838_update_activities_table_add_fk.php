@@ -25,8 +25,6 @@ class UpdateActivitiesTableAddFk extends Migration
                 ->references('id')
                 ->on('units')
                 ->onDelete('cascade');
-
-            $table->unique(['program_id','unit_id']);
         });
     }
 

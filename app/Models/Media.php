@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Media extends Model
 {
+    protected $fillable = ['name','original_name','size','mime','hash','ext','location'];
+
     public function achievements()
     {
         return $this->belongsToMany(Achievement::class)
@@ -14,6 +16,7 @@ class Media extends Model
 
     public function agreements()
     {
-        return $this->belongsToMany(Agreement::class);
+        return $this->belongsToMany(Agreement::class)
+            ->withTimestamps();
     }
 }

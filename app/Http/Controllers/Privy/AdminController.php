@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Privy;
 
 
 use App\Http\Controllers\Controller;
+use App\Models\Period;
 use App\Models\Role;
 use App\Models\User;
 
@@ -12,6 +13,7 @@ class AdminController extends Controller {
 
     protected $defaultLanguage;
     protected $identifier = 'view';
+    protected $years = [];
 
     function __construct()
     {
@@ -23,10 +25,26 @@ class AdminController extends Controller {
             $user = User::with('role')->find($authenticatedUser->id);
             view()->share('authUser', $user);
         }
+
+        $this->setYear();
+
         // if(!$this->hasAccess())
         //    abort(403);
 
 
+    }
+
+    public function setYear()
+    {
+        $periods = Period::where('year_begin', 2015)->first();
+        $years = [];
+        $begin = $periods->year_begin;
+        $end = $periods->year_end;
+        for($i=$begin; $i <= $end; $i++) {
+            $years[$i] = $i;
+        }
+
+        $this->years = $years;
     }
 
     /**

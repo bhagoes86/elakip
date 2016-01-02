@@ -149,4 +149,23 @@ class TargetController extends AdminController
             })
             ->make(true);
     }
+
+    /**
+     * @param Request $request
+     * @return string
+     * @author Fathur Rohman <fathur@dragoncapital.center>
+     */
+    public function getSelect2(Request $request)
+    {
+        $activity = $request->get('activity');
+
+        $targets = Target::activity($activity)->get();
+
+        $options = '<option>-Select One-</option>';
+        foreach ($targets as $target) {
+            $options .= '<option value="'.$target->id.'">'. $target->name. '</option>';
+        }
+
+        return $options;
+    }
 }

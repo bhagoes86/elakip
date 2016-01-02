@@ -69,8 +69,8 @@ START @SIDEBAR LEFT
                 <span class="arrow"></span>
             </a>
             <ul>
-                <li><a href="{{route('capaian.fisik.index')}}">Kegiatan Fisik</a></li>
-                <li><a href="{{route('capaian.anggaran.index')}}">Anggaran</a></li>
+                <li><a href="{{route('capaian.fisik.filter')}}">Kegiatan Fisik</a></li>
+                <li><a href="{{route('capaian.anggaran.filter')}}">Anggaran</a></li>
                 <li><a href="{{route('capaian.renstra.fisik.index')}}">Kegiatan Fisik Renstra</a></li>
                 <li><a href="#{{route('capaian.renstra.fisik.index')}}">Anggaran Renstra</a></li>
             </ul>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Privy;
 
+use App\Models\Target;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -14,74 +15,34 @@ class TargetAgreementController extends AdminController
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($agreementId, $programId, $activityId)
     {
-        //
+        return view('private.target_agreement.index')
+            ->with('id', [
+                'agreement' => $agreementId,
+                'program'   => $programId,
+                'activity'  => $activityId
+            ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function data(Request $request)
     {
-        //
-    }
+        $agreementId = $request->get('agreement');
+        $programId = $request->get('program');
+        $activityId = $request->get('activity');
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+        $targets = Target::activity($activityId)->get();
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
+        return \Datatables::of($targets)
+            ->editColumn('name', function ($data) use ($agreementId, $programId, $activityId) {
+                return '<a href="'.route('pk.program.kegiatan.sasaran.indikator.index', [
+                    $agreementId,
+                    $programId,
+                    $activityId,
+                    $data->id
+                ]).'">'.$data->name.'</a>';
+            })
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+            ->make(true);
     }
 }

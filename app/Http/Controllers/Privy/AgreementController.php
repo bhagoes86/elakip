@@ -139,4 +139,34 @@ class AgreementController extends AdminController
 
             ->make(true);
     }
+
+    /**
+     * @param Request $request
+     * @return mixed
+     * @author Fathur Rohman <fathur@dragoncapital.center>
+     */
+    public function getSelect2(Request $request)
+    {
+        $year = $request->get('year');
+
+        $agreements = Agreement::with([
+            'firstPosition' => function ($query) {
+                $query->with(['unit','user']);
+            },
+            'secondPosition' => function ($query) {
+                $query->with(['unit','user']);
+            }
+        ])
+            ->where('year', $year)->get();
+
+        $options = '<option>-Select One-</option>';
+        foreach ($agreements as $agreement) {
+            $options .= '<option value="'.$agreement->id.'">'.
+                $agreement->firstPosition->user->name.' ('.$agreement->firstPosition->unit->name.')'.' - '.
+                $agreement->secondPosition->user->name.' ('.$agreement->secondPosition->unit->name.')'.
+                '</option>';
+        }
+
+        return $options;
+    }
 }

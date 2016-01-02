@@ -17,4 +17,15 @@ class Goal extends Model
     {
         return $this->hasMany(Achievement::class);
     }
+
+    public function scopeIndicatorId($query, $id)
+    {
+        return $query->where('indicator_id', $id);
+    }
+
+    public function scopeYear($query, $year)
+    {
+        return $query->where('year', $year);
+
+    }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Privy;
 
+use App\Models\Agreement;
 use App\Models\Plan;
 use App\Models\Program;
 use Datatables;
@@ -120,5 +121,26 @@ class ProgramController extends AdminController
 
                     ->render();
             })->make(true);
+    }
+
+    /**
+     * @param Request $request
+     * @return string
+     * @author Fathur Rohman <fathur@dragoncapital.center>
+     */
+    public function getSelect2(Request $request)
+    {
+        $agreement = $request->get('agreement');
+
+        $agreement = Agreement::find($agreement);
+
+        $programs = Program::where('plan_id', $agreement->plan_id)->get();
+
+        $options = '<option>-Select One-</option>';
+        foreach ($programs as $program) {
+            $options .= '<option value="'.$program->id.'">'. $program->name. '</option>';
+        }
+
+        return $options;
     }
 }
