@@ -127,10 +127,10 @@ Route::group([
         resource('goal.achievement', 'BudgetAchievementController', ['only' => ['index','store']]);
     });
 
-    get('capaian/renstra/fisik', [
-        'uses'  => 'Period\PhysicAchievementController@index',
-        'as'    => 'capaian.renstra.fisik.index'
-    ]);
+    get('capaian/renstra/fisik/filter', ['uses'  => 'Period\PhysicAchievementController@getFilter', 'as'    => 'capaian.renstra.fisik.filter']);
+    get('capaian/renstra/fisik/filter/indicator', ['uses'  => 'Period\PhysicAchievementController@getIndicator', 'as'    => 'capaian.renstra.fisik.indicator']);
+    get('capaian/renstra/fisik/indicator/{indicator}/chart', ['uses'  => 'Period\PhysicAchievementController@getChart', 'as'    => 'capaian.renstra.fisik.indicator.chart']);
+
     get('capaian/renstra/anggaran', [
         'uses'  => 'Period\BudgetAchievementController@index',
         'as'    => 'capaian.renstra.anggaran.index'

@@ -28,21 +28,6 @@ class PhysicAchievementController extends AdminController
      */
     public function index($goalId)
     {
-        /*$indicator = Indicator::with([
-            'achievements' => function ($query)
-            {
-                $query->orderBy('quarter_id', 'asc');
-            },
-            'target' => function ($query)
-            {
-                $query->with(['activity' => function ($query) {
-                    $query->with(['program' => function ($query) {
-                        $query->with(['agreement' => function ($query) {
-                            $query->with('year');
-                        }]);
-                    }]);
-                }]);
-            }])->find($indicatorId);*/
 
         $this->isAchievementExist($goalId);
 

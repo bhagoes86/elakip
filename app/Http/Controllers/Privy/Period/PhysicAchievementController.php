@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Privy\Period;
 
 use App\Http\Controllers\Privy\AdminController;
+use App\Models\Plan;
+use App\Models\Target;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -84,5 +86,46 @@ class PhysicAchievementController extends AdminController
     public function destroy($id)
     {
         //
+    }
+
+    public function getFilter()
+    {
+        $plans = [];
+        foreach (Plan::with('period')->get() as $plan) {
+            $plans[$plan->id] = $plan->period->year_begin . ' - ' . $plan->period->year_end;
+        }
+
+        return view('private.physic_achievement.filter')
+            ->with('plans', $plans)
+            ->with('years', $this->years);
+    }
+
+    public function getIndicator(Request $request)
+    {
+        $planId = $request->get('plan'); // renstra
+        $targetId = $request->get('target');
+
+        $plans = [];
+        foreach (Plan::with('period')->get() as $plan) {
+            $plans[$plan->id] = $plan->period->year_begin . ' - ' . $plan->period->year_end;
+        }
+
+        $plan = Plan::with(['period'])
+            ->find($planId);
+
+        $target = Target::find($targetId);
+
+        //dd($plan->period->toArray());
+
+       return view('private.physic_achievement.detail')
+           ->with('plans', $plans)
+           ->with('period', $plan->period)
+           ->with('indicators', $target->indicators)
+           ->with('years', $this->years);
+    }
+
+    public function getChart()
+    {
+        return view('private.physic_achievement.chart');
     }
 }
