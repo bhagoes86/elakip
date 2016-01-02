@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Privy\Period;
 
 use App\Http\Controllers\Privy\AdminController;
+use App\Models\Plan;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -10,79 +11,40 @@ use App\Http\Controllers\Controller;
 
 class BudgetAchievementController extends AdminController
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function getFilter()
     {
-        //
+        $plans = [];
+        foreach (Plan::with('period')->get() as $plan) {
+            $plans[$plan->id] = $plan->period->year_begin . ' - ' . $plan->period->year_end;
+        }
+        return view('private.budget_achievement.filter')
+            ->with('plans', $plans)
+            ->with('years', $this->years);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function getChart()
     {
-        //
+        return view('private.budget_achievement.chart');
+
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function getActivity(Request $request)
     {
-        //
-    }
+        $planId = $request->get('plan'); // renstra
+        $targetId = $request->get('target');
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
+        $plans = [];
+        foreach (Plan::with('period')->get() as $plan) {
+            $plans[$plan->id] = $plan->period->year_begin . ' - ' . $plan->period->year_end;
+        }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
+        $plan = Plan::with(['period'])
+            ->find($planId);
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
+        return view('private.budget_achievement.detail')
+            ->with('plans', $plans)
+            ->with('period', $plan->period)
+            ->with('years', $this->years);
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 }

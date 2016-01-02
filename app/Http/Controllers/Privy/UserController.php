@@ -101,6 +101,7 @@ class UserController extends AdminController
         $item->username = $request->get('username');
         $item->email = $request->get('email');
         $item->name = $request->get('name');
+        $item->role_id = $request->get('role_id');
 
         if( $item->save() )
             return \Redirect::route('user.edit', $id);
@@ -178,22 +179,5 @@ class UserController extends AdminController
         if($user->save()) {
             return \Redirect::route('user.edit', $user->id);
         }
-    }
-
-    /**
-     * @param Request $request
-     * @param $id
-     * @return \Illuminate\Http\RedirectResponse
-     * @author Fathur Rohman <fathur@dragoncapital.center>
-     */
-    public function putRole(Request $request, $id)
-    {
-        $role = $request->get('role');
-
-        $user = User::find($id);
-
-        $user->roles()->sync([$role]);
-
-        return \Redirect::route('user.edit', $id);
     }
 }

@@ -22,36 +22,46 @@
                         <form action="{{route('capaian.renstra.fisik.indicator')}}" method="get">
                             <div class="form-group">
                                 <label for="year">Rencana Strategis</label>
-                                {!! Form::select('plan', $plans, null, [
+                                {!! Form::select('plan', $plans, $id['plan'], [
                                     'placeholder' => '-Select Renstra-',
                                     'class' => 'form-control',
                                     'id'=>'plan']) !!}
                             </div>
                             <div class="form-group">
                                 <label for="year">Tahun</label>
-                                {!! Form::select('year', $years, null, [
+                                {!! Form::select('year', $years, $id['year'], [
                                     'placeholder' => '-Select Year-',
                                     'class' => 'form-control',
                                     'id'=>'year']) !!}
                             </div>
                             <div class="form-group">
                                 <label for="agreement">Perjanjian kinerja</label>
-                                <select id="agreement" name="agreement" class="form-control"></select>
+                                {!! Form::select('agreement', $agreements, $id['agreement'], [
+                                    'placeholder' => '-Select Agreement-',
+                                    'class' => 'form-control',
+                                    'id'=>'agreement']) !!}
                             </div>
                             <div class="form-group">
                                 <label for="program">Program</label>
-                                <select id="program" name="program" class="form-control"></select>
+                                {!! Form::select('program', $programs, $id['program'], [
+                                   'placeholder' => '-Select Program-',
+                                   'class' => 'form-control',
+                                   'id'=>'program']) !!}
 
                             </div>
                             <div class="form-group">
                                 <label for="activity">Kegiatan</label>
-                                <select id="activity" name="activity" class="form-control"></select>
-
+                                {!! Form::select('activity', $activities, $id['activity'], [
+                                    'placeholder' => '-Select Activity-',
+                                    'class' => 'form-control',
+                                    'id'=>'activity']) !!}
                             </div>
                             <div class="form-group">
                                 <label for="target">Sasaran</label>
-                                <select id="target" name="target" class="form-control"></select>
-
+                                {!! Form::select('target', $targets, $id['target'], [
+                                    'placeholder' => '-Select Target-',
+                                    'class' => 'form-control',
+                                    'id'=>'target']) !!}
                             </div>
 
                             <button type="submit" class="btn btn-primary"> Load </button>
@@ -78,20 +88,24 @@
                                 <tr>
                                     <th rowspan="2">Indikator</th>
                                     <th rowspan="2" class="text-center">Satuan</th>
+
                                     <th colspan="{{($period->year_end - $period->year_begin)+2}}" class="text-center">Target</th>
                                     <th colspan="{{($period->year_end - $period->year_begin)+2}}" class="text-center">Capaian</th>
                                 </tr>
                                 <tr>
-                                    @for($year = $period->year_begin; $year <= $period->year_end; $year++)
-                                        <th class="text-center">{{$year}}</th>
-                                    @endfor
-                                        <th class="text-center"><strong>Total</strong></th>
+                                    @foreach($indicators as $indicator)
+                                        @foreach($indicator->goals as $goal)
+                                            <th class="text-center">{{$goal->year}}</th>
+                                        @endforeach
+                                    @endforeach
+                                    <th class="text-center"><b>Total</b></th>
 
-                                    @for($year = $period->year_begin; $year <= $period->year_end; $year++)
-                                        <th class="text-center">{{$year}}</th>
-                                    @endfor
-
-                                        <th class="text-center"><strong>Total</strong></th>
+                                    @foreach($indicators as $indicator)
+                                        @foreach($indicator->goals as $goal)
+                                            <th class="text-center">{{$goal->year}}</th>
+                                        @endforeach
+                                    @endforeach
+                                    <th class="text-center"><b>Total</b></th>
 
                                 </tr>
 
@@ -111,18 +125,10 @@
                                         </button>
                                     </td>
                                     <td>{{$indicator->unit}}</td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
+
+                                    @foreach($indicator->goals as $goal)
+                                    <td>{{$goal->count}}</td>
+                                    @endforeach
                                 </tr>
                                 @endforeach
                             </tbody>

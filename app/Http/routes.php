@@ -131,10 +131,9 @@ Route::group([
     get('capaian/renstra/fisik/filter/indicator', ['uses'  => 'Period\PhysicAchievementController@getIndicator', 'as'    => 'capaian.renstra.fisik.indicator']);
     get('capaian/renstra/fisik/indicator/{indicator}/chart', ['uses'  => 'Period\PhysicAchievementController@getChart', 'as'    => 'capaian.renstra.fisik.indicator.chart']);
 
-    get('capaian/renstra/anggaran', [
-        'uses'  => 'Period\BudgetAchievementController@index',
-        'as'    => 'capaian.renstra.anggaran.index'
-    ]);
+    get('capaian/renstra/anggaran/filter', ['uses'  => 'Period\BudgetAchievementController@getFilter', 'as'    => 'capaian.renstra.anggaran.filter']);
+    get('capaian/renstra/anggaran/filter/activity', ['uses'  => 'Period\BudgetAchievementController@getActivity', 'as'    => 'capaian.renstra.anggaran.kegiatan']);
+    get('capaian/renstra/anggaran/kegiatan/{kegiatan}/chart', ['uses'  => 'Period\BudgetAchievementController@getChart', 'as'    => 'capaian.renstra.anggaran.kegiatan.chart']);
 
     resource('kegiatan.evaluasi', 'EvaluationController');
 });

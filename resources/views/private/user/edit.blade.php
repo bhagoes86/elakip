@@ -38,10 +38,7 @@
                         {!! Form::model($user, [
                             'route' => ['user.update', $user->id],
                             'method' => 'PUT',
-                            //'id' => 'form-'.$viewId.'-edit',
-                            //'class' => 'app-form-edit',
-                            //'data-table' => $viewId . '-datatables',
-                            //'data-modal-id' => $viewId
+
                             ]) !!}
 
                         {{--<div class="alert-wrapper"></div>--}}
@@ -61,42 +58,9 @@
                             {!! Form::text('name', null, ['id' => 'name', 'placeholder' => 'Real name', 'class' => 'form-control']) !!}
                         </div>
 
-                        <button type="submit" class="btn btn-info">
-                            <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Update
-                        </button>
-
-                        {!! Form::close() !!}
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-12">
-                <div class="panel rounded shadow">
-
-                    <div class="panel-heading">
-                        <div class="pull-left">
-                            <h3 class="panel-title">Role {{$user->name}}</h3>
-                        </div>
-                        <div class="clearfix"></div>
-                    </div>
-
-                    <div class="panel-body">
-                        {!! Form::open([
-                            'route' => ['user.role.update', $user->id],
-                            'method' => 'PUT',
-                            /*'id' => 'form-'.$viewId.'-edit',
-                            'class' => 'app-form-edit',
-                            'data-table' => $viewId . '-datatables',
-                            'data-modal-id' => $viewId*/
-                            ]) !!}
-                        {{--
-                        <div class="alert-wrapper"></div>--}}
-
                         <div class="form-group">
                             <label for="role">Role</label>
-                            {!! Form::select('role', $roles, $selectedRole, ['id' => 'role', 'class' => 'form-control']) !!}
+                            {!! Form::select('role_id', $roles, $selectedRole, ['class' => 'form-control']) !!}
                         </div>
 
                         <button type="submit" class="btn btn-info">
@@ -108,6 +72,8 @@
                 </div>
             </div>
         </div>
+
+
 
         <div class="row">
             <div class="col-md-12">
@@ -124,10 +90,7 @@
                         {!! Form::open([
                             'route' => ['user.password.update', $user->id],
                             'method' => 'PUT',
-                            //'id' => 'form-'.$viewId.'-edit',
-                            //'class' => 'app-form-edit',
-                            //'data-table' => $viewId . '-datatables',
-                            //'data-modal-id' => $viewId
+
                             ]) !!}
 
                         {{--<div class="alert-wrapper"></div>--}}
