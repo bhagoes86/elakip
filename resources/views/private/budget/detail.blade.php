@@ -84,13 +84,19 @@
                                 <tr>
                                     <td>{{$activity->name}}</td>
                                     <td>{{$activity->budget->pagu}}</td>
-                                    <td><a href="#"
+                                    <td>
+                                        @can('read-only')
+                                        {{$activity->budget->realization}}
+                                        @else
+                                        <a href="#"
                                            class="x-editable"
                                            id="realization-{{$activity->budget->id}}"
                                            data-type="text"
                                            data-pk="{{$activity->budget->id}}"
                                            data-url="{{route('capaian.anggaran.kegiatan.update', [$activity->budget->id])}}"
-                                           data-title="Realisasi">{{$activity->budget->realization}}</a></td>
+                                           data-title="Realisasi">{{$activity->budget->realization}}</a>
+                                        @endif
+                                    </td>
                                 </tr>
                             @endforeach
                             </tbody>

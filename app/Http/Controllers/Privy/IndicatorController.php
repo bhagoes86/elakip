@@ -16,6 +16,10 @@ class IndicatorController extends AdminController
     /**
      * Display a listing of the resource.
      *
+     * @param $planId
+     * @param $programId
+     * @param $activityId
+     * @param $targetId
      * @return \Illuminate\Http\Response
      */
     public function index($planId, $programId, $activityId, $targetId)
@@ -45,11 +49,18 @@ class IndicatorController extends AdminController
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
+     * @param $planId
+     * @param $programId
+     * @param $activityId
+     * @param $targetId
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request, $planId, $programId, $activityId, $targetId)
     {
+        if(\Gate::allows('read-only'))
+            abort(403);
+
         $target = Target::find($targetId);
         $target->indicators()->save(new Indicator([
             'name'  => $request->get('name'),
@@ -74,11 +85,19 @@ class IndicatorController extends AdminController
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param $planId
+     * @param $programId
+     * @param $activityId
+     * @param $targetId
+     * @param $indicatorId
      * @return \Illuminate\Http\Response
+     * @internal param int $id
      */
     public function edit($planId, $programId, $activityId, $targetId, $indicatorId)
     {
+        if(\Gate::allows('read-only'))
+            abort(403);
+
         $indicator = Indicator::find($indicatorId);
         return view('private.indicator.edit')
             ->with('id', [
@@ -94,12 +113,20 @@ class IndicatorController extends AdminController
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param $planId
+     * @param $programId
+     * @param $activityId
+     * @param $targetId
+     * @param $indicatorId
      * @return \Illuminate\Http\Response
+     * @internal param int $id
      */
     public function update(Request $request, $planId, $programId, $activityId, $targetId, $indicatorId)
     {
+        if(\Gate::allows('read-only'))
+            abort(403);
+
         $indicator = Indicator::find($indicatorId);
         $indicator->name = $request->get('name');
         $indicator->unit = $request->get('unit');
@@ -111,11 +138,19 @@ class IndicatorController extends AdminController
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param $planId
+     * @param $programId
+     * @param $activityId
+     * @param $targetId
+     * @param $indicatorId
      * @return \Illuminate\Http\Response
+     * @internal param int $id
      */
     public function destroy($planId, $programId, $activityId, $targetId, $indicatorId)
     {
+        if(\Gate::allows('read-only'))
+            abort(403);
+
         return (int) Indicator::destroy($indicatorId);
     }
 

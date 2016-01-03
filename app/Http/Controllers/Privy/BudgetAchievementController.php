@@ -76,6 +76,10 @@ class BudgetAchievementController extends AdminController
      */
     public function update(Request $request, $budgetId)
     {
+
+        if(\Gate::allows('read-only'))
+            abort(403);
+
         $budget = Budget::find($budgetId);
         $budget->realization = $request->get('value');
         return (int) $budget->save();

@@ -16,6 +16,10 @@ class IndicatorAgreementController extends AdminController
     /**
      * Display a listing of the resource.
      *
+     * @param $agreementId
+     * @param $programId
+     * @param $activityId
+     * @param $targetId
      * @return \Illuminate\Http\Response
      */
     public function index($agreementId, $programId, $activityId, $targetId)
@@ -53,11 +57,19 @@ class IndicatorAgreementController extends AdminController
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param $agreementId
+     * @param $programId
+     * @param $activityId
+     * @param $targetId
+     * @param $indicatorId
      * @return \Illuminate\Http\Response
+     * @internal param int $id
      */
     public function edit($agreementId, $programId, $activityId, $targetId, $indicatorId)
     {
+        if(\Gate::allows('read-only'))
+            abort(403);
+
         $agreement = Agreement::find($agreementId);
 
         $goal = Goal::with('indicator')->where('year', $agreement->year)
@@ -87,12 +99,20 @@ class IndicatorAgreementController extends AdminController
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param $agreementId
+     * @param $programId
+     * @param $activityId
+     * @param $targetId
+     * @param $indicatorId
      * @return \Illuminate\Http\Response
+     * @internal param int $id
      */
     public function update(Request $request, $agreementId, $programId, $activityId, $targetId, $indicatorId)
     {
+        if(\Gate::allows('read-only'))
+            abort(403);
+
         $goal = Goal::where('year', Agreement::find($agreementId)->year)
             ->where('indicator_id', $indicatorId)
             ->first();

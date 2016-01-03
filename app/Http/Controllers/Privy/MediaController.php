@@ -30,6 +30,9 @@ class MediaController extends AdminController
 
     public function store(Request $request)
     {
+        if(\Gate::allows('read-only'))
+            abort(403);
+
         $file = $request->file('file');
 
         if($file->isValid())

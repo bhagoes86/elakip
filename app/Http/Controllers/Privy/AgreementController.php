@@ -34,9 +34,6 @@ class AgreementController extends AdminController
             $units[$unit->id] = $unit->name;
         }
 
-
-
-
         return view('private.agreement.index')
             ->with('units', $units)
             ->with('years', $this->years);
@@ -49,6 +46,9 @@ class AgreementController extends AdminController
      */
     public function create()
     {
+        if(\Gate::allows('read-only'))
+            abort(403);
+
         $plans = [];
         foreach (Plan::with('period')->get() as $plan) {
             $plans[$plan->id]   = $plan->period->year_begin .' - '. $plan->period->year_end;
@@ -66,6 +66,8 @@ class AgreementController extends AdminController
      */
     public function store(Request $request)
     {
+        if(\Gate::allows('read-only'))
+            abort(403);
 
         $agreement = Agreement::create([
 
@@ -150,6 +152,9 @@ class AgreementController extends AdminController
      */
     public function update(Request $request, $id)
     {
+        if(\Gate::allows('read-only'))
+            abort(403);
+
         $agreement = Agreement::find($id);
 
         $agreement->plan_id           = $request->get('plan_id');
@@ -171,6 +176,9 @@ class AgreementController extends AdminController
      */
     public function destroy($id)
     {
+        if(\Gate::allows('read-only'))
+            abort(403);
+
         return (int) Agreement::destroy($id);
     }
 

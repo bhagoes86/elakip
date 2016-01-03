@@ -42,6 +42,7 @@
 
         <div class="row">
 
+            @if(!Gate::check('read-only'))
             <div class="col-md-4">
                 <div class="panel rounded shadow">
 
@@ -89,7 +90,10 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-8">
+            @endif
+
+            <div class="@can('read-only') col-md-12 @else col-md-8 @endcan">
+
                 <div class="panel rounded shadow">
 
                     <div class="panel-heading">
@@ -107,7 +111,10 @@
                                 <th>Indikator</th>
                                 <th>Satuan</th>
                                 <th>Lokasi</th>
+
+                                @if(!Gate::check('read-only'))
                                 <th>Action</th>
+                                @endif
                             </tr>
                             </thead>
                         </table>
@@ -152,7 +159,10 @@
                     {data:'name',name:'name'},
                     {data:'unit',name:'unit'},
                     {data:'location',name:'location'},
+
+                    @if(!Gate::check('read-only'))
                     {data:'action',name:'action', orderable:false, searchable:false}
+                    @endif
                 ]
             });
 

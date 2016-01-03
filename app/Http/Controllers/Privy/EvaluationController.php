@@ -48,10 +48,15 @@ class EvaluationController extends AdminController
     /**
      * Show the form for creating a new resource.
      *
+     * @param $activityId
+     * @param Request $request
      * @return \Illuminate\Http\Response
      */
     public function create($activityId, Request $request)
     {
+        if(\Gate::allows('read-only'))
+            abort(403);
+
         $agreementId = $request->get('agreement');
 
         $agreement = Agreement::with([
@@ -88,6 +93,9 @@ class EvaluationController extends AdminController
      */
     public function store(Request $request, $activityId, $agreementId)
     {
+        if(\Gate::allows('read-only'))
+            abort(403);
+
         $activity = Activity::find($activityId);
         $agreement = Agreement::find($agreementId);
 
@@ -116,11 +124,16 @@ class EvaluationController extends AdminController
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param $activityId
+     * @param $evaluationId
      * @return \Illuminate\Http\Response
+     * @internal param int $id
      */
     public function edit($activityId, $evaluationId)
     {
+        if(\Gate::allows('read-only'))
+            abort(403);
+
         $evaluation = Evaluation::with('activity')
             ->find($evaluationId);
 
@@ -137,6 +150,9 @@ class EvaluationController extends AdminController
      */
     public function update(Request $request, $activityId, $evaluationId)
     {
+        if(\Gate::allows('read-only'))
+            abort(403);
+
         $evaluation = Evaluation::find($evaluationId);
         $evaluation->issue = $request->get('issue');
         $evaluation->solutions = $request->get('solutions');
@@ -154,11 +170,16 @@ class EvaluationController extends AdminController
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param $activityId
+     * @param $evaluationId
      * @return \Illuminate\Http\Response
+     * @internal param int $id
      */
     public function destroy($activityId, $evaluationId)
     {
+        if(\Gate::allows('read-only'))
+            abort(403);
+
         return (int) Evaluation::destroy($evaluationId);
     }
 

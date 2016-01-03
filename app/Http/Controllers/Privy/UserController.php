@@ -26,6 +26,8 @@ class UserController extends AdminController
         if (\Gate::denies('read-user', $this->authUser))
             abort(403);
 
+
+
         $roles = [];
         foreach (Role::all() as $role) {
             $roles[$role->id] = $role->name;
@@ -44,6 +46,9 @@ class UserController extends AdminController
     public function store(Request $request)
     {
         if (\Gate::denies('create-user', $this->authUser))
+            abort(403);
+
+        if(\Gate::allows('read-only'))
             abort(403);
 
         $this->validate($request, [
@@ -71,6 +76,9 @@ class UserController extends AdminController
     public function edit($id)
     {
         if (\Gate::denies('read-user', $this->authUser))
+            abort(403);
+
+        if(\Gate::allows('read-only'))
             abort(403);
 
         $user = User::find($id);//->with('roles');
@@ -103,6 +111,9 @@ class UserController extends AdminController
         if (\Gate::denies('update-user', $this->authUser))
             abort(403);
 
+        if(\Gate::allows('read-only'))
+            abort(403);
+
         $this->validate($request, [
             'username'  => 'required',
             'email'     => 'required',
@@ -128,6 +139,9 @@ class UserController extends AdminController
     public function destroy($id)
     {
         if (\Gate::denies('delete-user', $this->authUser))
+            abort(403);
+
+        if(\Gate::allows('read-only'))
             abort(403);
 
         return (int) User::destroy($id);

@@ -20,7 +20,8 @@
 
                     <div class="panel-body">
                         <div class="row">
-                            <div class="col-md-8">
+
+                            <div class="@can('read-only') col-md-12 @else col-md-8 @endcan">
                                 <table class="table table-striped table-condensed">
                                     <tr>
                                         <th>Id</th>
@@ -49,9 +50,15 @@
                                         @endforeach
                                     </ul>
                                 @else
+                                    @can('read-only')
+                                    <i>Tidak ada dokumen</i>
+                                    @else
                                     <i>Tidak ada dokumen, silahkan klik tombol "Upload dokumen" untuk upload dokumen baru</i>
+                                    @endcan
                                 @endif
                             </div>
+
+                            @if(!Gate::check('read-only'))
                             <div class="col-md-4">
                                 <a href="{{route('pk.export', [$agreement->id])}}" class="btn btn-success" target="_blank">
                                     <i class="fa fa-file-excel-o"></i> Export
@@ -60,6 +67,8 @@
                                     <i class="fa fa-file-text-o"></i> Upload dokumen
                                 </button>
                             </div>
+                            @endif
+
                         </div>
                     </div>
                 </div>

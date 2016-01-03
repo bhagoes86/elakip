@@ -24,6 +24,7 @@ class PhysicAchievementController extends AdminController
     /**
      * Display a listing of the resource.
      *
+     * @param $goalId
      * @return \Illuminate\Http\Response
      */
     public function index($goalId)
@@ -92,6 +93,9 @@ class PhysicAchievementController extends AdminController
      */
     public function store(Request $request, $goalId)
     {
+        if(\Gate::allows('read-only'))
+            abort(403);
+
         $this->validate($request, [
             'plan'          => 'integer',
             'realization'   => 'integer'
@@ -330,6 +334,9 @@ class PhysicAchievementController extends AdminController
      */
     public function postDocument($goalId, $achievementId, Request $request)
     {
+        if(\Gate::allows('read-only'))
+            abort(403);
+
         $achievement = Achievement::find($achievementId);
         $achievement->media()->attach($request->get('mediaId'));
         return $achievement->media;
@@ -340,6 +347,7 @@ class PhysicAchievementController extends AdminController
      * todo: replace it with database trigger someday
      *
      * @author Fathur Rohman <fathur@dragoncapital.center>
+     * @param $id
      */
     protected function isAchievementExist($id)
     {

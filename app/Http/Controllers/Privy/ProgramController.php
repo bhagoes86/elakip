@@ -39,6 +39,9 @@ class ProgramController extends AdminController
      */
     public function store(Request $request, $planId)
     {
+        if(\Gate::allows('read-only'))
+            abort(403);
+
         $this->validate($request, $this->roles);
 
         $plan = Plan::find($planId);
@@ -57,6 +60,9 @@ class ProgramController extends AdminController
      */
     public function edit($planId, $id)
     {
+        if(\Gate::allows('read-only'))
+            abort(403);
+
         $program = Program::with('plan')
             ->find($id);
 
@@ -73,6 +79,9 @@ class ProgramController extends AdminController
      */
     public function update(Request $request, $planId, $id)
     {
+        if(\Gate::allows('read-only'))
+            abort(403);
+
         $this->validate($request, $this->roles);
 
         $program = Program::find($id);
@@ -83,11 +92,15 @@ class ProgramController extends AdminController
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param $planId
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($planId, $id)
     {
+        if(\Gate::allows('read-only'))
+            abort(403);
+
         return (int) Program::destroy($id);
     }
 

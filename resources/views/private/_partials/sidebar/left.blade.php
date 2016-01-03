@@ -55,7 +55,10 @@ START @SIDEBAR LEFT
                 <span class="arrow"></span>
             </a>
             <ul>
+                @if(!Gate::check('read-only'))
                 <li><a href="{{route('pk.create')}}">Buat baru</a></li>
+                @endif
+
                 <li><a href="{{route('pk.index')}}">Daftar perjanjian kinerja</a></li>
                 <li><a href="{{route('pk.index')}}">Tanpa PK</a></li>
             </ul>

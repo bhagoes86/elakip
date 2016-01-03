@@ -13,9 +13,11 @@
                     <i class="fa fa-arrow-left"></i> Back
                 </a>
 
+                @if(!Gate::check('read-only'))
                 <a href="{{route('kegiatan.evaluasi.create', [$activity->id])}}?agreement={{$agreement->id}}" class="btn btn-success">
                     <i class="fa fa-plus"></i> New
                 </a>
+                @endif
             </div>
         </div>
 
@@ -77,7 +79,10 @@
                             <tr>
                                 <th>Kendala</th>
                                 <th>Solusi</th>
+
+                                @if(!Gate::check('read-only'))
                                 <th>Action</th>
+                                @endif
                             </tr>
                             </thead>
                         </table>
@@ -119,7 +124,10 @@
                 columns: [
                     {data:'issue',name:'issue'},
                     {data:'solutions',name:'solutions'},
+
+                    @if(!Gate::check('read-only'))
                     {data:'action',name:'action',orderable:false,searchable:false}
+                    @endif
                 ]
             });
         });

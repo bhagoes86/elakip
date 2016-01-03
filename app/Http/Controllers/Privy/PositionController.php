@@ -65,6 +65,9 @@ class PositionController extends AdminController
      */
     public function store(Request $request)
     {
+        if(\Gate::allows('read-only'))
+            abort(403);
+
         $this->validate($request, $this->roles);
 
         return Position::create([
@@ -94,6 +97,9 @@ class PositionController extends AdminController
      */
     public function edit($id)
     {
+        if(\Gate::allows('read-only'))
+            abort(403);
+
         $position = Position::find($id);
 
         return view('private.position.edit')
@@ -109,6 +115,9 @@ class PositionController extends AdminController
      */
     public function update(Request $request, $id)
     {
+        if(\Gate::allows('read-only'))
+            abort(403);
+
         $this->validate($request, $this->roles);
 
     }
@@ -121,6 +130,9 @@ class PositionController extends AdminController
      */
     public function destroy($id)
     {
+        if(\Gate::allows('read-only'))
+            abort(403);
+
         return (int) Position::destroy($id);
     }
 

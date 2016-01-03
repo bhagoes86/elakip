@@ -16,6 +16,9 @@ class TargetController extends AdminController
     /**
      * Display a listing of the resource.
      *
+     * @param $planId
+     * @param $programId
+     * @param $activityId
      * @return \Illuminate\Http\Response
      */
     public function index($planId, $programId, $activityId)
@@ -56,6 +59,9 @@ class TargetController extends AdminController
      */
     public function store(Request $request, $planId, $programId, $activityId)
     {
+        if(\Gate::allows('read-only'))
+            abort(403);
+
         $target = Target::create([
             'type'      => 'activity',
             'type_id'   => $activityId,
@@ -84,6 +90,9 @@ class TargetController extends AdminController
      */
     public function edit($planId, $programId, $activityId, $targetId)
     {
+        if(\Gate::allows('read-only'))
+            abort(403);
+
         $target = Target::find($targetId);
         return view('private.target.edit')
             ->with('id', [
@@ -104,6 +113,9 @@ class TargetController extends AdminController
      */
     public function update(Request $request, $planId, $programId, $activityId, $targetId)
     {
+        if(\Gate::allows('read-only'))
+            abort(403);
+
         $target = Target::find($targetId);
         $target->name = $request->get('name');
         return (int) $target->save();
@@ -112,11 +124,18 @@ class TargetController extends AdminController
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param $planId
+     * @param $programId
+     * @param $activityId
+     * @param $targetId
      * @return \Illuminate\Http\Response
+     * @internal param int $id
      */
     public function destroy($planId, $programId, $activityId, $targetId)
     {
+        if(\Gate::allows('read-only'))
+            abort(403);
+
         return (int) Target::destroy($targetId);
     }
 

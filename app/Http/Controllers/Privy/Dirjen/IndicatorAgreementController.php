@@ -31,6 +31,9 @@ class IndicatorAgreementController extends AdminController
 
     public function edit($agreementId, $programId, $targetId, $indicatorId)
     {
+        if(\Gate::allows('read-only'))
+            abort(403);
+
         $agreement = Agreement::find($agreementId);
 
         $goal = Goal::with('indicator')->where('year', $agreement->year)
@@ -58,6 +61,9 @@ class IndicatorAgreementController extends AdminController
 
     public function update(Request $request, $agreementId, $programId, $targetId, $indicatorId)
     {
+        if(\Gate::allows('read-only'))
+            abort(403);
+
         $goal = Goal::where('year', Agreement::find($agreementId)->year)
             ->where('indicator_id', $indicatorId)
             ->first();

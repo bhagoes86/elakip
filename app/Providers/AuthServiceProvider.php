@@ -73,8 +73,15 @@ class AuthServiceProvider extends ServiceProvider
                 return true;
         });
 
+
         $gate->define('has-position', function($user) {
             if(count($user->positions) > 0)
+                return true;
+        });
+
+        // Route jika pimpinan, maka tidak bisa edit
+        $gate->define('read-only', function($user) {
+            if($user->role->name == 'Pimpinan')
                 return true;
         });
     }

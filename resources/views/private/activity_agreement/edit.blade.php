@@ -1,4 +1,6 @@
-{!! Form::model($activity, [
+@if(!Gate::check('read-only'))
+
+    {!! Form::model($activity, [
     'route' => ['pk.program.kegiatan.update',
         $id['agreement'],
         $id['program'],
@@ -11,23 +13,24 @@
     'data-modal-id' => $viewId
     ]) !!}
 
-<div class="alert-wrapper"></div>
+    <div class="alert-wrapper"></div>
 
-<div class="form-group">
-    <label for="pagu">Pagu</label>
-    {!! Form::text('pagu', $activity->budget->pagu, ['class'=>"form-control", 'placeholder'=>"Pagu", 'id'=>"pagu"]) !!}
+    <div class="form-group">
+        <label for="pagu">Pagu</label>
+        {!! Form::text('pagu', $activity->budget->pagu, ['class'=>"form-control", 'placeholder'=>"Pagu", 'id'=>"pagu"]) !!}
 
-</div>
+    </div>
 
-<button type="submit" class="btn btn-info btn-block btn-lg save">
-    <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Update
-</button>
+    <button type="submit" class="btn btn-info btn-block btn-lg save">
+        <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Update
+    </button>
 
-{!! Form::close() !!}
+    {!! Form::close() !!}
 
-<script>
-    "use strict";
+    <script>
+        "use strict";
 
-    updateForm();
+        updateForm();
 
-</script>
+    </script>
+@endif

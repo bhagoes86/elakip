@@ -16,6 +16,9 @@ class TargetAgreementController extends AdminController
     /**
      * Display a listing of the resource.
      *
+     * @param $agreementId
+     * @param $programId
+     * @param $activityId
      * @return \Illuminate\Http\Response
      */
     public function index($agreementId, $programId, $activityId)

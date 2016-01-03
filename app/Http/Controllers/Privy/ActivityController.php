@@ -58,6 +58,9 @@ class ActivityController extends AdminController
      */
     public function store(Request $request, $planId, $programId)
     {
+        if(\Gate::allows('read-only'))
+            abort(403);
+
         $program = Program::find($programId);
         $program->activities()->save(new Activity([
             'name'  => $request->get('name'),
@@ -109,6 +112,9 @@ class ActivityController extends AdminController
      */
     public function destroy($planId, $programId, $activityId)
     {
+        if(\Gate::allows('read-only'))
+            abort(403);
+
         return (int) Activity::destroy($activityId);
     }
 

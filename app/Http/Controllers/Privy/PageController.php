@@ -39,6 +39,9 @@ class PageController extends AdminController
      */
     public function edit($id)
     {
+        if(\Gate::allows('read-only'))
+            abort(403);
+
         $page = Page::find($id);
 
         if (\Gate::denies('update-page', $page))
@@ -68,6 +71,9 @@ class PageController extends AdminController
      */
     public function update(Request $request, $id)
     {
+        if(\Gate::allows('read-only'))
+            abort(403);
+
         $this->validate($request, [
             'title' => 'required'
         ]);

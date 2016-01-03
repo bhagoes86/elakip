@@ -6,11 +6,15 @@
     </div>
 
     <div class="body-content animated fadeIn">
+
+        @if(!Gate::check('read-only'))
         <div class="row mbot-15">
             <div class="col-md-12">
                 <a href="{{route('pk.create')}}" class="btn btn-success"><i class="fa fa-plus"></i> New</a>
             </div>
         </div>
+        @endif
+
         <div class="row">
 
             <div class="col-md-12">

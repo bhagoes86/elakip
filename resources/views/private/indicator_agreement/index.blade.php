@@ -79,7 +79,10 @@
                             <tr>
                                 <th>Indikator</th>
                                 <th>Target</th>
+
+                                @if(!Gate::check('read-only'))
                                 <th>Action</th>
+                                @endif
                             </tr>
                             </thead>
                         </table>
@@ -121,7 +124,10 @@
                 columns: [
                     {data:'name',name:'name'},
                     {data:'target',name:'target'},
+
+                    @if(!Gate::check('read-only'))
                     {data:'action',name:'action'}
+                    @endif
                 ]
             });
         });

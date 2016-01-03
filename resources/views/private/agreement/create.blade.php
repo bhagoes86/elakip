@@ -3,19 +3,6 @@
 @section('content')
     <div class="header-content">
         <h2><i class="fa fa-home"></i>Perjanjian Kinerja</h2>
-        {{--<div class="breadcrumb-wrapper hidden-xs">
-            <span class="label">You are here:</span>
-            <ol class="breadcrumb">
-                <li>
-                    <i class="fa fa-home"></i>
-                    <a href="#">Pengaturan</a>
-                    <i class="fa fa-angle-right"></i>
-                </li>
-                <li>
-                    Year
-                </li>
-            </ol>
-        </div>--}}
     </div>
 
     <div class="body-content animated fadeIn">
@@ -114,11 +101,6 @@
                 getUserInYear();
                 getDitjenInYear();
             });
-
-           /* $('#second_user').change(function () {
-                var unitId = $(this).find(':selected').data('unit-id');
-                $('#unit_id').val(unitId);
-            });*/
 
             $('#date_agreement').datepicker({
                 format: 'yyyy-mm-dd',

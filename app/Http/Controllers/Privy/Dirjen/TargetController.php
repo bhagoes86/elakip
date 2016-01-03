@@ -31,7 +31,7 @@ class TargetController extends AdminController
      */
     public function create()
     {
-        //
+
     }
 
 
@@ -44,6 +44,9 @@ class TargetController extends AdminController
      */
     public function store(Request $request, $planId, $programId)
     {
+        if(\Gate::allows('read-only'))
+            abort(403);
+
         $this->validate($request, $this->roles);
 
         $target = Target::create([
@@ -74,6 +77,9 @@ class TargetController extends AdminController
      */
     public function edit($planId, $programId, $targetId)
     {
+        if(\Gate::allows('read-only'))
+            abort(403);
+
         return view('private.target.program_edit')
             ->with('id', [
                 'plan'      => $planId,
@@ -91,6 +97,9 @@ class TargetController extends AdminController
      */
     public function update(Request $request, $planId, $programId, $targetId)
     {
+        if(\Gate::allows('read-only'))
+            abort(403);
+
         $this->validate($request, $this->roles);
 
         $target = Target::find($targetId);
@@ -106,6 +115,9 @@ class TargetController extends AdminController
      */
     public function destroy($planId, $programId, $targetId)
     {
+        if(\Gate::allows('read-only'))
+            abort(403);
+
         return (int) Target::destroy($targetId);
     }
 

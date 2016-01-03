@@ -19,6 +19,8 @@ class ActivityAgreementController extends AdminController
     /**
      * Display a listing of the resource.
      *
+     * @param $agreementId
+     * @param $programId
      * @return \Illuminate\Http\Response
      */
     public function index($agreementId, $programId)
@@ -58,6 +60,8 @@ class ActivityAgreementController extends AdminController
      */
     public function edit($agreementId, $programId, $activityId)
     {
+        if(\Gate::allows('read-only'))
+            abort(403);
 
         $agreement = Agreement::find($agreementId);
 
@@ -100,6 +104,9 @@ class ActivityAgreementController extends AdminController
      */
     public function update(Request $request, $agreementId, $programId, $activityId)
     {
+        if(\Gate::allows('read-only'))
+            abort(403);
+
         $agreement = Agreement::find($agreementId);
         $activity = Activity::with([
             'budget'    => function ($query) use ($agreement) {

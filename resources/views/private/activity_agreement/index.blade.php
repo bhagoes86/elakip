@@ -65,7 +65,10 @@
                                 <th>Unit</th>
                                 <th>Kegiatan</th>
                                 <th>Pagu</th>
+
+                                @if(!Gate::check('read-only'))
                                 <th>Action</th>
+                                @endif
                             </tr>
                             </thead>
                         </table>
@@ -106,7 +109,10 @@
                     {data:'unit.name',name:'unit.name'},
                     {data:'name',name:'name'},
                     {data:'pagu',name:'pagu'},
+
+                    @if(!Gate::check('read-only'))
                     {data:'action',name:'action'},
+                    @endif
                 ]
             });
         });
