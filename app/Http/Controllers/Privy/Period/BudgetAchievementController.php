@@ -7,6 +7,7 @@ use App\Models\Activity;
 use App\Models\Budget;
 use App\Models\Plan;
 use App\Models\Program;
+use App\Models\Target;
 use App\Models\Unit;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
@@ -28,11 +29,9 @@ class BudgetAchievementController extends AdminController
             $units[$unit->id]   = $unit->name;
         }
 
-
         return view('private.budget_achievement.filter')
             ->with('plans', $plans)
-            ->with('units', $units)
-            ->with('years', $this->years);
+            ->with('units', $units);
     }
 
     public function getChart()
@@ -122,6 +121,24 @@ class BudgetAchievementController extends AdminController
         $options = '<option>-Select One-</option>';
         foreach ($activities as $activity) {
             $options .= '<option value="'.$activity->id.'">'. $activity->name. '</option>';
+        }
+
+        return $options;
+    }
+
+    public function getSelectTarget(Request $request)
+    {
+        $type   = $request->get('type');
+        $typeId = $request->get('typeId');
+
+        if($type == 'activity')
+            $targets = Target::activity($typeId)->get();
+        elseif($type == 'program')
+            $targets = Target::program($typeId)->get();
+
+        $options = '<option>-Select One-</option>';
+        foreach ($targets as $target) {
+            $options .= '<option value="'.$target->id.'">'. $target->name. '</option>';
         }
 
         return $options;

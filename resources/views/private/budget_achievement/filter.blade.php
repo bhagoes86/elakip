@@ -27,17 +27,6 @@
                                     'class' => 'form-control',
                                     'id'=>'plan']) !!}
                             </div>
-                            {{--<div class="form-group">
-                                <label for="year">Tahun</label>
-                                {!! Form::select('year', $years, null, [
-                                    'placeholder' => '-Select Year-',
-                                    'class' => 'form-control',
-                                    'id'=>'year']) !!}
-                            </div>--}}
-                            {{--<div class="form-group">
-                                <label for="agreement">Perjanjian kinerja</label>
-                                <select id="agreement" name="agreement" class="form-control"></select>
-                            </div>--}}
 
                             <div class="form-group">
                                 <label for="unit">Unit</label>

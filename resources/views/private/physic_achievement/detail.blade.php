@@ -27,41 +27,28 @@
                                     'class' => 'form-control',
                                     'id'=>'plan']) !!}
                             </div>
+
                             <div class="form-group">
-                                <label for="year">Tahun</label>
-                                {!! Form::select('year', $years, $id['year'], [
-                                    'placeholder' => '-Select Year-',
-                                    'class' => 'form-control',
-                                    'id'=>'year']) !!}
+                                <label for="unit">Unit</label>
+                                {!! Form::select('unit', $units, $id['unit'], ['class' => 'form-control','id'=> 'unit','placeholder' => '-Pilih Unit-']) !!}
                             </div>
-                            <div class="form-group">
-                                <label for="agreement">Perjanjian kinerja</label>
-                                {!! Form::select('agreement', $agreements, $id['agreement'], [
-                                    'placeholder' => '-Select Agreement-',
-                                    'class' => 'form-control',
-                                    'id'=>'agreement']) !!}
-                            </div>
+
                             <div class="form-group">
                                 <label for="program">Program</label>
-                                {!! Form::select('program', $programs, $id['program'], [
-                                   'placeholder' => '-Select Program-',
-                                   'class' => 'form-control',
-                                   'id'=>'program']) !!}
+                                {!! Form::select('program', $programs, $id['program'], ['class' => 'form-control','id'=> 'program','placeholder' => '-Pilih Program-']) !!}
+
 
                             </div>
                             <div class="form-group">
                                 <label for="activity">Kegiatan</label>
-                                {!! Form::select('activity', $activities, $id['activity'], [
-                                    'placeholder' => '-Select Activity-',
-                                    'class' => 'form-control',
-                                    'id'=>'activity']) !!}
+                                {!! Form::select('activity', $activities, $id['activity'], ['class' => 'form-control','id'=> 'activity','placeholder' => '-Pilih Kegiatan-']) !!}
+
+
                             </div>
                             <div class="form-group">
                                 <label for="target">Sasaran</label>
-                                {!! Form::select('target', $targets, $id['target'], [
-                                    'placeholder' => '-Select Target-',
-                                    'class' => 'form-control',
-                                    'id'=>'target']) !!}
+                                {!! Form::select('target', $targets, $id['target'], ['class' => 'form-control','id'=> 'target','placeholder' => '-Pilih Target-']) !!}
+
                             </div>
 
                             <button type="submit" class="btn btn-primary"> Load </button>

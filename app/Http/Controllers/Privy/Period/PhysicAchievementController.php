@@ -9,6 +9,7 @@ use App\Models\Goal;
 use App\Models\Plan;
 use App\Models\Program;
 use App\Models\Target;
+use App\Models\Unit;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 
@@ -28,9 +29,14 @@ class PhysicAchievementController extends AdminController
             $plans[$plan->id] = $plan->period->year_begin . ' - ' . $plan->period->year_end;
         }
 
+        $units = [];
+        foreach (Unit::all() as $unit) {
+            $units[$unit->id]   = $unit->name;
+        }
+
         return view('private.physic_achievement.filter')
             ->with('plans', $plans)
-            ->with('years', $this->years);
+            ->with('units', $units);
     }
 
 
@@ -47,6 +53,7 @@ class PhysicAchievementController extends AdminController
         $agreementId    = $request->get('agreement');
         $programId      = $request->get('program');
         $activityId     = $request->get('activity');
+        $unitId     = $request->get('unit');
 
         $selectedAgreement = Agreement::with([
                 'firstPosition' => function ($query) {
@@ -60,8 +67,12 @@ class PhysicAchievementController extends AdminController
             ->where('plan_id', $planId)
             ->get();
 
-        $selectedProgram    = Program::where('plan_id', $planId)->get();
-        $selectedActivity   = Activity::where('program_id', $programId)->get();
+        $plan               = Plan::with(['period'])->find($planId);
+
+        $selectedActivity   = Activity::where('program_id', $programId)
+                                ->where('unit_id', $unitId)
+                                ->get();
+
         $selectedTarget     = Target::activity($activityId)->get();
 
         $plans = [];
@@ -83,14 +94,20 @@ class PhysicAchievementController extends AdminController
                 ' (' . $item->secondPosition->unit->name . ')';
         }
 
-        foreach ($selectedProgram as $item)
-            $program_arr[$item->id] = $item->name;
+        foreach ($plan->programs as $program) {
+            $program_arr[$program->id] = $program->name;
+        }
 
         foreach ($selectedActivity as $item)
             $activity_arr[$item->id] = $item->name;
 
         foreach ($selectedTarget as $item)
             $target_arr[$item->id] = $item->name;
+
+        $unit_arr = [];
+        foreach (Unit::all() as $unit) {
+            $unit_arr[$unit->id] = $unit->name;
+        }
 
         $plan = Plan::with(['period'])
             ->find($planId);
@@ -118,6 +135,7 @@ class PhysicAchievementController extends AdminController
            ->with('id', [
                'plan'      => $planId,
                'year'      => $year,
+               'unit'      => $unitId,
                'agreement' => $agreementId,
                'program'   => $programId,
                'activity'  => $activityId,
@@ -130,7 +148,7 @@ class PhysicAchievementController extends AdminController
            ->with('programs', $program_arr) //ok
            ->with('activities', $activity_arr) //ok
            ->with('targets', $target_arr) //ok
-
+           ->with('units', $unit_arr)
            ->with('years', $this->years); //ok
     }
 

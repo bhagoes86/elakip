@@ -27,17 +27,12 @@
                                     'class' => 'form-control',
                                     'id'=>'plan']) !!}
                             </div>
+
                             <div class="form-group">
-                                <label for="year">Tahun</label>
-                                {!! Form::select('year', $years, null, [
-                                    'placeholder' => '-Select Year-',
-                                    'class' => 'form-control',
-                                    'id'=>'year']) !!}
+                                <label for="unit">Unit</label>
+                                {!! Form::select('unit', $units, null, ['class' => 'form-control','id'=> 'unit','placeholder' => '-Pilih Unit-']) !!}
                             </div>
-                            <div class="form-group">
-                                <label for="agreement">Perjanjian kinerja</label>
-                                <select id="agreement" name="agreement" class="form-control"></select>
-                            </div>
+
                             <div class="form-group">
                                 <label for="program">Program</label>
                                 <select id="program" name="program" class="form-control"></select>
@@ -83,40 +78,15 @@
         $(function() {
             "use strict";
 
-            var $yearFilter = $('#year-filter');
-
-
-            $yearFilter.change(function () {
-                var $this = $(this),
-                        value = $this.val();
-
-                table.ajax.reload();
-            });
-
-            $('#year').on('change', function () {
+            $('#plan').on('change', function () {
                 var $this = $(this);
 
-                $('#agreement').html('');
-                $('#program').html('');
+                $('#program').html('<option>..Loading..</option>');
                 $('#activity').html('');
                 $('#target').html('');
 
-                $.get('{{route('pk.select2')}}', {
-                    year: $this.find(':selected').val()
-                }, function (response) {
-                    $('#agreement').html(response);
-                })
-            });
-
-            $('#agreement').on('change', function () {
-                var $this = $(this);
-
-                $('#program').html('');
-                $('#activity').html('');
-                $('#target').html('');
-
-                $.get('{{route('program.select2')}}', {
-                    agreement: $this.find(':selected').val()
+                $.get('{{url('renstra/program/select2')}}', {
+                    plan: $this.find(':selected').val()
                 }, function (response) {
                     $('#program').html(response);
                 })
@@ -125,11 +95,12 @@
             $('#program').on('change', function () {
                 var $this = $(this);
 
-                $('#activity').html('');
+                $('#activity').html('<option>..Loading..</option>');
                 $('#target').html('');
 
-                $.get('{{route('kegiatan.select2')}}', {
-                    program: $this.find(':selected').val()
+                $.get('{{url('renstra/activity/select2')}}', {
+                    program: $this.find(':selected').val(),
+                    unit: $('#unit').find(':selected').val()
                 }, function (response) {
                     $('#activity').html(response);
                 })
@@ -138,15 +109,15 @@
             $('#activity').on('change', function () {
                 var $this = $(this);
 
-                $('#target').html('');
-                $.get('{{route('sasaran.select2')}}', {
-                    activity: $this.find(':selected').val()
+                $('#target').html('<option>..Loading..</option>');
+
+                $.get('{{url('renstra/target/select2')}}', {
+                    type: 'activity',
+                    typeId: $this.find(':selected').val()
                 }, function (response) {
                     $('#target').html(response);
                 })
             });
-
-
         });
     </script>
 @stop

@@ -142,6 +142,7 @@ Route::group([
 
     get('renstra/program/select2', ['uses' => 'Period\BudgetAchievementController@getSelectProgram']);
     get('renstra/activity/select2', ['uses' => 'Period\BudgetAchievementController@getSelectActivity']);
+    get('renstra/target/select2', ['uses' => 'Period\BudgetAchievementController@getSelectTarget']);
 
     get('kegiatan/evaluasi/filter', ['uses' => 'EvaluationController@getFilter', 'as' => 'kegiatan.evaluasi.filter']);
     get('kegiatan/evaluasi', ['uses' => 'EvaluationController@getActivity', 'as' => 'kegiatan.evaluasi']);
