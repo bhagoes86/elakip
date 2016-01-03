@@ -140,7 +140,12 @@ Route::group([
     get('capaian/renstra/anggaran/filter/activity', ['uses'  => 'Period\BudgetAchievementController@getActivity', 'as'    => 'capaian.renstra.anggaran.kegiatan']);
     get('capaian/renstra/anggaran/kegiatan/{kegiatan}/chart', ['uses'  => 'Period\BudgetAchievementController@getChart', 'as'    => 'capaian.renstra.anggaran.kegiatan.chart']);
 
-    resource('kegiatan.evaluasi', 'EvaluationController');
+    get('kegiatan/evaluasi/filter', ['uses' => 'EvaluationController@getFilter', 'as' => 'kegiatan.evaluasi.filter']);
+    get('kegiatan/evaluasi', ['uses' => 'EvaluationController@getActivity', 'as' => 'kegiatan.evaluasi']);
+    get('kegiatan/evaluasi/data', ['uses' => 'EvaluationController@getDataActivity', 'as' => 'kegiatan.evaluasi.data']);
+    get('evaluation/data', ['uses' => 'EvaluationController@data', 'as' => 'evaluasi.data']);
+    post('kegiatan/{kegiatan}/pk/{pk}/evaluasi', ['uses' => 'EvaluationController@store', 'as' =>'kegiatan.agreement.evaluasi.store']);
+    resource('kegiatan.evaluasi', 'EvaluationController', ['except' => ['store']]);
 });
 
 Route::get('/{slug}', ['uses' => 'Common\LandingController@page', 'as' => 'public.page']);
