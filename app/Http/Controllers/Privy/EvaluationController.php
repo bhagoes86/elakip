@@ -91,14 +91,15 @@ class EvaluationController extends AdminController
         $activity = Activity::find($activityId);
         $agreement = Agreement::find($agreementId);
 
-        $activity->evaluations()->save(new Evaluation([
+        $evaluation = $activity->evaluations()->save(new Evaluation([
             'year'  => $agreement->year,
             'issue' => $request->get('issue'),
             'solutions' => $request->get('solutions'),
         ]));
 
         //return \Redirect::('kegiatan.evaluasi.index', $activityId) . '?agreement='.$agreement->id;
-        return \Redirect::to('kegiatan/'.$activityId.'/evaluasi/create?agreement='.$agreement->id);
+        return \Redirect::to('kegiatan/'.$activityId.'/evaluasi/'.$evaluation->id.'/edit');
+
     }
 
     /**
@@ -118,9 +119,13 @@ class EvaluationController extends AdminController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($activityId, $evaluationId)
     {
-        //
+        $evaluation = Evaluation::with('activity')
+            ->find($evaluationId);
+
+        return view('private.evaluation.edit')
+            ->with('evaluation', $evaluation);
     }
 
     /**
@@ -130,9 +135,20 @@ class EvaluationController extends AdminController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $activityId, $evaluationId)
     {
-        //
+        $evaluation = Evaluation::find($evaluationId);
+        $evaluation->issue = $request->get('issue');
+        $evaluation->solutions = $request->get('solutions');
+        $evaluation->save();
+
+        //dd($evaluation->activity->program);
+        $agreement = Agreement::where('plan_id', $evaluation->activity->program->plan_id)
+            ->where('year', $evaluation->year)
+            ->first();
+
+        return \Redirect::to('kegiatan/'.$activityId.'/evaluasi/'.$evaluationId.'/edit');
+
     }
 
     /**
@@ -141,9 +157,9 @@ class EvaluationController extends AdminController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($activityId, $evaluationId)
     {
-        //
+        return (int) Evaluation::destroy($evaluationId);
     }
 
     public function getFilter(Request $request)
@@ -233,15 +249,15 @@ class EvaluationController extends AdminController
         return Datatables::of($activity->evaluations)
             ->addColumn('action', function($data) use ($activity) {
 
-                /*return view('private._partials.action.2')
+                return view('private._partials.action.2')
 
-                    ->with('edit_action', route('activity.evaluation.edit', [$activity->id, $data->id]))
+                    ->with('edit_action', route('kegiatan.evaluasi.edit', [$activity->id, $data->id]))
 
                     ->with('destroy_action', 'confirmDelete(this)')
                     ->with('destroy_data', 'data-table='.$this->identifier.'-datatables
                         data-token='.csrf_token().'
-                        data-url='.route('activity.evaluation.destroy', [$activity->id, $data->id]))
-                    ->render();*/
+                        data-url='.route('kegiatan.evaluasi.destroy', [$activity->id, $data->id]))
+                    ->render();
             })
             ->make(true);
     }
