@@ -132,9 +132,19 @@ class BudgetAchievementController extends AdminController
 
         // $selectedActivity = Activity::where('program_id', $programId)->get();
 
-        $program = Program::with(['activities' => function ($query) {
+        $program = Program::with(['activities' => function ($query) use ($agreementId) {
+
+            $agreement = Agreement::with([
+                'firstPosition' => function($query) {
+                    $query->with(['user','unit']);
+                }
+            ])->find($agreementId);
+
             $query->with('budget');
-        }])->find($programId);
+            $query->where('unit_id', $agreement->firstPosition->unit->id);
+        }])
+            ->where('plan_id', $planId)
+            ->find($programId);
 
         $agreement_arr = [];
         $program_arr = [];
@@ -154,7 +164,7 @@ class BudgetAchievementController extends AdminController
         /* foreach ($selectedActivity as $item)
             $activity_arr[$item->id] = $item->name;*/
 
-        // dd($program->toArray());
+        //dd($program->toArray());
 
 
         return view('private.budget.detail')

@@ -6,6 +6,7 @@ use App\Http\Controllers\Privy\AdminController;
 use App\Models\Activity;
 use App\Models\Agreement;
 use App\Models\Goal;
+use App\Models\Indicator;
 use App\Models\Plan;
 use App\Models\Program;
 use App\Models\Target;
@@ -153,12 +154,39 @@ class PhysicAchievementController extends AdminController
     }
 
     /**
+     * @param Request $request
      * @return \BladeView|bool|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      * @author Fathur Rohman <fathur@dragoncapital.center>
      */
-    public function getChart()
+    public function getChart(Request $request, $indicatorId)
     {
-        return view('private.physic_achievement.chart');
+
+        $goals = Goal::with(['achievements' => function($query) {
+            $query->orderBy('quarter', 'asc');
+        }])
+            ->whereBetween('year', [2015,2019])
+            ->where('indicator_id', $indicatorId)->get();
+
+        //dd($goals->toArray());
+
+        $year_holder = [];
+        $pagu_holder = [];
+        $real_holder = [];
+        foreach ($goals as $goal) {
+            array_push($year_holder, $goal->year);
+            array_push($pagu_holder, $goal->count);
+            array_push($real_holder, $goal->achievements[3]->realization);
+        }
+
+
+        $years = $year_holder;
+        $pagu = $pagu_holder;
+        $real = $real_holder;
+
+        return view('private.physic_achievement.chart')
+            ->with('years', json_encode($years))
+            ->with('pagu', json_encode($pagu))
+            ->with('real', json_encode($real));
     }
 
     /**
