@@ -53,7 +53,7 @@
                     <a href="{{route('public.page', 'tupoksi')}}">Tupoksi</a>
                 </li>
                 <li>
-                    <a href="{{route('public.page', 'renstra')}}">Renstra</a>
+                    <a href="{{route('public.page', 'rencana-strategis')}}">Renstra</a>
                 </li>
                 <li>
                     <a href="{{route('public.page', 'regulasi')}}">Regulasi</a>

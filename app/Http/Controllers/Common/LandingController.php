@@ -18,7 +18,7 @@ class LandingController extends Controller
         return view('public.landing')
             ->with('intro', Page::findBySlug('intro'))
             ->with('tupoksi', Page::findBySlug('tupoksi'))
-            ->with('renstra', Page::findBySlug('renstra'))
+            ->with('renstra', Page::findBySlug('rencana-strategis'))
             ->with('regulasi', Page::findBySlug('regulasi'))
             ->with('lakip', Page::findBySlug('lakip'));
     }

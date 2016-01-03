@@ -23,7 +23,7 @@ class PageTableSeeder extends Seeder
         ]);
 
         Page::create([
-            'title'  => 'Renstra',
+            'title'  => 'Rencana Strategis',
             'content' => ''
         ]);
 
