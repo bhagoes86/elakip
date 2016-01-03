@@ -34,9 +34,27 @@ class BudgetAchievementController extends AdminController
             ->with('units', $units);
     }
 
-    public function getChart()
+    public function getChart(Request $request, $activityId)
     {
-        return view('private.budget_achievement.chart');
+        $budgets = Budget::whereBetween('year', [2015,2019])
+            ->where('activity_id', $activityId)
+            ->get();
+
+
+        $years = [];
+        $pagu = [];
+        $real = [];
+
+        foreach ($budgets as $budget) {
+            array_push($years, $budget->year);
+            array_push($pagu, $budget->pagu);
+            array_push($real, $budget->realization);
+        }
+
+        return view('private.budget_achievement.chart')
+            ->with('years', json_encode($years))
+            ->with('pagu', json_encode($pagu))
+            ->with('real', json_encode($real));
 
     }
 

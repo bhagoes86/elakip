@@ -170,22 +170,22 @@ class PhysicAchievementController extends AdminController
         //dd($goals->toArray());
 
         $year_holder = [];
-        $pagu_holder = [];
+        $count_holder = [];
         $real_holder = [];
         foreach ($goals as $goal) {
             array_push($year_holder, $goal->year);
-            array_push($pagu_holder, $goal->count);
+            array_push($count_holder, $goal->count);
             array_push($real_holder, $goal->achievements[3]->realization);
         }
 
 
         $years = $year_holder;
-        $pagu = $pagu_holder;
+        $count = $count_holder;
         $real = $real_holder;
 
         return view('private.physic_achievement.chart')
             ->with('years', json_encode($years))
-            ->with('pagu', json_encode($pagu))
+            ->with('count', json_encode($count))
             ->with('real', json_encode($real));
     }
 

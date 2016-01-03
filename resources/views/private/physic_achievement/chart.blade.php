@@ -35,7 +35,7 @@
         },
         series: [{
             name: 'Pagu',
-            data: {!! $pagu !!}
+            data: {!! $count !!}
         }, {
             name: 'Realisasi',
             data: {!! $real !!}

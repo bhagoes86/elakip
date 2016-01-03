@@ -66,8 +66,8 @@
                                 <button class="btn btn-xs btn-primary btn-chart"
                                         onclick="showEdit(this)"
                                         data-modal-id="{{$viewId}}"
-                                        data-url="{{route('capaian.renstra.fisik.indicator.chart', 1)}}"
-                                        data-title="xx">
+                                        data-url="{{route('capaian.renstra.anggaran.kegiatan.chart', $activity['id'])}}"
+                                        data-title="{{$activity['name']}}">
 
                                     <i class="fa fa-bar-chart"></i>
                                 </button>

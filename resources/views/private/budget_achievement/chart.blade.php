@@ -6,11 +6,11 @@
             type: 'column'
         },
         title: {
-            text: 'Grafik Capaian Kinerja Kegiatan Fisik 2015-2019'
+            text: 'Grafik Capaian Anggaran 2015-2019'
         },
 
         xAxis: {
-            categories: [2015,2016,2017,2018,2019],
+            categories: {!! $years !!},
             crosshair: true
         },
         yAxis: {
@@ -35,10 +35,10 @@
         },
         series: [{
             name: 'Pagu',
-            data: [65,34,56,23,46]
+            data: {!! $pagu !!}
         }, {
             name: 'Realisasi',
-            data: [5,78,45,23,34]
+            data: {!! $real !!}
 
         }],
         credits: {
