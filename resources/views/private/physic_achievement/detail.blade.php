@@ -83,56 +83,61 @@
                     </div>
 
                     <div class="panel-body">
+                        <div class="table-responsive">
                         <table class="table table-condensed table-bordered table-striped">
                             <thead>
-                                <tr>
-                                    <th rowspan="2">Indikator</th>
-                                    <th rowspan="2" class="text-center">Satuan</th>
+                            <tr>
+                                <th rowspan="2">Indikator</th>
+                                <th rowspan="2" class="text-center">Satuan</th>
 
-                                    <th colspan="{{($period->year_end - $period->year_begin)+2}}" class="text-center">Target</th>
-                                    <th colspan="{{($period->year_end - $period->year_begin)+2}}" class="text-center">Capaian</th>
-                                </tr>
-                                <tr>
-                                    @foreach($indicators as $indicator)
-                                        @foreach($indicator->goals as $goal)
-                                            <th class="text-center">{{$goal->year}}</th>
-                                        @endforeach
-                                    @endforeach
-                                    <th class="text-center"><b>Total</b></th>
+                                <th colspan="{{count($indicators['header']['years'])+1}}" class="text-center">Target</th>
+                                <th colspan="{{count($indicators['header']['years'])+1}}" class="text-center">Capaian</th>
+                            </tr>
+                            <tr>
+                                @foreach($indicators['header']['years'] as $year)
+                                    <th class="text-center">{{$year}}</th>
+                                @endforeach
+                                <th class="text-center"><b>Total</b></th>
 
-                                    @foreach($indicators as $indicator)
-                                        @foreach($indicator->goals as $goal)
-                                            <th class="text-center">{{$goal->year}}</th>
-                                        @endforeach
-                                    @endforeach
-                                    <th class="text-center"><b>Total</b></th>
+                                @foreach($indicators['header']['years'] as $year)
+                                    <th class="text-center">{{$year}}</th>
+                                @endforeach
+                                <th class="text-center"><b>Total</b></th>
 
-                                </tr>
+                            </tr>
 
                             </thead>
                             <tbody>
-                                @foreach($indicators as $indicator)
+                            @foreach($indicators['data'] as $indicator)
                                 <tr>
                                     <td>
-                                        <span>{{$indicator->name}}</span>
+                                        <span>{{$indicator['name']}}</span>
                                         <button class="btn btn-xs btn-primary btn-chart"
                                                 onclick="showEdit(this)"
                                                 data-modal-id="{{$viewId}}"
-                                                data-url="{{route('capaian.renstra.fisik.indicator.chart', $indicator->id)}}"
-                                                data-title="{{$indicator->name}}">
+                                                data-url="{{route('capaian.renstra.fisik.indicator.chart', $indicator['id'])}}"
+                                                data-title="{{$indicator['name']}}">
 
                                             <i class="fa fa-bar-chart"></i>
                                         </button>
                                     </td>
-                                    <td>{{$indicator->unit}}</td>
+                                    <td>{{$indicator['unit']}}</td>
 
-                                    @foreach($indicator->goals as $goal)
-                                    <td>{{$goal->count}}</td>
+                                    @foreach($indicator['goal']['years'] as $year => $value)
+                                        <td>{{$year}}: {{$value}}</td>
                                     @endforeach
+                                    <td>{{$indicator['goal']['total']}}</td>
+
+                                    @foreach($indicator['achievement']['years'] as $year => $value)
+                                        <td>{{$year}}: {{$value}}</td>
+                                    @endforeach
+                                    <td>{{$indicator['achievement']['total']}}</td>
+
                                 </tr>
-                                @endforeach
+                            @endforeach
                             </tbody>
                         </table>
+                        </div>
                     </div>
                 </div>
             </div>

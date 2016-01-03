@@ -9,6 +9,7 @@ use App\Models\Goal;
 use App\Models\Plan;
 use App\Models\Program;
 use App\Models\Target;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -32,6 +33,7 @@ class PhysicAchievementController extends AdminController
             ->with('years', $this->years);
     }
 
+
     /**
      * @param Request $request
      * @return mixed
@@ -39,12 +41,12 @@ class PhysicAchievementController extends AdminController
      */
     public function getIndicator(Request $request)
     {
-        $planId = $request->get('plan'); // renstra
-        $year = $request->get('year');
-        $targetId = $request->get('target');
-        $agreementId = $request->get('agreement');
-        $programId = $request->get('program');
-        $activityId = $request->get('activity');
+        $planId         = $request->get('plan'); // renstra
+        $year           = $request->get('year');
+        $targetId       = $request->get('target');
+        $agreementId    = $request->get('agreement');
+        $programId      = $request->get('program');
+        $activityId     = $request->get('activity');
 
         $selectedAgreement = Agreement::with([
                 'firstPosition' => function ($query) {
@@ -57,9 +59,10 @@ class PhysicAchievementController extends AdminController
             ->where('year', $year)
             ->where('plan_id', $planId)
             ->get();
-        $selectedProgram = Program::where('plan_id', $planId)->get();
-        $selectedActivity = Activity::where('program_id', $programId)->get();
-        $selectedTarget = Target::activity($activityId)->get();
+
+        $selectedProgram    = Program::where('plan_id', $planId)->get();
+        $selectedActivity   = Activity::where('program_id', $programId)->get();
+        $selectedTarget     = Target::activity($activityId)->get();
 
         $plans = [];
         foreach (Plan::with('period')->get() as $plan) {
@@ -71,7 +74,6 @@ class PhysicAchievementController extends AdminController
         $program_arr = [];
         $activity_arr = [];
         $target_arr = [];
-
 
         foreach ($selectedAgreement as $item) {
 
@@ -106,10 +108,11 @@ class PhysicAchievementController extends AdminController
         ])
             ->find($targetId);
 
-        //dd($target->toArray());
+        //dd($target->indicators);
 
+        $indicators = $this->reformatIndicators($target->indicators);
 
-        //dd($plan->period->toArray());
+        //dd($indicators);
 
        return view('private.physic_achievement.detail')
            ->with('id', [
@@ -120,15 +123,15 @@ class PhysicAchievementController extends AdminController
                'activity'  => $activityId,
                'target'  => $targetId,
            ])
-           ->with('plans', $plans)
-           ->with('period', $plan->period)
-           ->with('indicators', $target->indicators)
-           ->with('agreements', $agreement_arr)
-           ->with('programs', $program_arr)
-           ->with('activities', $activity_arr)
-           ->with('targets', $target_arr)
+           ->with('plans', $plans) //ok
+           // ->with('period', $plan->period)
+           ->with('indicators', $indicators)
+           ->with('agreements', $agreement_arr) //ok
+           ->with('programs', $program_arr) //ok
+           ->with('activities', $activity_arr) //ok
+           ->with('targets', $target_arr) //ok
 
-           ->with('years', $this->years);
+           ->with('years', $this->years); //ok
     }
 
     /**
@@ -138,5 +141,87 @@ class PhysicAchievementController extends AdminController
     public function getChart()
     {
         return view('private.physic_achievement.chart');
+    }
+
+    /**
+     * @param Collection $indicators
+     * @author Fathur Rohman <fathur@dragoncapital.center>
+     * @return array
+     */
+    protected function reformatIndicators(Collection $indicators)
+    {
+        //dd($indicators->toArray());
+
+        /* $indicatorsBucket = [
+            'header'    => [
+                'years'     => [2015, 2016]
+            ],
+            'data'      => [
+                "id" => 5,
+                "target_id" => 7,
+                "name" => "Jumlah laporan pengembanngan organiasi, tata laksana dan reformasi birokrasi",
+                "unit" => "laporan",
+                "location" => "",
+                "created_at" => "2016-01-03 03:18:41",
+                "updated_at" => "2016-01-03 03:18:41",
+                'goal'          => [
+                    'years' => [
+                        2015    => 34,
+                        2016    => 87
+                    ]
+                ],
+                'achievement'   => [
+                    'years' => [
+                        2015    => 34,
+                        2016    => 87
+                    ]
+                ],
+            ]
+        ];*/
+
+        $indicatorsBucket = [
+            'header'    => [],
+            'data'      => []
+        ];
+
+        $header_years = [];
+
+        foreach ($indicators as $indicator) {
+            $data = [];
+
+            foreach ($indicator->toArray() as $key => $val) {
+
+                if($key != 'goals')
+                    $data[$key] = $val;
+
+                else {
+                    $yearGoalHolder = [];
+                    $yearAchHolder = [];
+                    $totalGoalHolder = 0;
+                    $totalAchHolder = 0;
+                    foreach ($val as $goal) {
+                        $yearGoalHolder[$goal['year']] = $goal['count'];
+                        $yearAchHolder[$goal['year']] = $goal['achievements'][3]['realization']; // Ambil quarter 4 saja
+
+                        $totalGoalHolder = $totalGoalHolder + $goal['count'];
+                        $totalAchHolder = $totalAchHolder + $goal['achievements'][3]['realization']; // Ambil quarter 4 saja
+                        array_push($header_years, $goal['year']);
+                    }
+                    $data['goal']['years'] = $yearGoalHolder;
+                    $data['achievement']['years'] = $yearAchHolder;
+                    $data['goal']['total']  = $totalGoalHolder;
+                    $data['achievement']['total']  = $totalAchHolder;
+
+
+                }
+            }
+
+            array_push($indicatorsBucket['data'], $data);
+
+        }
+        $indicatorsBucket['header']['years'] = array_unique($header_years);
+
+        return $indicatorsBucket;
+
     }
 }
