@@ -150,7 +150,7 @@
                 },
                 columns: [
                     {data:'name',name:'name'},
-                    {data:'goals.0.count',name:'goals.0.count'},
+                    {data:'first_goal_count',name:'first_goal_count'},
                     {data:'unit',name:'unit'}
                 ]
             });

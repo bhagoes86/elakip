@@ -232,6 +232,7 @@ class PhysicAchievementController extends AdminController
      */
     public function getIndicatorData(Request $request)
     {
+        $planId = $request->get('plan');
         $year  = $request->get('year');
         $programId  = $request->get('program');
         $agreementId = $request->get('agreement');
@@ -248,8 +249,20 @@ class PhysicAchievementController extends AdminController
 
         return Datatables::of($target->indicators)
             ->editColumn('name', function ($data) {
-                return '<a href="'.url('capaian/fisik/goal/'.$data->goals[0]->id.'/achievement').'">'.$data->name.'</a>';
-                //return '<a href="#">'.$data->name.'</a>';
+                if (isset($data->goals[0])) {
+                    $goalId = $data->goals[0]->id;
+                    return '<a href="'.url('capaian/fisik/goal/'.$goalId.'/achievement').'">'.$data->name.'</a>';
+
+                } else {
+                    return $data->name;
+                }
+            })
+            ->addColumn('first_goal_count', function($data) {
+                if (isset($data->goals[0]))
+                    return $data->goals[0]->count;
+                else
+                    return '-';
+
             })
             ->make(true);
     }

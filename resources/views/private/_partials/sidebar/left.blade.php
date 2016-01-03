@@ -57,6 +57,7 @@ START @SIDEBAR LEFT
             <ul>
                 <li><a href="{{route('pk.create')}}">Buat baru</a></li>
                 <li><a href="{{route('pk.index')}}">Daftar perjanjian kinerja</a></li>
+                <li><a href="{{route('pk.index')}}">Tanpa PK</a></li>
             </ul>
         </li>
 
