@@ -150,34 +150,7 @@ class PhysicAchievementController extends AdminController
      */
     protected function reformatIndicators(Collection $indicators)
     {
-        //dd($indicators->toArray());
-
-        /* $indicatorsBucket = [
-            'header'    => [
-                'years'     => [2015, 2016]
-            ],
-            'data'      => [
-                "id" => 5,
-                "target_id" => 7,
-                "name" => "Jumlah laporan pengembanngan organiasi, tata laksana dan reformasi birokrasi",
-                "unit" => "laporan",
-                "location" => "",
-                "created_at" => "2016-01-03 03:18:41",
-                "updated_at" => "2016-01-03 03:18:41",
-                'goal'          => [
-                    'years' => [
-                        2015    => 34,
-                        2016    => 87
-                    ]
-                ],
-                'achievement'   => [
-                    'years' => [
-                        2015    => 34,
-                        2016    => 87
-                    ]
-                ],
-            ]
-        ];*/
+       
 
         $indicatorsBucket = [
             'header'    => [],
