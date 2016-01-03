@@ -140,6 +140,9 @@ Route::group([
     get('capaian/renstra/anggaran/filter/activity', ['uses'  => 'Period\BudgetAchievementController@getActivity', 'as'    => 'capaian.renstra.anggaran.kegiatan']);
     get('capaian/renstra/anggaran/kegiatan/{kegiatan}/chart', ['uses'  => 'Period\BudgetAchievementController@getChart', 'as'    => 'capaian.renstra.anggaran.kegiatan.chart']);
 
+    get('renstra/program/select2', ['uses' => 'Period\BudgetAchievementController@getSelectProgram']);
+    get('renstra/activity/select2', ['uses' => 'Period\BudgetAchievementController@getSelectActivity']);
+
     get('kegiatan/evaluasi/filter', ['uses' => 'EvaluationController@getFilter', 'as' => 'kegiatan.evaluasi.filter']);
     get('kegiatan/evaluasi', ['uses' => 'EvaluationController@getActivity', 'as' => 'kegiatan.evaluasi']);
     get('kegiatan/evaluasi/data', ['uses' => 'EvaluationController@getDataActivity', 'as' => 'kegiatan.evaluasi.data']);

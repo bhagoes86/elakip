@@ -22,28 +22,22 @@
                         <form action="{{route('capaian.renstra.anggaran.kegiatan')}}" method="get">
                             <div class="form-group">
                                 <label for="year">Rencana Strategis</label>
-                                {!! Form::select('plan', $plans, null, [
+                                {!! Form::select('plan', $plans, $id['plan'], [
                                     'placeholder' => '-Select Renstra-',
                                     'class' => 'form-control',
                                     'id'=>'plan']) !!}
                             </div>
+
                             <div class="form-group">
-                                <label for="year">Tahun</label>
-                                {!! Form::select('year', $years, null, [
-                                    'placeholder' => '-Select Year-',
-                                    'class' => 'form-control',
-                                    'id'=>'year']) !!}
+                                <label for="unit">Unit</label>
+                                {!! Form::select('unit', $units, $id['unit'], ['class' => 'form-control','id'=> 'unit','placeholder' => '-Pilih Unit-']) !!}
                             </div>
-                            <div class="form-group">
-                                <label for="agreement">Perjanjian kinerja</label>
-                                <select id="agreement" name="agreement" class="form-control"></select>
-                            </div>
+
                             <div class="form-group">
                                 <label for="program">Program</label>
-                                <select id="program" name="program" class="form-control"></select>
+                                {!! Form::select('program', $programs, $id['program'], ['class' => 'form-control','id'=> 'program','placeholder' => '-Pilih Program-']) !!}
 
                             </div>
-
 
                             <button type="submit" class="btn btn-primary"> Load </button>
                         </form>
@@ -145,49 +139,18 @@
         $(function() {
             "use strict";
 
-            var $yearFilter = $('#year-filter');
-
-
-            $yearFilter.change(function () {
-                var $this = $(this),
-                        value = $this.val();
-
-                table.ajax.reload();
-            });
-
-            $('#year').on('change', function () {
+            $('#plan').on('change', function () {
                 var $this = $(this);
 
-                $('#agreement').html('');
-                $('#program').html('');
+                $('#program').html('<option>..Loading..</option>');
                 $('#activity').html('');
-                $('#target').html('');
 
-                $.get('{{route('pk.select2')}}', {
-                    year: $this.find(':selected').val()
-                }, function (response) {
-                    $('#agreement').html(response);
-                })
-            });
-
-            $('#agreement').on('change', function () {
-                var $this = $(this);
-
-                $('#program').html('');
-                $('#activity').html('');
-                $('#target').html('');
-
-                $.get('{{route('program.select2')}}', {
-                    agreement: $this.find(':selected').val()
+                $.get('{{url('renstra/program/select2')}}', {
+                    plan: $('#plan').find(':selected').val()
                 }, function (response) {
                     $('#program').html(response);
                 })
             });
-
-
-
-
-
         });
     </script>
 @stop
