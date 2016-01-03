@@ -61,9 +61,15 @@
                 <li>
                     <a href="{{route('public.page', 'lakip')}}">e-Doc Lakip</a>
                 </li>
+                @if(Auth::check())
+                <li>
+                    <a href="{{url('dashboard')}}" class="btn btn-success btn-login">Dashboard</a>
+                </li>
+                @else
                 <li>
                     <a href="{{url('login')}}" class="btn btn-success btn-login">Login</a>
                 </li>
+                @endif
             </ul>
         </div>
     </div>
