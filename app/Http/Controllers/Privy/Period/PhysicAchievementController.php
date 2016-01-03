@@ -150,7 +150,7 @@ class PhysicAchievementController extends AdminController
      */
     protected function reformatIndicators(Collection $indicators)
     {
-       
+
 
         $indicatorsBucket = [
             'header'    => [],

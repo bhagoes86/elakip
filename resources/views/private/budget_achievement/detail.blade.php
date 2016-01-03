@@ -64,9 +64,11 @@
                     </div>
 
                     <div class="panel-body">
-                        <div class="item">
+                        @foreach($activities['data'] as $activity)
+                        <div class="row mbot-15 item">
+                            <div class="col-md-12">
                             <div class="mbot-15">
-                                <span>Kegiatan Satu</span>
+                                <span><strong>{{$activity['name']}}</strong></span>
                                 <button class="btn btn-xs btn-primary btn-chart"
                                         onclick="showEdit(this)"
                                         data-modal-id="{{$viewId}}"
@@ -76,48 +78,45 @@
                                     <i class="fa fa-bar-chart"></i>
                                 </button>
                             </div>
+
                             <div class="table-responsive">
                                 <table class="table table-condensed table-bordered table-striped">
 
                                     <thead>
                                         <tr>
-                                            <th colspan="{{($period->year_end - $period->year_begin)+2}}" class="text-center">Pagu</th>
-                                            <th colspan="{{($period->year_end - $period->year_begin)+2}}" class="text-center">Realisasi</th>
+                                            <th colspan="{{count($activities['header']['years'])}}" class="text-center">Pagu</th>
+                                            <th colspan="{{count($activities['header']['years'])}}" class="text-center">Realisasi</th>
                                         </tr>
                                         <tr>
-                                            @for($year = $period->year_begin; $year <= $period->year_end; $year++)
+                                            @foreach($activities['header']['years'] as $year)
                                                 <th class="text-center">{{$year}}</th>
-                                            @endfor
-                                                <th class="text-center"><strong>Total</strong></th>
-
-                                            @for($year = $period->year_begin; $year <= $period->year_end; $year++)
+                                            @endforeach
+                                           {{-- <th class="text-center"><b>Total</b></th>
+--}}
+                                            @foreach($activities['header']['years'] as $year)
                                                 <th class="text-center">{{$year}}</th>
-                                            @endfor
-                                                <th class="text-center"><strong>Total</strong></th>
+                                            @endforeach
+                                            {{--<th class="text-center"><b>Total</b></th>--}}
 
                                         </tr>
                                     </thead>
 
+
                                     <tbody>
                                         <tr>
-                                            <td>Rp.2.000.000.000.000</td>
-                                            <td>Rp.2.000.000.000.000</td>
-                                            <td>Rp.2.000.000.000.000</td>
-                                            <td>Rp.2.000.000.000.000</td>
-                                            <td>Rp.2.000.000.000.000</td>
-                                            <td>Rp.2.000.000.000.000</td>
-                                            <td>Rp.2.000.000.000.000</td>
-                                            <td>Rp.2.000.000.000.000</td>
-                                            <td>Rp.2.000.000.000.000</td>
-                                            <td>Rp.2.000.000.000.000</td>
-                                            <td>Rp.2.000.000.000.000</td>
-                                            <td>Rp.2.000.000.000.000</td>
+                                        @foreach($activity['budget']['pagu'] as $pagu)
+                                            <td>{{$pagu}}</td>
+                                        @endforeach
+                                        @foreach($activity['budget']['real'] as $real)
+                                            <td>{{$real}}</td>
+                                        @endforeach
                                         </tr>
-
                                     </tbody>
                                 </table>
                             </div>
+                            </div>
                         </div>
+                        @endforeach
                     </div>
                 </div>
             </div>
