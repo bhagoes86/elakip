@@ -77,13 +77,13 @@ START @SIDEBAR LEFT
             </ul>
         </li>
 
-        {{--<li>
-            <a href="{{route('evaluation.filter')}}">
+        <li>
+            <a href="{{route('kegiatan.evaluasi.filter')}}">
                 <span class="icon"><i class="fa fa-home"></i></span>
                 <span class="text">Evaluasi Kinerja</span>
 
             </a>
-        </li>--}}
+        </li>
 
         @can('read-user', null)
         <li class="submenu">
