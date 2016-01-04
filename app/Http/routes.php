@@ -33,6 +33,7 @@ Route::group([
     get('position/user/not:{year}', ['uses' => 'PositionController@getSelectUser', 'as' => 'position.user.year']);
     resource('position', 'PositionController');
 
+    Route::any('media/connector', ['uses' => 'MediaController@showConnector', 'as' => 'media.connector']);
     resource('media', 'MediaController');
 
     get('page/data', [
