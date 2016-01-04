@@ -87,19 +87,23 @@ class AuthServiceProvider extends ServiceProvider
                 return true;
         });
 
-        // Hanya dirjen saja yang bisa akses
+        // Hanya dirjen dan admin saja yang bisa akses
         $gate->define('dirjen', function($user) {
-            //if($user->role->id == 2) {
-                /*$position = Position::where('user_id', $user->id)
+            if($user->role->id == 1 || $user->role->id == 3) { // administrator atau pimpinan
+                return true;
+            }
+
+            if($user->role->id == 2) { // operator
+                $position = Position::where('user_id', $user->id)
                     ->where('year', Carbon::now()->year)
                     ->first();
 
                 if(count($position) == 1) {
-                    if ($position->unit_id == 1)
+                    if ($position->unit_id == 1) //Unit dirjen
                         return true;
-                }*/
+                }
 
-            //}
+            }
         });
     }
 }

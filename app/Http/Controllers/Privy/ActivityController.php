@@ -29,7 +29,7 @@ class ActivityController extends AdminController
         }])->find($programId);
 
         $units_arr = [];
-        foreach (Unit::all() as $unit) {
+        foreach (Unit::whereNotIn('id', [1])->get() as $unit) {
             $units_arr[$unit->id] = $unit->name;
         }
 

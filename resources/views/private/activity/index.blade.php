@@ -62,6 +62,11 @@
                         <div class="alert-wrapper"></div>
 
                         <div class="form-group">
+                            <label for="name">Unit</label>
+                            <div class="form-control">Direktorat Jenderal Penyediaan Perumahan</div>
+                        </div>
+
+                        <div class="form-group">
                             <label for="name">Nama sasaran</label>
                             <textarea name="name" id="name" placeholder="Nama sasaran program" class="form-control autosize"></textarea>
                         </div>
@@ -76,8 +81,7 @@
             </div>
             @endif
 
-
-                <div class="@can('read-only') col-md-12 @else col-md-8 @endcan">
+            <div class="@can('read-only') col-md-12 @else col-md-8 @endcan">
 
                 <div class="panel rounded shadow">
 
