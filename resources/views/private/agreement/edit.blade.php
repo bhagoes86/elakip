@@ -108,9 +108,9 @@
             });
         }
 
-        function getDitjenInYear()
+        function getFirstUserInYear()
         {
-            $.get('{{route('user.ditjen.year')}}', {
+            $.get('{{route('user.first.year')}}', {
                 year: $('#year').val()
             }, function(r) {
                 $('#first_user').html(r);
@@ -127,7 +127,7 @@
 
 
                 getUserInYear();
-                getDitjenInYear();
+                getFirstUserInYear();
 
             });
 

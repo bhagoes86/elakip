@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Auth\Passwords\CanResetPassword;
@@ -37,6 +38,8 @@ class User extends Model implements AuthenticatableContract,
      */
     protected $hidden = ['password', 'remember_token'];
 
+    protected $appends = ['current_position'];
+
     public function positions()
     {
         return $this->hasMany(Position::class);
@@ -45,5 +48,24 @@ class User extends Model implements AuthenticatableContract,
     public function role()
     {
         return $this->belongsTo(Role::class);
+    }
+
+    public function getCurrentPositionAttribute()
+    {
+        if(\Auth::check()) {
+
+            $position = Position::with(['unit'])
+                ->where('year', Carbon::now()->year)
+                ->where('user_id', \Auth::user()->id)
+                ->first();
+
+            return [
+                'unit_id'   => isset($position->unit) ? $position->unit->id : null,
+                'unit_name' => isset($position->unit) ? $position->unit->name : null
+            ];
+
+        } else {
+            return null;
+        }
     }
 }

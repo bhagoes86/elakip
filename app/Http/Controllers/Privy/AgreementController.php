@@ -109,10 +109,13 @@ class AgreementController extends AdminController
             $plans[$plan->id]   = $plan->period->year_begin .' - '. $plan->period->year_end;
         }
         $first_positions_arr = [];
-        $first_positions = Position::with(['user','unit'])
-            ->where('year', $agreement->year)
+        $first_positions = Position::with(['user','unit']);
+        $first_positions->where('year', $agreement->year);
+        if($this->authUser->role->id == 2) {
+            $first_positions->where('unit_id', $this->authUser->current_position['unit_id']);
+        }
             // ->where('unit_id', self::DITJEN_UNIT_ID)
-            ->get();
+        $first_positions = $first_positions->get();;
 
         foreach ($first_positions as $position) {
             $first_positions_arr[$position->id] = $position->user->name . ' ('.$position->position.' '.$position->year.' - '.$position->unit->name.')';

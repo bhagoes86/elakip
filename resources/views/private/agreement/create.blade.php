@@ -82,9 +82,9 @@
             });
         }
 
-        function getDitjenInYear()
+        function getFirstUserInYear()
         {
-            $.get('{{route('user.ditjen.year')}}', {
+            $.get('{{route('user.first.year')}}', {
                 year: $('#year').val()
             }, function(r) {
                 $('#first_user').html(r);
@@ -99,7 +99,7 @@
                 $('#second_user').html(loadingHtml);
 
                 getUserInYear();
-                getDitjenInYear();
+                getFirstUserInYear();
             });
 
             $('#date_agreement').datepicker({
@@ -108,7 +108,7 @@
             });
 
             getUserInYear();
-            getDitjenInYear();
+            getFirstUserInYear();
 
         });
     </script>

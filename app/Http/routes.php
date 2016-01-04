@@ -8,7 +8,7 @@ Route::get('logout', 'Auth\AuthController@getLogout');
 
 
 Route::group([
-    'middleware' => ['auth','operator.position'],
+    'middleware' => ['auth','position'],
     'namespace' => 'Privy'
 ], function () {
 
@@ -22,8 +22,8 @@ Route::group([
     put('user/password/{id}', ['uses' => 'UserController@putPassword', 'as' => 'user.password.update']);
     put('user/role/{id}', ['uses' => 'UserController@putRole', 'as' => 'user.role.update']);
     get('user/year', ['uses' => 'UserController@getUserInYear', 'as' => 'user.year']);
-    get('user/ditjen/year', ['uses' => 'UserController@getDitjenInYear', 'as' => 'user.ditjen.year']);
-    get('user/first/year', ['uses' => 'UserController@getDitjenInYear', 'as' => 'user.first.year']);
+    // get('user/ditjen/year', ['uses' => 'UserController@getDitjenInYear', 'as' => 'user.ditjen.year']);
+    get('user/first/year', ['uses' => 'UserController@getFirstUserInYear', 'as' => 'user.first.year']);
     resource('user', 'UserController');
 
     get('position/data', [

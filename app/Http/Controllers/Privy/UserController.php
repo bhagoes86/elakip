@@ -26,7 +26,7 @@ class UserController extends AdminController
         if (\Gate::denies('read-user', $this->authUser))
             abort(403);
 
-
+        // dd(User::find($this->authUser->id)->toArray());
 
         $roles = [];
         foreach (Role::all() as $role) {
@@ -245,6 +245,33 @@ class UserController extends AdminController
             ->where('year', $year)
             // ->where('unit_id', self::DITJEN_UNIT_ID)
             ->get();
+
+        $html = '<option>- Pilih satu -</option>';
+
+
+        foreach ($positions as $position) {
+            $html .= '<option value="'.$position->id.'">'.$position->user->name . ' (' . $position->position . ' ' . $position->year . ' - ' . $position->unit->name . ')'.'</option>';
+        }
+
+        return $html;
+    }
+
+    public function getFirstUserInYear(Request $request)
+    {
+        //dd($this->authUser->current_position['unit_id']);
+
+        $year = $request->get('year');
+
+        $positions = Position::with(['user','unit']);
+        $positions->where('year', $year);
+
+        if($this->authUser->role->id == 2) {
+            $positions->where('unit_id', $this->authUser->current_position['unit_id']);
+        }
+            // ->where('unit_id', self::DITJEN_UNIT_ID)
+        $positions = $positions->get();
+
+        //dd($positions);
 
         $html = '<option>- Pilih satu -</option>';
 

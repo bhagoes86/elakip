@@ -12,19 +12,17 @@
 
             <div class="col-md-12">
                 <div class="panel rounded shadow">
-
-                   {{-- <div class="panel-heading">
-                        <div class="pull-left">
-                            <h3 class="panel-title">Detail</h3>
-                        </div>
-                        <div class="clearfix"></div>
-                    </div>--}}
-
                     <div class="panel-body">
                         <span style="font-size: 40px;color:red;">
                             <i class="fa fa-exclamation-triangle"></i>
                         </span>
                         <h2>Maaf Anda tidak berwenang melihat halaman ini</h2>
+                        <div>
+                            <p>Coba cek beberapa hal berikut</p>
+                            <ul>
+                                <li>Apakah Anda sudah di assign jabatan pada tahun {{Carbon\Carbon::now()->year}} ini?</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
