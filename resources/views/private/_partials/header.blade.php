@@ -14,7 +14,7 @@
 
             <!-- Start brand -->
             <a id="tour-1" class="navbar-brand" href="dashboard.html">
-                <img class="logo" src="http://img.djavaui.com/?create=175x50,81B71A?f=ffffff" alt="brand logo">
+                <img class="logo" src="{{asset('img/logoPU.jpg')}}" alt="brand logo">
             </a><!-- /.navbar-brand -->
             <!--/ End brand -->
 

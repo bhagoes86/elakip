@@ -17,3 +17,8 @@
 textarea.autosize {
   resize: none;
 }
+
+.navbar-brand .logo {
+  height: 50px;
+  width: 54px;
+}
