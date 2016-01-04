@@ -139,7 +139,10 @@ class ActivityAgreementController extends AdminController
                     $query->where('year', $agreement->year);
                 }
             ]);
+
             $query->where('unit_id', $agreement->firstPosition->unit->id);
+            $query->inAgreement();
+
         }])
             ->find($programId);
 

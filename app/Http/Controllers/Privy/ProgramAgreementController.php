@@ -63,7 +63,6 @@ class ProgramAgreementController extends AdminController
 
         $plan = Plan::with(['programs' => function ($query) {
             $query->with(['activities' => function ($query) {
-
             }]);
         }])->find($agreement->plan_id);
 

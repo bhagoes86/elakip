@@ -64,7 +64,8 @@ class ActivityController extends AdminController
         $program = Program::find($programId);
         $program->activities()->save(new Activity([
             'name'  => $request->get('name'),
-            'unit_id'  => $request->get('unit_id')
+            'unit_id'  => $request->get('unit_id'),
+            'in_agreement' => $request->get('in_agreement') ? true : false
         ]));
 
         return $program->activities;
@@ -84,31 +85,64 @@ class ActivityController extends AdminController
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param $planId
+     * @param $programId
+     * @param $activityId
      * @return \Illuminate\Http\Response
+     * @internal param int $id
      */
-    public function edit($id)
+    public function edit($planId, $programId, $activityId)
     {
-        //
+        if(\Gate::allows('read-only'))
+            abort(403);
+
+        $activity = Activity::find($activityId);
+
+        $units_arr = [];
+        foreach (Unit::whereNotIn('id', [1])->get() as $unit) {
+            $units_arr[$unit->id] = $unit->name;
+        }
+
+        return view('private.activity.edit')
+            ->with('activity', $activity)
+            ->with('units', $units_arr)
+            ->with('id',[
+                'plan'      => $planId,
+                'program'   => $programId,
+                'activity'  => $activityId
+            ]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param $planId
+     * @param $programId
+     * @param $activityId
      * @return \Illuminate\Http\Response
+     * @internal param int $id
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $planId, $programId, $activityId)
     {
-        //
+        if(\Gate::allows('read-only'))
+            abort(403);
+
+        $activity = Activity::find($activityId);
+        $activity->name = $request->get('name');
+        $activity->unit_id = $request->get('unit_id');
+        $activity->in_agreement = $request->get('in_agreement') ? true : false;
+        return (int) $activity->save();
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param $planId
+     * @param $programId
+     * @param $activityId
      * @return \Illuminate\Http\Response
+     * @internal param int $id
      */
     public function destroy($planId, $programId, $activityId)
     {
@@ -140,6 +174,19 @@ class ActivityController extends AdminController
         return Datatables::of($program->activities)
             ->editColumn('name', function ($data) use ($planId, $programId) {
                 return '<a href="'.route('renstra.program.kegiatan.sasaran.index', [$planId, $programId, $data->id]).'">'.$data->name.'</a>';
+            })
+            ->editColumn('in_agreement', function($data) {
+                if($data->in_agreement) {
+                    $fa = 'fa-check';
+                    $color = '#81B71A';
+                }
+                else
+                {
+                    $fa = 'fa-times';
+                    $color = '#E9573F';
+                }
+
+                return '<span style="color: '.$color.'"><i class="fa '.$fa.'"></i></span>';
             })
             ->addColumn('action', function ($data) use ($programId, $planId) {
                 return view('private._partials.action.1')

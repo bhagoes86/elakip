@@ -151,6 +151,12 @@
                             <textarea name="name" id="name" placeholder="Nama sasaran program" class="form-control autosize"></textarea>
                         </div>
 
+                        <div class="checkbox">
+                            <label>
+                                {!! Form::checkbox('is_agreement', 1, true) !!} Perjanjian Kinerja
+                            </label>
+                        </div>
+
                         <button type="submit" class="btn btn-info btn-block btn-lg save">
                             <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Save
                         </button>
@@ -178,6 +184,7 @@
                             <tr>
                                 <th>Unit</th>
                                 <th>Kegiatan</th>
+                                <th>PK</th>
 
                                 @if(!Gate::check('read-only'))
                                 <th>Action</th>
@@ -243,6 +250,7 @@
                 columns: [
                     {data:'unit.name',name:'unit.name'},
                     {data:'name',name:'name'},
+                    {data:'in_agreement',name:'in_agreement',searchable:false},
 
                     @if(!Gate::check('read-only'))
                     {data:'action',name:'action', orderable:false, searchable:false}

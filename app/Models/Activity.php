@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Activity extends Model
 {
-    protected $fillable = ['program_id','unit_id','name'];
+    protected $fillable = ['program_id','unit_id','name','in_agreement'];
 
     public function evaluations()
     {
@@ -26,5 +26,10 @@ class Activity extends Model
     public function unit()
     {
         return $this->belongsTo(Unit::class);
+    }
+
+    public function scopeInAgreement($query)
+    {
+        return $query->where('in_agreement', true);
     }
 }

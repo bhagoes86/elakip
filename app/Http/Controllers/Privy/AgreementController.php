@@ -299,6 +299,7 @@ class AgreementController extends AdminController
             'programs'=> function($query) use ($agreement) {
                 $query->with(['activities' => function($query) use ($agreement) {
                     $query->with(['budget']);
+                    $query->inAgreement();
                     $query->where('unit_id', $agreement->firstPosition->unit->id);
                 }]);
             }
