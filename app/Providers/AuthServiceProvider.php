@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Models\Position;
+use Carbon\Carbon;
 use Illuminate\Contracts\Auth\Access\Gate as GateContract;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
@@ -83,6 +85,21 @@ class AuthServiceProvider extends ServiceProvider
         $gate->define('read-only', function($user) {
             if($user->role->name == 'Pimpinan')
                 return true;
+        });
+
+        // Hanya dirjen saja yang bisa akses
+        $gate->define('dirjen', function($user) {
+            //if($user->role->id == 2) {
+                /*$position = Position::where('user_id', $user->id)
+                    ->where('year', Carbon::now()->year)
+                    ->first();
+
+                if(count($position) == 1) {
+                    if ($position->unit_id == 1)
+                        return true;
+                }*/
+
+            //}
         });
     }
 }

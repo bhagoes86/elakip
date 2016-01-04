@@ -35,6 +35,8 @@
                 </div>
             </div>
         </div>
+
+        @if(Gate::check('dirjen'))
         <div class="row">
 
             @if(!Gate::check('read-only'))
@@ -105,6 +107,8 @@
         </div>
 
         <hr/>
+        @endif
+
         <div class="row">
 
             @if(!Gate::check('read-only'))
@@ -153,10 +157,9 @@
             </div>
             @endif
 
-                <div class="@can('read-only') col-md-12 @else col-md-8 @endcan">
+            <div class="@can('read-only') col-md-12 @else col-md-8 @endcan">
 
                 <div class="panel rounded shadow">
-
                     <div class="panel-heading">
                         <div class="pull-left">
                             <h3 class="panel-title">Daftar kegiatan program</h3>

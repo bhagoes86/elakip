@@ -9,7 +9,6 @@ use Datatables;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
-use App\Http\Controllers\Controller;
 
 class ActivityController extends AdminController
 {
@@ -38,6 +37,7 @@ class ActivityController extends AdminController
         return view('private.activity.index')
             ->with('program', $program)
             ->with('units', $units_arr);
+
     }
 
     /**

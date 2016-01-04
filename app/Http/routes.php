@@ -6,8 +6,9 @@ Route::get('login', 'Auth\AuthController@getLogin');
 Route::post('login', 'Auth\AuthController@postLogin');
 Route::get('logout', 'Auth\AuthController@getLogout');
 
+
 Route::group([
-    'middleware' => 'auth',
+    'middleware' => ['auth','operator.position'],
     'namespace' => 'Privy'
 ], function () {
 
@@ -22,6 +23,7 @@ Route::group([
     put('user/role/{id}', ['uses' => 'UserController@putRole', 'as' => 'user.role.update']);
     get('user/year', ['uses' => 'UserController@getUserInYear', 'as' => 'user.year']);
     get('user/ditjen/year', ['uses' => 'UserController@getDitjenInYear', 'as' => 'user.ditjen.year']);
+    get('user/first/year', ['uses' => 'UserController@getDitjenInYear', 'as' => 'user.first.year']);
     resource('user', 'UserController');
 
     get('position/data', [
@@ -150,6 +152,10 @@ Route::group([
     get('evaluation/data', ['uses' => 'EvaluationController@data', 'as' => 'evaluasi.data']);
     post('kegiatan/{kegiatan}/pk/{pk}/evaluasi', ['uses' => 'EvaluationController@store', 'as' =>'kegiatan.agreement.evaluasi.store']);
     resource('kegiatan.evaluasi', 'EvaluationController', ['except' => ['store']]);
+
 });
+
+Route::controller('error','Privy\ErrorController');
+
 
 Route::get('/{slug}', ['uses' => 'Common\LandingController@page', 'as' => 'public.page']);

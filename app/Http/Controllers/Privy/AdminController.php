@@ -6,7 +6,6 @@ namespace App\Http\Controllers\Privy;
 
 use App\Http\Controllers\Controller;
 use App\Models\Period;
-use App\Models\Role;
 use App\Models\User;
 use Carbon\Carbon;
 
@@ -20,25 +19,29 @@ class AdminController extends Controller {
     function __construct()
     {
 
+
         view()->share('viewId', $this->identifier);
 
         if(\Auth::check()) {
+
+
             $authenticatedUser = \Auth::user();
+
             $user = User::with([
                 'role',
-                'positions' => function($query) {
+                'positions' => function ($query) {
                     $query->with(['unit']);
                     $query->where('year', Carbon::now()->year);
                 }
             ])->find($authenticatedUser->id);
 
-            //dd($user->toArray());
 
             $this->authUser = $user;
-            view()->share('authUser', $user);
-        }
 
-        $this->setYear();
+            view()->share('authUser', $user);
+            $this->setYear();
+
+        }
 
         // if(!$this->hasAccess())
         //    abort(403);

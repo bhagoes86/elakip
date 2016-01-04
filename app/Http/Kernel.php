@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\OperatorPosition;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -29,5 +30,6 @@ class Kernel extends HttpKernel
         'auth' => \App\Http\Middleware\Authenticate::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
+        'operator.position' => OperatorPosition::class
     ];
 }
