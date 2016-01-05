@@ -34,7 +34,7 @@
             }
         },
         series: [{
-            name: 'Pagu',
+            name: 'Target',
             data: {!! $count !!}
         }, {
             name: 'Realisasi',
