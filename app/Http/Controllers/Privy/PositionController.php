@@ -101,8 +101,40 @@ class PositionController extends AdminController
             abort(403);
 
         $position = Position::find($id);
+        $periods = Period::where('year_begin', 2015)->first();
+
+
+        $years = [];
+        $begin = $periods->year_begin;
+        $end = $periods->year_end;
+        for($i=$begin; $i <= $end; $i++) {
+            $years[$i] = $i;
+        }
+
+        $unit_arr = [];
+        foreach (Unit::all() as $unit) {
+            $unit_arr[$unit->id]    = $unit->name;
+        }
+
+        // Mendapatkan semua user pada tahun $year yang belum diassign
+        // plus user yang sedang diedit
+        $userIds = Position::where('year', $position->year)->lists('user_id')->toArray();
+        if(($key = array_search($position->user_id, $userIds)) !== false) {
+            unset($userIds[$key]);
+        }
+
+        $users = User::whereNotIn('id', $userIds)->get();
+
+        $users_arr = [];
+        foreach($users as $user) {
+            $users_arr[$user->id]   = $user->name;
+        }
+
 
         return view('private.position.edit')
+            ->with('users', $users_arr)
+            ->with('years', $years)
+            ->with('units', $unit_arr)
             ->with('position', $position);
     }
 
@@ -168,15 +200,29 @@ class PositionController extends AdminController
 
     public function getSelectUser($year)
     {
-        $userIds = Position::where('year', $year)->lists('user_id');
-        $users = User::whereNotIn('id', $userIds)->get();
+        $users = $this->generateListUserOptionsNotInYear($year);
 
         $html = "";
 
+        /** @var TYPE_NAME $users */
         foreach ($users as $user) {
             $html .= "<option value='$user->id'>$user->name</option>";
         }
 
         return $html;
     }
+
+    /**
+     * @param $year
+     * @return string
+     * @author Fathur Rohman <fathur@dragoncapital.center>
+     */
+    protected function generateListUserOptionsNotInYear($year)
+    {
+        $userIds = Position::where('year', $year)->lists('user_id');
+        $users = User::whereNotIn('id', $userIds)->get();
+
+        return $users;
+    }
+
 }

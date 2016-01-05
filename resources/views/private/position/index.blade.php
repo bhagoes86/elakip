@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="header-content">
-        <h2><i class="fa fa-home"></i>User unit</h2>
+        <h2><i class="fa fa-home"></i>Jabatan user</h2>
         <div class="breadcrumb-wrapper hidden-xs">
             <span class="label">You are here:</span>
             <ol class="breadcrumb">
@@ -25,7 +25,7 @@
 
                     <div class="panel-heading">
                         <div class="pull-left">
-                            <h3 class="panel-title">Filter</h3>
+                            <h3 class="panel-title">Jabatan baru</h3>
                         </div>
                         <div class="clearfix"></div>
                     </div>
@@ -78,7 +78,7 @@
 
                     <div class="panel-heading">
                         <div class="pull-left">
-                            <h3 class="panel-title">Year list</h3>
+                            <h3 class="panel-title">Jabatan user per tahun</h3>
                         </div>
                         <div class="clearfix"></div>
                     </div>
