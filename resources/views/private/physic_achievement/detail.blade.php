@@ -111,12 +111,12 @@
                                     <td>{{$indicator['unit']}}</td>
 
                                     @foreach($indicator['goal']['years'] as $year => $value)
-                                        <td>{{$year}}: {{$value}}</td>
+                                        <td>{{$value}}</td>
                                     @endforeach
                                     <td>{{$indicator['goal']['total']}}</td>
 
                                     @foreach($indicator['achievement']['years'] as $year => $value)
-                                        <td>{{$year}}: {{$value}}</td>
+                                        <td>{{$value}}</td>
                                     @endforeach
                                     <td>{{$indicator['achievement']['total']}}</td>
 
