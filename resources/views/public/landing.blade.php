@@ -7,8 +7,9 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="intro-message">
-                        <h1>Direktorat Jenderal<br/>Penyediaan Perumahan</h1>
+                        <h1>Sistem Informasi Laporan Kinerja Penyediaan Perumahan</h1>
                         <hr class="intro-divider">
+                        <h2>Direktorat Jenderal Penyediaan Perumahan</h2>
                         <h3>Kementerian Pekerjaan Umum dan Perumahan Rakyat</h3>
                     </div>
                 </div>
