@@ -43,6 +43,25 @@ class PhysicAchievementController extends AdminController
 
         ])->find($goalId);
 
+        if($goal->indicator->target->type == 'activity')
+        {
+            $activity = Activity::with([
+                'program' => function ($query) {
+                    $query->with('plan');
+                }
+            ])
+                ->find($goal->indicator->target->type_id);
+
+            $agreement = Agreement::where('year', $goal->year)
+                ->where('plan_id', $activity->program->plan->id)
+                ->first();
+        }
+        else {
+            abort(404);
+        }
+
+
+
         $achievements = [
             'first_quarter' => [
                 'id'    => isset($goal->achievements[0]) ? $goal->achievements[0]->id : null,
@@ -72,6 +91,8 @@ class PhysicAchievementController extends AdminController
 
         return view('private.achievement.index')
             ->with('goal', $goal)
+            ->with('activity', $activity)
+            ->with('agreement', $agreement)
             ->with('achievements', $achievements);
     }
 

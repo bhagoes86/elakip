@@ -22,9 +22,9 @@
 
         <div class="row mbot-15">
             <div class="col-md-12">
-                {{--<a href="{{route('achievement.indicator')}}?year={{$indicator->target->activity->program->agreement->year->id}}&agreement={{$indicator->target->activity->program->agreement->id}}&program={{$indicator->target->activity->program->id}}&activity={{$indicator->target->activity->id}}&target={{$indicator->target->id}}" class="btn btn-danger">
+                <a href="{{route('capaian.fisik.indicator')}}?plan={{$activity->program->plan->id}}&year={{$goal->year}}&agreement={{$agreement->id}}&program={{$activity->program->id}}&activity={{$activity->id}}&target={{$goal->indicator->target->id}}" class="btn btn-danger">
                     <i class="fa fa-arrow-left"></i> Back
-                </a>--}}
+                </a>
 
             </div>
         </div>
