@@ -173,9 +173,9 @@ class PhysicAchievementController extends AdminController
         $count_holder = [];
         $real_holder = [];
         foreach ($goals as $goal) {
-            array_push($year_holder, $goal->year);
-            array_push($count_holder, $goal->count);
-            array_push($real_holder, $goal->achievements[3]->realization);
+            array_push($year_holder, (int) $goal->year);
+            array_push($count_holder, (int) $goal->count);
+            array_push($real_holder, (int) $goal->achievements[3]->realization);
         }
 
 
