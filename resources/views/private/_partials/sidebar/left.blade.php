@@ -73,12 +73,18 @@ START @SIDEBAR LEFT
                 <span class="arrow"></span>
             </a>
             <ul>
+                @can('read-user', null)
                 <li><a href="{{route('capaian.fisik.filter')}}">Kegiatan Fisik</a></li>
                 <li><a href="{{route('capaian.anggaran.filter')}}">Anggaran</a></li>
+                @endcan
                 <li><a href="{{route('capaian.renstra.fisik.filter')}}">Kegiatan Fisik Renstra</a></li>
                 <li><a href="{{route('capaian.renstra.anggaran.filter')}}">Anggaran Renstra</a></li>
             </ul>
         </li>
+{{--
+        <li>
+            <a href="">Kegiatan Prioritas</a>
+        </li>--}}
 
         <li>
             <a href="{{route('kegiatan.evaluasi.filter')}}">
