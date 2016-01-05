@@ -138,6 +138,7 @@ Route::group([
     get('capaian/renstra/fisik/filter', ['uses'  => 'Period\PhysicAchievementController@getFilter', 'as'    => 'capaian.renstra.fisik.filter']);
     get('capaian/renstra/fisik/filter/indicator', ['uses'  => 'Period\PhysicAchievementController@getIndicator', 'as'    => 'capaian.renstra.fisik.indicator']);
     get('capaian/renstra/fisik/indicator/{indicator}/chart', ['uses'  => 'Period\PhysicAchievementController@getChart', 'as'    => 'capaian.renstra.fisik.indicator.chart']);
+    get('capaian/renstra/fisik/target/{target}/year/{year}/chart', ['uses'  => 'Period\PhysicAchievementController@getChartOneYear', 'as'    => 'capaian.renstra.fisik.indicator.chart.year']);
 
     get('capaian/renstra/anggaran/filter', ['uses'  => 'Period\BudgetAchievementController@getFilter', 'as'    => 'capaian.renstra.anggaran.filter']);
     get('capaian/renstra/anggaran/filter/activity', ['uses'  => 'Period\BudgetAchievementController@getActivity', 'as'    => 'capaian.renstra.anggaran.kegiatan']);

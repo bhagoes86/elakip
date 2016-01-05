@@ -243,4 +243,56 @@ class PhysicAchievementController extends AdminController
         return $indicatorsBucket;
 
     }
+
+    public function getChartOneYear($targetId, $year)
+    {
+        $target = Target::with(['indicators' => function ($query)  use ($year) {
+            $query->with(['goals' => function ($query) use ($year) {
+
+                $query->with(['achievements' => function ($query) {
+                    $query->where('quarter', 4);
+                }]);
+
+                $query->where('year', $year);
+            }]);
+        }])
+            ->find($targetId);
+       /* if($target->type == 'activity')
+        {
+            $parent = Activity::find($target->id);
+        }
+        elseif($target->type == 'program')
+        {
+            $parent = Program::find($target->id);
+        }*/
+
+        //dd($target->toArray());
+
+        $indicators = [];
+        $count      = [];
+        $real       = [];
+
+        foreach ($target->indicators as $indicator) {
+            array_push($indicators, $indicator->name);
+            if(count($indicator->goals) > 0) {
+                array_push($count, $indicator->goals[0]->count);
+
+                if(count($indicator->goals[0]->achievements) > 0)
+                {
+                    array_push($real, $indicator->goals[0]->achievements[0]->realization);
+                }
+                else {
+                    array_push($real, 0);
+
+                }
+            } else {
+                array_push($count, 0);
+            }
+        }
+
+        return view('private.physic_achievement.chart_one_year')
+            ->with('indicators', json_encode($indicators))
+            ->with('count', json_encode($count))
+            ->with('real', json_encode($real));
+    }
 }
