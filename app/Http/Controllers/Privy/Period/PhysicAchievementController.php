@@ -250,7 +250,7 @@ class PhysicAchievementController extends AdminController
             $query->with(['goals' => function ($query) use ($year) {
 
                 $query->with(['achievements' => function ($query) {
-                    $query->where('quarter', 4);
+                    //$query->where('quarter', 4);
                 }]);
 
                 $query->where('year', $year);
@@ -275,11 +275,11 @@ class PhysicAchievementController extends AdminController
         foreach ($target->indicators as $indicator) {
             array_push($indicators, $indicator->name);
             if(count($indicator->goals) > 0) {
-                array_push($count, $indicator->goals[0]->count);
+                array_push($count, (int) $indicator->goals[0]->count);
 
                 if(count($indicator->goals[0]->achievements) > 0)
                 {
-                    array_push($real, $indicator->goals[0]->achievements[0]->realization);
+                    array_push($real, (int) $indicator->goals[0]->achievements[3]->realization);
                 }
                 else {
                     array_push($real, 0);

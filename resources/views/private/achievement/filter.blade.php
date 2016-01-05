@@ -129,7 +129,8 @@
                 $('#target').html('');
 
                 $.get('{{route('kegiatan.select2')}}', {
-                    program: $this.find(':selected').val()
+                    program: $this.find(':selected').val(),
+                    agreement: $('#agreement').find(':selected').val()
                 }, function (response) {
                     $('#activity').html(response);
                 })

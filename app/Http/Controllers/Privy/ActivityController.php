@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Privy;
 
 use App\Models\Activity;
+use App\Models\Agreement;
 use App\Models\Program;
 use App\Models\Unit;
 use Datatables;
@@ -213,8 +214,34 @@ class ActivityController extends AdminController
      */
     public function getSelect2(Request $request)
     {
-        $program = $request->get('program');
-        $program = Program::find($program);
+        $programId = $request->get('program');
+
+        if($request->has('agreement')) {
+            $agreementId = $request->get('agreement');
+            $agreement = Agreement::with([
+                'firstPosition' => function($query) {
+                    $query->with(['unit']);
+                }
+            ])
+                ->find($agreementId);
+
+            $program = Program::with(['activities' => function($query) use ($agreement) {
+                $query->where('unit_id', $agreement->firstPosition->unit->id);
+            }])->find($programId);
+
+        }
+        elseif($request->has('unit')) {
+            $unitId = $request->get('unit', null);
+            $program = Program::with(['activities' => function($query) use ($unitId) {
+                $query->where('unit_id', $unitId);
+            }])->find($programId);
+        }
+        else
+        {
+            $program = Program::find($programId);
+        }
+
+
 
         $options = '<option>-Select One-</option>';
         foreach ($program->activities as $activity) {

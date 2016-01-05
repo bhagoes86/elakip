@@ -64,6 +64,30 @@
 
                     <div class="panel-heading">
                         <div class="pull-left">
+                            <h3 class="panel-title">Grafik Satu Tahun</h3>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+
+                    <div class="panel-body">
+                        <div class="btn-group">
+                            @foreach($indicators['header']['years'] as $year)
+                                <button type="button" class="btn btn-danger year-chart" data-year="{{$year}}" data-title="{{$year}}">
+                                    <i class="fa fa-bar-chart"></i> {{$year}}
+                                </button>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel rounded shadow">
+
+                    <div class="panel-heading">
+                        <div class="pull-left">
                             <h3 class="panel-title">Detail indicator</h3>
                         </div>
                         <div class="clearfix"></div>
@@ -130,30 +154,6 @@
             </div>
         </div>
 
-
-        <div class="row">
-            <div class="col-md-12">
-                <div class="panel rounded shadow">
-
-                    <div class="panel-heading">
-                        <div class="pull-left">
-                            <h3 class="panel-title">Grafik</h3>
-                        </div>
-                        <div class="clearfix"></div>
-                    </div>
-
-                    <div class="panel-body">
-                        <div class="btn-group">
-                            @foreach($indicators['header']['years'] as $year)
-                            <button type="button" class="btn btn-danger year-chart" data-year="{{$year}}" data-title="{{$year}}">
-                                <i class="fa fa-bar-chart"></i> {{$year}}
-                            </button>
-                            @endforeach
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 
     @include('private._partials.modal')
