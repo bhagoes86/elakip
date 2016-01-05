@@ -46,9 +46,9 @@ class BudgetAchievementController extends AdminController
         $real = [];
 
         foreach ($budgets as $budget) {
-            array_push($years, $budget->year);
-            array_push($pagu, $budget->pagu);
-            array_push($real, $budget->realization);
+            array_push($years, (int) $budget->year);
+            array_push($pagu, (int) $budget->pagu);
+            array_push($real, (int) $budget->realization);
         }
 
         return view('private.budget_achievement.chart')
