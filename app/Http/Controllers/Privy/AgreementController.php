@@ -18,6 +18,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use PHPExcel_Style_Border;
+use PHPExcel_Worksheet_PageSetup;
 
 class AgreementController extends AdminController
 {
@@ -313,7 +314,7 @@ class AgreementController extends AdminController
 
             $excel->sheet('Pendahuluan', function ($sheet) use ($agreement, $plan) {
 
-                $sheet->setAutoSize(true); // fix
+                //$sheet->setAutoSize(true); // fix
                 $sheet->setWidth('A', 20); // fix
                 $sheet->setWidth('B', 50); // fix
                 $sheet->setWidth('C', 70); // fix
@@ -409,12 +410,22 @@ class AgreementController extends AdminController
                     $cells->setFontWeight('bold'); // fix
                 });
 
+                $sheet->getPageSetup()->setOrientation(PHPExcel_Worksheet_PageSetup::ORIENTATION_LANDSCAPE);
+                $sheet->getPageSetup()->setPrintArea('A1:C33');
+                //$sheet->getPageSetup()->setFitToWidth(1);
+                //$sheet->getPageSetup()->setFitToHeight(0);
+                $sheet->getPageMargins()->setTop(0.5);
+                $sheet->getPageMargins()->setRight(0.5);
+                $sheet->getPageMargins()->setLeft(0.75);
+                $sheet->getPageMargins()->setBottom(0.5);
+
 
             });
 
             $excel->sheet('Perjanjian kinerja', function ($sheet) use ($agreement, $plan) {
 
-                $sheet->setAutoSize(true); // fix
+                //$sheet->setAutoSize(true); // fix
+                //$sheet->getDefaultRowDimension()->setRowHeight(-1);
                 $sheet->setWidth('A', 50); // fix
                 $sheet->setWidth('B', 50); // fix
                 $sheet->setWidth('C', 30); // fix
@@ -507,24 +518,42 @@ class AgreementController extends AdminController
                                         ->where('indicator_id', $indicator->id)
                                         ->first();
 
-                                    //dd($goal->toArray());
+                                    //dd($indicator->toArray());
 
                                     if ($l == 1) {
                                         $sheet->row($counter, [
-                                            $j . '.' . $k . '. ' . $target->name, $l . '. ' . $indicator->name, null, isset($goal->count) ? $goal->count : '-' . ' ' . $indicator->unit
+                                            $j . '.' . $k . '. ' . $target->name, $l . '. ' . $indicator->name, null, isset($goal->count) ? ($goal->count . ' ' . $indicator->unit) : '-'
                                         ]);
 
                                         $sheet->getStyle('A'.$counter)->getAlignment()->setWrapText(true);
                                         $sheet->cell('A'.$counter, function ($cells) {
                                             $cells->setValignment('top');
                                         });
+
                                         $sheet->mergeCells('B'.$counter.':C'.$counter);
+                                        $sheet->getStyle('B'.$counter)->getAlignment()->setWrapText(true);
+                                        //$sheet->getRowDimension($counter)->setRowHeight(-1);
+
+                                        $numRows = $this->getRowCount($indicator->name);
+                                        $sheet->getRowDimension($counter)->setRowHeight($numRows * 15);
+
+                                        $sheet->cell('D'.$counter, function ($cells) {
+                                            $cells->setValignment('top');
+                                        });
                                         $counter++;
                                     } else {
                                         $sheet->row($counter, [
-                                            null, $l . '. ' . $indicator->name, null, isset($goal->count) ? $goal->count : '-' . ' ' . $indicator->unit
+                                            null, $l . '. ' . $indicator->name, null, isset($goal->count) ? ($goal->count . ' ' . $indicator->unit) : '-'
+                                            //null, $l . '. ' . $indicator->name, null, 'xxx'
                                         ]);
                                         $sheet->mergeCells('B'.$counter.':C'.$counter);
+                                        $sheet->getStyle('B'.$counter)->getAlignment()->setWrapText(true);
+                                        //$sheet->getRowDimension($counter)->setRowHeight(-1);
+                                        $numRows = $this->getRowCount($indicator->name);
+                                        $sheet->getRowDimension($counter)->setRowHeight($numRows * 15);
+                                        $sheet->cell('D'.$counter, function ($cells) {
+                                            $cells->setValignment('top');
+                                        });
                                         $counter++;
                                     }
                                     $l++;
@@ -645,6 +674,15 @@ class AgreementController extends AdminController
 
                 endforeach;
 
+                $maxPrintAreaRow = $counter++;
+
+                $sheet->getPageSetup()->setOrientation(PHPExcel_Worksheet_PageSetup::ORIENTATION_LANDSCAPE);
+                $sheet->getPageSetup()->setPrintArea('A1:D'.$maxPrintAreaRow);
+                $sheet->getPageMargins()->setTop(1);
+                $sheet->getPageMargins()->setRight(0.75);
+                $sheet->getPageMargins()->setLeft(0.75);
+                $sheet->getPageMargins()->setBottom(1);
+
             });
 
         })->export('xls');
@@ -663,5 +701,22 @@ class AgreementController extends AdminController
         $agreement->media()->attach($request->get('mediaId'));
 
         return $agreement->media;
+    }
+
+    /**
+     * @author Fathur Rohman <fathur@dragoncapital.center>
+     * @source  http://stackoverflow.com/questions/13313048/phpexcel-dynamic-row-height-for-merged-cells
+     * @param $text
+     * @param int $width
+     * @return int
+     */
+    protected function getRowCount($text, $width = 100)
+    {
+        $rc = 0;
+        $line = explode("\n", $text);
+        foreach($line as $source) {
+            $rc += intval((strlen($source) / $width) +1);
+        }
+        return $rc;
     }
 }
