@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="header-content">
-        <h2><i class="fa fa-home"></i>Capaian Kinerja Kegiatan Fisik</h2>
+        <h2><i class="fa fa-home"></i>Capaian Kinerja Anggaran Renstra</h2>
     </div>
 
     <div class="body-content animated fadeIn">

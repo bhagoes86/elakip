@@ -38,6 +38,7 @@ START @SIDEBAR LEFT
             </a>
         </li>
 
+        @can('read-user', null)
         <li>
             <a href="{{route('renstra.index')}}">
                 <span class="icon"><i class="fa fa-home"></i></span>
@@ -45,6 +46,7 @@ START @SIDEBAR LEFT
 
             </a>
         </li>
+        @endcan
 
         <li class="submenu">
             <a href="javascript:void(0)">
@@ -73,10 +75,8 @@ START @SIDEBAR LEFT
                 <span class="arrow"></span>
             </a>
             <ul>
-                @can('read-user', null)
                 <li><a href="{{route('capaian.fisik.filter')}}">Kegiatan Fisik</a></li>
                 <li><a href="{{route('capaian.anggaran.filter')}}">Anggaran</a></li>
-                @endcan
                 <li><a href="{{route('capaian.renstra.fisik.filter')}}">Kegiatan Fisik Renstra</a></li>
                 <li><a href="{{route('capaian.renstra.anggaran.filter')}}">Anggaran Renstra</a></li>
             </ul>
