@@ -235,6 +235,7 @@ class AgreementController extends AdminController
                         data-url='.route('pk.destroy', $data->id))
 
                     ->with('show_action', route('pk.program.index', [$data->id]))
+                    ->with('export_action', route('pk.export', $data->id))
                     ->render();
 
             })
