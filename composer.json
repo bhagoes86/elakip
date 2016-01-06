@@ -13,7 +13,8 @@
         "maatwebsite/excel": "~2.0.0",
         "yajra/laravel-datatables-oracle": "~5.0",
         "barryvdh/laravel-elfinder": "^0.3.5",
-        "barryvdh/laravel-dompdf": "0.6.*"
+        "barryvdh/laravel-dompdf": "0.6.*",
+        "doctrine/dbal": "^2.5"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
