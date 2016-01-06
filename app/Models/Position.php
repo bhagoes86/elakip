@@ -28,4 +28,15 @@ class Position extends Model
         return $this->belongsTo(Agreement::class, 'second_position_id');
     }
 
+    /**
+     * relation one to one to view
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     * @author Fathur Rohman <fathur@dragoncapital.center>
+     */
+    public function positionUserUnitView()
+    {
+        return $this->hasOne(UserUnitPositions::class);
+    }
+
 }

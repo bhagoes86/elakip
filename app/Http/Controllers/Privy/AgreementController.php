@@ -35,9 +35,17 @@ class AgreementController extends AdminController
             $units[$unit->id] = $unit->name;
         }
 
+        $periods = Period::where('year_begin', 2015)->first();
+        $years = [ 0 => 'All'];
+        $begin = $periods->year_begin;
+        $end = $periods->year_end;
+        for($i=$begin; $i <= $end; $i++) {
+            $years[$i] = $i;
+        }
+
         return view('private.agreement.index')
             ->with('units', $units)
-            ->with('years', $this->years);
+            ->with('years', $years);
     }
 
     /**
@@ -188,26 +196,33 @@ class AgreementController extends AdminController
 
     public function data(Request $request)
     {
-        $agreements = Agreement::with([
-            'firstPosition' => function ($query) {
-                $query->with([
-                    'unit',
-                    'user'
-                ]);
-                // $query->where('unit_id', 90);
-            },
-            'secondPosition'    => function ($query) {
-                $query->with([
-                    'unit',
-                    'user'
-                ]);
-            },
-        ])
-            //->join('positions', 'agreements.first_position_id', '=', 'positions.id')
+        $year = $request->get('year');
+        $unitId = $request->get('unit');
 
-            ->get();
+        $agreements = Agreement::select(\DB::raw('agreements.*,
+            first_positions.position_name as first_position,
+            first_positions.position_year as first_position_year,
+            first_positions.unit_name as first_position_unit_name,
+            first_positions.user_name as first_position_user_name,
+            second_positions.position_name as second_position,
+            second_positions.position_year as second_position_year,
+            second_positions.unit_name as second_position_unit_name,
+            second_positions.user_name as second_position_user_name'))
 
-        //dd($agreements->toArray());
+            ->join('positions_with_user_unit AS first_positions', function($join) use ($unitId) {
+                $join->on('first_positions.position_id','=','agreements.first_position_id');
+
+                if($unitId != 0)
+                    $join->where('first_positions.unit_id','=', $unitId);
+            })
+            ->join('positions_with_user_unit AS second_positions', function($join) {
+                $join->on('second_positions.position_id','=','agreements.second_position_id');
+            });
+
+        if($year != 0)
+            $agreements->where('year', $year);
+
+        $agreements = $agreements->get();
 
         return Datatables::of($agreements)
             ->addColumn('action', function($data){

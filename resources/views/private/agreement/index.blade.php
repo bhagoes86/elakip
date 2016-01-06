@@ -96,15 +96,24 @@
                 processing: true,
                 serverSide: true,
                 ajax: {
-                    url: "{{route('pk.data')}}"
+                    url: "{{route('pk.data')}}",
+                    data: function(d) {
+                        d.year = $('#year-filter').find(':selected').val();
+                        d.unit = $('#unit-filter').find(':selected').val();
+                        return d;
+                    }
                 },
                 columns: [
                     {data:'year',name:'year'},
-                    {data:'first_position.unit.name',name:'first_position.unit.name'},
-                    {data:'first_position.user.name',name:'first_position.user.name'},
-                    {data:'second_position.user.name',name:'second_position.user.name'},
+                    {data:'first_position_unit_name',name:'first_position_unit_name'},
+                    {data:'first_position_user_name',name:'first_position_user_name'},
+                    {data:'second_position_user_name',name:'second_position_user_name'},
                     {data:'action',name:'action',orderable:false,searchable:false}
                 ]
+            });
+
+            $('#unit-filter, #year-filter').on('change', function () {
+                table.ajax.reload();
             });
         });
     </script>
