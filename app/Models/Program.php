@@ -18,8 +18,8 @@ class Program extends Model
         return $this->hasMany(Activity::class);
     }
 
-    public function budget()
+    public function budgets()
     {
-        return $this->hasOne(ProgramBudget::class);
+        return $this->hasMany(ProgramBudget::class);
     }
 }

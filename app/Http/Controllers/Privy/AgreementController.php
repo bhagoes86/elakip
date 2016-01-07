@@ -196,8 +196,8 @@ class AgreementController extends AdminController
 
     public function data(Request $request)
     {
-        $year = $request->get('year');
-        $unitId = $request->get('unit');
+        $year       = $request->get('year');
+        $unitId     = $request->get('unit');
 
         $agreements = Agreement::select(\DB::raw('agreements.*,
             first_positions.position_name as first_position,
@@ -225,7 +225,8 @@ class AgreementController extends AdminController
         $agreements = $agreements->get();
 
         return Datatables::of($agreements)
-            ->addColumn('action', function($data){
+            ->addColumn('action', function($data) use ($unitId) {
+
                 return view('private.agreement.action')
                     ->with('edit_action', route('pk.edit', $data->id))
 

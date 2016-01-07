@@ -96,6 +96,7 @@ Route::group([
     post('pk/{id}/doc/create', ['uses' => 'AgreementController@postDocument', 'as' => 'pk.doc.store']);
     get('pk/program/data', 'ProgramAgreementController@data');
     get('pk/{pk}/program', ['uses' => 'ProgramAgreementController@index', 'as' => 'pk.program.index']);
+    put('pk/program/{program}/budget', ['uses' => 'ProgramAgreementController@putBudget', 'as' => 'pk.program.budget.update']);
     resource('pk', 'AgreementController');
 
     // Dirjen

@@ -94,8 +94,56 @@
                             <thead>
                             <tr>
                                 <th>Title</th>
+                                @if($agreement->firstPosition->unit_id == $id['dirjen'])
+                                    <th>Budget</th>
+                                @endif
                             </tr>
                             </thead>
+                            <tbody>
+
+                            @foreach($plan->programs as $program)
+                            <tr>
+                                <td><a href="@if($agreement->firstPosition->unit->id == $id['dirjen'])
+                                        {{route('pk.program.sasaran.index', [
+                                            $agreement->id,
+                                            $program->id
+                                        ])}}
+                                    @else
+                                        {{route('pk.program.kegiatan.index', [
+                                            $agreement->id,
+                                            $program->id
+                                        ])}}
+                                    @endif">
+
+
+                                    {{$program->name}}
+                                    </a>
+                                </td>
+
+                                @if($agreement->firstPosition->unit_id == $id['dirjen'])
+                                <td>
+                                    <a href="#"
+                                       id="pagu"
+                                       class="editable"
+                                       data-type="text"
+                                       data-pk="@if(isset($program->budgets[0])){{$program->budgets[0]->id}}@else{{null}}@endif"
+                                       data-url="{{route('pk.program.budget.update', [$program->id])}}"
+                                       data-year="{{$agreement->year}}"
+                                       data-title="Enter budget">
+
+                                        @if(isset($program->budgets[0]))
+                                            {{$program->budgets[0]->pagu}}
+                                        @else
+                                            0
+                                        @endif
+                                    </a>
+
+                                </td>
+                                @endif
+                            </tr>
+                            @endforeach
+
+                            </tbody>
                         </table>
                     </div>
                 </div>
@@ -110,13 +158,12 @@
 @section('scripts')
     <script src="{{asset('lib/datatables/media/js/jquery.dataTables.min.js')}}"></script>
     <script src="{{asset('lib/datatables/media/js/dataTables.bootstrap.min.js')}}"></script>
-    <script src="{{asset('lib/dropzone/dist/dropzone.js')}}"></script>
-
+    <script src="{{asset('lib/x-editable/dist/bootstrap3-editable/js/bootstrap-editable.min.js')}}"></script>
 @stop
 
 @section('styles')
     <link rel="stylesheet" href="{{asset('lib/datatables/media/css/dataTables.bootstrap.min.css')}}"/>
-    <link rel="stylesheet" href="{{asset('lib/dropzone/dist/dropzone.css')}}"/>
+    <link rel="stylesheet" href="{{asset('lib/x-editable/dist/bootstrap3-editable/css/bootstrap-editable.css')}}"/>
 
 @stop
 
@@ -125,7 +172,7 @@
         $(function() {
             "use strict";
 
-            var table = $('#{{$viewId}}-datatables').DataTable({
+            /*var table = $('#{{$viewId}}-datatables').DataTable({
                 processing: true,
                 serverSide: true,
                 ajax: {
@@ -135,8 +182,23 @@
                     }
                 },
                 columns: [
-                    {data:'name',name:'name'}
+                    {data:'name',name:'name'},
+                    @if($agreement->firstPosition->unit_id == 1)
+                    {data:'budget',name:'budget'},
+                    {data:'action',name:'action'},
+                    @endif
                 ]
+            });*/
+
+            $('.editable').editable({
+                ajaxOptions: {
+                    type: 'put'
+                },
+                params: function(params) {
+                    params.year = $(this).data('year');
+                    params._token = '{{csrf_token()}}';
+                    return params;
+                }
             });
 
             $('#upload-scan').click(function(){

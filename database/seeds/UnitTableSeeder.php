@@ -12,7 +12,8 @@ class UnitTableSeeder extends Seeder
         'Direktorat Rumah Susun',
         'Direktorat Rumah Khusus',
         'Direktorat Rumah Swadaya',
-        'Direktorat Rumah Umum dan Komersial'
+        'Direktorat Rumah Umum dan Komersial',
+        'Lainnya'
     ];
     /**
      * Run the database seeds.
