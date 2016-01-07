@@ -26,4 +26,9 @@ class Target extends Model
             ->where('type_id', $id);
 
     }
+
+    public function goals()
+    {
+        return $this->hasMany(TargetGoal::class);
+    }
 }

@@ -53,14 +53,15 @@
                     <a href="{{route('public.page', 'tupoksi')}}">Tupoksi</a>
                 </li>
                 <li>
-                    <a href="{{route('public.page', 'rencana-strategis')}}">Renstra</a>
+                    <a href="{{route('public.page', 'lakip')}}">e-Doc Lakip</a>
+                </li>
+                <li>
+                    <a href="{{route('public.page', 'rencana-strategis')}}">Struktur Oganisasi</a>
                 </li>
                 <li>
                     <a href="{{route('public.page', 'regulasi')}}">Regulasi</a>
                 </li>
-                <li>
-                    <a href="{{route('public.page', 'lakip')}}">e-Doc Lakip</a>
-                </li>
+
                 
                 @if(Auth::check())
                 <li>

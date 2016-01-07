@@ -17,4 +17,9 @@ class Program extends Model
     {
         return $this->hasMany(Activity::class);
     }
+
+    public function budget()
+    {
+        return $this->hasOne(ProgramBudget::class);
+    }
 }
