@@ -59,7 +59,7 @@
         </div>
 
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-6">
                 <div class="panel rounded shadow">
 
                     <div class="panel-heading">
@@ -74,6 +74,28 @@
                             @foreach($indicators['header']['years'] as $year)
                                 <button type="button" class="btn btn-danger year-chart" data-year="{{$year}}" data-title="{{$year}}">
                                     <i class="fa fa-bar-chart"></i> {{$year}}
+                                </button>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="panel rounded shadow">
+
+                    <div class="panel-heading">
+                        <div class="pull-left">
+                            <h3 class="panel-title">Tabel Satu Tahun</h3>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+
+                    <div class="panel-body">
+                        <div class="btn-group">
+                            @foreach($indicators['header']['years'] as $year)
+                                <button type="button" class="btn btn-success year-table" data-year="{{$year}}" data-title="{{$year}}">
+                                    <i class="fa fa-table"></i> {{$year}}
                                 </button>
                             @endforeach
                         </div>
@@ -251,6 +273,21 @@
 
                 $('#' + modalId + '-label').html(title);
                 $.get('{{url('capaian/renstra/fisik/target') .'/'. $id['target']}}/year/'+year+'/chart', function(r) {
+                    return $('#' + modalId + ' .modal-body').html(r);
+                });
+                return $('#' + modalId).modal();
+            });
+
+            $('.year-table').click(function(){
+                var $this = $(this);
+                var modalId = '{{$viewId}}-lg';
+                var title = $this.data('title');
+                var year = $this.data('year');
+
+                console.log($this);
+
+                $('#' + modalId + '-label').html(title);
+                $.get('{{url('capaian/renstra/fisik/target') .'/'. $id['target']}}/year/'+year+'/table', function(r) {
                     return $('#' + modalId + ' .modal-body').html(r);
                 });
                 return $('#' + modalId).modal();

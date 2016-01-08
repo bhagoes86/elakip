@@ -257,16 +257,6 @@ class PhysicAchievementController extends AdminController
             }]);
         }])
             ->find($targetId);
-       /* if($target->type == 'activity')
-        {
-            $parent = Activity::find($target->id);
-        }
-        elseif($target->type == 'program')
-        {
-            $parent = Program::find($target->id);
-        }*/
-
-        //dd($target->toArray());
 
         $indicators = [];
         $count      = [];
@@ -294,5 +284,56 @@ class PhysicAchievementController extends AdminController
             ->with('indicators', json_encode($indicators))
             ->with('count', json_encode($count))
             ->with('real', json_encode($real));
+    }
+
+    public function getTableOneYear($targetId, $year)
+    {
+        $target = Target::with(['indicators' => function ($query)  use ($year) {
+            $query->with(['goals' => function ($query) use ($year) {
+
+                $query->with(['achievements' => function ($query) {
+                    //$query->where('quarter', 4);
+                }]);
+
+                $query->where('year', $year);
+            }]);
+
+        }])->find($targetId);
+
+        $indicators = [];
+        $count      = [];
+        $real       = [];
+
+        foreach ($target->indicators as $indicator) {
+
+            $indicators[$indicator->name] = [
+                'pagu'  => 0,
+                'real'  => 0
+            ];
+
+            //array_push($indicators, $indicator->name);
+
+            if(count($indicator->goals) > 0) {
+                //array_push($count, (int) $indicator->goals[0]->count);
+                $indicators[$indicator->name]['pagu'] = (int) $indicator->goals[0]->count;
+                $indicators[$indicator->name]['real'] = (int) $indicator->goals[0]->achievements[3]->realization;
+
+               /* if(count($indicator->goals[0]->achievements) > 0)
+                {
+                    array_push($real, (int) $indicator->goals[0]->achievements[3]->realization);
+                }
+                else {
+                    array_push($real, 0);
+
+                }*/
+            } /*else {
+                array_push($count, 0);
+            }*/
+        }
+
+        //dd($indicators);
+
+        return view('private.physic_achievement.table_one_year')
+            ->with('indicators', $indicators);
     }
 }
