@@ -27,8 +27,8 @@ class Target extends Model
 
     }
 
-    public function goals()
+    /*public function goals()
     {
         return $this->hasMany(TargetGoal::class);
-    }
+    }*/
 }

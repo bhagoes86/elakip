@@ -9,10 +9,12 @@ use App\Models\Period;
 use App\Models\Plan;
 use App\Models\Position;
 use App\Models\Program;
+use App\Models\ProgramBudget;
 use App\Models\Target;
 use App\Models\Unit;
 use Carbon\Carbon;
 use Datatables;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -276,26 +278,13 @@ class AgreementController extends AdminController
 
     public function getExport($id)
     {
-// Set locale ke Indonesia
+        // Set locale ke Indonesia
         // Jika belum ada sebaiknya install terlebih dahulu locale-nya di server
         //
         // @reference   http://askubuntu.com/questions/76013/how-do-i-add-locale-to-ubuntu-server
         //              http://whplus.com/blog/2008/11/27/format-penulisan-tanggal-phpdalam-bahasa-indonesia.html
         setlocale(LC_TIME, 'id_ID');
         Carbon::setLocale('id');
-
-        /*$agreement = Agreement::with([
-            'unit',
-            'year',
-            'firstUser',
-            'secondUser',
-            'programs' => function ($query) {
-                $query->with(['activities' => function ($query) {
-                    $query->with(['budget', 'targets' => function ($query) {
-                        $query->with('indicators');
-                    }]);
-                }]);
-            }])->find($id);*/
 
         $agreement = Agreement::with([
             'firstPosition' => function ($query) {
@@ -313,20 +302,82 @@ class AgreementController extends AdminController
             'plan'
         ])->find($id);
 
-        $plan = Plan::with([
-            'programs'=> function($query) use ($agreement) {
-                $query->with(['activities' => function($query) use ($agreement) {
-                    $query->with(['budget']);
-                    $query->inAgreement();
-                    $query->where('unit_id', $agreement->firstPosition->unit->id);
-                }]);
-            }
-        ])->find($agreement->plan_id);
 
-        //$target = Target::activity()->first();
 
-        // dd($agreement->toArray());
 
+        // Jika bukan dirjen maka export to excel regular
+        if($agreement->firstPosition->unit_id != 1)
+        {
+            $plan = Plan::with([
+                'programs'=> function($query) use ($agreement) {
+                    $query->with(['activities' => function($query) use ($agreement) {
+                        $query->with(['budget']);
+                        $query->inAgreement();
+                        $query->where('unit_id', $agreement->firstPosition->unit->id);
+                    }]);
+                }
+            ])->find($agreement->plan_id);
+
+            return $this->exportToExcelRegular($agreement, $plan);
+
+        }
+        // Jika dirjen makan export khusus excel dirjen
+        else {
+            $plan = Plan::with([
+                'programs'  => function($query) use ($agreement) {
+                    $query->with([
+                        'budgets'   => function($query) use ($agreement) {
+                            $query->where('year', $agreement->year);
+                        }
+                    ]);
+                }
+            ])->find($agreement->plan_id);
+
+            return $this->exportToExcelDirjen($agreement, $plan);
+        }
+
+    }
+
+    public function getDocumentForm($id)
+    {
+        return view('private.agreement.dropzone')
+            ->with('id', $id);
+    }
+
+    public function postDocument(Request $request, $id)
+    {
+
+        $agreement = Agreement::find($id);
+        $agreement->media()->attach($request->get('mediaId'));
+
+        return $agreement->media;
+    }
+
+    /**
+     * @author Fathur Rohman <fathur@dragoncapital.center>
+     * @source  http://stackoverflow.com/questions/13313048/phpexcel-dynamic-row-height-for-merged-cells
+     * @param $text
+     * @param int $width
+     * @return int
+     */
+    protected function getRowCount($text, $width = 100)
+    {
+        $rc = 0;
+        $line = explode("\n", $text);
+        foreach($line as $source) {
+            $rc += intval((strlen($source) / $width) +1);
+        }
+        return $rc;
+    }
+
+    /**
+     * @param $agreement
+     * @param $plan
+     * @return mixed
+     * @author Fathur Rohman <fathur@dragoncapital.center>
+     */
+    private function exportToExcelRegular(Agreement $agreement, Plan $plan)
+    {
         return \Excel::create(Carbon::now()->toDateTimeString(), function ($excel) use ($agreement, $plan) {
 
             $excel->sheet('Pendahuluan', function ($sheet) use ($agreement, $plan) {
@@ -364,8 +415,8 @@ class AgreementController extends AdminController
                 $sheet->getStyle('A8')->getAlignment()->setWrapText(true);
                 $sheet->setHeight(8, 30); // fix
 
-                $sheet->row(10, ['Nama', ': '.$agreement->firstPosition->user->name,]);
-                $sheet->row(11, ['Jabatan', ': '.$agreement->firstPosition->position ]);
+                $sheet->row(10, ['Nama', ': ' . $agreement->firstPosition->user->name,]);
+                $sheet->row(11, ['Jabatan', ': ' . $agreement->firstPosition->position]);
 
                 // http://stackoverflow.com/questions/8045056/phpexcel-how-to-make-part-of-the-text-bold
                 $pihakPertamaText = new \PHPExcel_RichText();
@@ -376,8 +427,8 @@ class AgreementController extends AdminController
 
                 $sheet->row(13, [$pihakPertamaText]);
 
-                $sheet->row(15, ['Nama', ': '.$agreement->secondPosition->user->name,]);
-                $sheet->row(16, ['Jabatan', ': '.$agreement->secondPosition->position ]);
+                $sheet->row(15, ['Nama', ': ' . $agreement->secondPosition->user->name,]);
+                $sheet->row(16, ['Jabatan', ': ' . $agreement->secondPosition->position]);
 
                 $pihakKeduaText = new \PHPExcel_RichText();
                 $pihakKeduaText->createText('Selanjutnya disebut ');
@@ -387,26 +438,25 @@ class AgreementController extends AdminController
 
                 $sheet->row(18, [$pihakKeduaText]);
 
-                $sheet->row(20, ['Pihak pertama berjanji akan mewujudkan target kinerja tahunan yang seharusnya sesuai lampiran '.
-                    'perjanjian ini, dalam rangka mencapai target kinerja jangka menengah seperti yang telah ditetapkan '.
-                    'dalam dokumen perencanaan. Keberhasilan dan kegagalan pencapaian target kinerja tersebut '.
+                $sheet->row(20, ['Pihak pertama berjanji akan mewujudkan target kinerja tahunan yang seharusnya sesuai lampiran ' .
+                    'perjanjian ini, dalam rangka mencapai target kinerja jangka menengah seperti yang telah ditetapkan ' .
+                    'dalam dokumen perencanaan. Keberhasilan dan kegagalan pencapaian target kinerja tersebut ' .
                     'menjadi tanggungjawab kami.']);
                 $sheet->mergeCells('A20:C20'); // fix
                 $sheet->getStyle('A20')->getAlignment()->setWrapText(true);
                 $sheet->setHeight(20, 45); // fix
 
 
-                $sheet->row(22, ['Pihak kedua akan memberikan supervisi yang diperlukan serta akan melakukan evaluasi terhadap '.
-                    'capaian kinerja dari perjanjian ini dan mengambil tindakan yang diperlukan dalam rangka pemberian '.
+                $sheet->row(22, ['Pihak kedua akan memberikan supervisi yang diperlukan serta akan melakukan evaluasi terhadap ' .
+                    'capaian kinerja dari perjanjian ini dan mengambil tindakan yang diperlukan dalam rangka pemberian ' .
                     'penghargaan dan sanksi.']);
                 $sheet->mergeCells('A22:C22'); // fix
                 $sheet->getStyle('A22')->getAlignment()->setWrapText(true);
                 $sheet->setHeight(22, 30); // fix
 
 
-
                 $sheet->row(26, [
-                    null, null, 'Jakarta, '. Carbon::parse($agreement->date)->formatLocalized('%d %B %Y')
+                    null, null, 'Jakarta, ' . Carbon::parse($agreement->date)->formatLocalized('%d %B %Y')
                 ]);
                 $sheet->row(27, [
                     'Pihak Kedua',
@@ -451,7 +501,7 @@ class AgreementController extends AdminController
                 // Set content heading
                 $sheet->row(1, ['PERJANJIAN KINERJA TAHUN ' . $agreement->year]);
                 //$sheet->row(2, [ isset($agreement->first_user_unit->unit) ? strtoupper($agreement->first_user_unit->unit->name) : '' . ' - '.isset($agreement->second_user_unit->unit) ? strtoupper($agreement->second_user_unit->unit->name) : '']);
-                $sheet->row(2, [ (isset($agreement->firstPosition->unit) ? strtoupper($agreement->firstPosition->unit->name) : '...') . ' - ' . (isset($agreement->secondPosition->unit) ? strtoupper($agreement->secondPosition->unit->name) : '...')]);
+                $sheet->row(2, [(isset($agreement->firstPosition->unit) ? strtoupper($agreement->firstPosition->unit->name) : '...') . ' - ' . (isset($agreement->secondPosition->unit) ? strtoupper($agreement->secondPosition->unit->name) : '...')]);
                 $sheet->row(3, ['KEMENTERIAN PEKERJAAN UMUM DAN PERUMAHAN RAKYAT']);
 
                 // Set style heading
@@ -467,8 +517,8 @@ class AgreementController extends AdminController
                 });
 
                 // Set content title table
-                $sheet->row(5, ['SASARAN PROGRAM/KEGIATAN','INDIKATOR KINERJA', null, 'TARGET']); // fix
-                $sheet->row(6, ['(1)','(2)', null, '(3)']); // fix
+                $sheet->row(5, ['SASARAN PROGRAM/KEGIATAN', 'INDIKATOR KINERJA', null, 'TARGET']); // fix
+                $sheet->row(6, ['(1)', '(2)', null, '(3)']); // fix
 
                 // Set title table style
                 $sheet->mergeCells('B5:C5'); // fix
@@ -487,25 +537,25 @@ class AgreementController extends AdminController
                 foreach ($plan->programs as $program) :
                     // Set program dan kegiatan
                     $sheet->row($counter, ['PROGRAM ' . strtoupper($program->name)]);
-                    $sheet->mergeCells('A'.$counter.':D'.$counter);
-                    $sheet->cells('A'.$counter.':D'.$counter, function ($cells) {
+                    $sheet->mergeCells('A' . $counter . ':D' . $counter);
+                    $sheet->cells('A' . $counter . ':D' . $counter, function ($cells) {
                         $cells->setFontWeight('bold');
                     });
-                    $sheet->setBorder('A'.$counter.':D'.$counter, PHPExcel_Style_Border::BORDER_THIN);
+                    $sheet->setBorder('A' . $counter . ':D' . $counter, PHPExcel_Style_Border::BORDER_THIN);
                     $counter++;
 
                     $i = 1;
                     foreach ($program->activities as $activity) {
                         $sheet->row($counter, [$i . '. Kegiatan ' . $activity->name]);
-                        $sheet->mergeCells('A'.$counter.':D'.$counter);
-                        $sheet->cells('A'.$counter.':D'.$counter, function ($cells) {
+                        $sheet->mergeCells('A' . $counter . ':D' . $counter);
+                        $sheet->cells('A' . $counter . ':D' . $counter, function ($cells) {
                             $cells->setFontWeight('bold');
                         });
-                        $sheet->setBorder('A'.$counter.':D'.$counter, PHPExcel_Style_Border::BORDER_THIN);
+                        $sheet->setBorder('A' . $counter . ':D' . $counter, PHPExcel_Style_Border::BORDER_THIN);
                         $counter++;
                         $i++;
                     }
-                    $sheet->mergeCells('B'.$counter.':C'.$counter);
+                    $sheet->mergeCells('B' . $counter . ':C' . $counter);
 
 
                     $j = 1;
@@ -513,20 +563,19 @@ class AgreementController extends AdminController
                     foreach ($program->activities as $activity) {
 
                         $targets = Target::with([
-                                'indicators' => function($query) {
-                                    //$query->with();
-                                }
-                            ])
+                            'indicators' => function ($query) {
+                                //$query->with();
+                            }
+                        ])
                             ->activity($activity->id)
                             ->get();
 
                         $k = 1;
                         foreach ($targets as $target) {
 
-                            $sheet->mergeCells('B'.$counter.':C'.$counter);
+                            $sheet->mergeCells('B' . $counter . ':C' . $counter);
                             $counter++; // tambah baris kosong baru
-                            if(count($target->indicators) > 0)
-                            {
+                            if (count($target->indicators) > 0) {
                                 $targetRowStart = $counter;
                                 $l = 1;
                                 foreach ($target->indicators as $indicator) {
@@ -542,19 +591,19 @@ class AgreementController extends AdminController
                                             $j . '.' . $k . '. ' . $target->name, $l . '. ' . $indicator->name, null, isset($goal->count) ? ($goal->count . ' ' . $indicator->unit) : '-'
                                         ]);
 
-                                        $sheet->getStyle('A'.$counter)->getAlignment()->setWrapText(true);
-                                        $sheet->cell('A'.$counter, function ($cells) {
+                                        $sheet->getStyle('A' . $counter)->getAlignment()->setWrapText(true);
+                                        $sheet->cell('A' . $counter, function ($cells) {
                                             $cells->setValignment('top');
                                         });
 
-                                        $sheet->mergeCells('B'.$counter.':C'.$counter);
-                                        $sheet->getStyle('B'.$counter)->getAlignment()->setWrapText(true);
+                                        $sheet->mergeCells('B' . $counter . ':C' . $counter);
+                                        $sheet->getStyle('B' . $counter)->getAlignment()->setWrapText(true);
                                         //$sheet->getRowDimension($counter)->setRowHeight(-1);
 
                                         $numRows = $this->getRowCount($indicator->name);
                                         $sheet->getRowDimension($counter)->setRowHeight($numRows * 15);
 
-                                        $sheet->cell('D'.$counter, function ($cells) {
+                                        $sheet->cell('D' . $counter, function ($cells) {
                                             $cells->setValignment('top');
                                         });
                                         $counter++;
@@ -563,32 +612,30 @@ class AgreementController extends AdminController
                                             null, $l . '. ' . $indicator->name, null, isset($goal->count) ? ($goal->count . ' ' . $indicator->unit) : '-'
                                             //null, $l . '. ' . $indicator->name, null, 'xxx'
                                         ]);
-                                        $sheet->mergeCells('B'.$counter.':C'.$counter);
-                                        $sheet->getStyle('B'.$counter)->getAlignment()->setWrapText(true);
+                                        $sheet->mergeCells('B' . $counter . ':C' . $counter);
+                                        $sheet->getStyle('B' . $counter)->getAlignment()->setWrapText(true);
                                         //$sheet->getRowDimension($counter)->setRowHeight(-1);
                                         $numRows = $this->getRowCount($indicator->name);
                                         $sheet->getRowDimension($counter)->setRowHeight($numRows * 15);
-                                        $sheet->cell('D'.$counter, function ($cells) {
+                                        $sheet->cell('D' . $counter, function ($cells) {
                                             $cells->setValignment('top');
                                         });
                                         $counter++;
                                     }
                                     $l++;
                                 }
-                                $targetRowEnd = $counter-1;
-                                $sheet->mergeCells('A'.$targetRowStart.':A'.$targetRowEnd);
+                                $targetRowEnd = $counter - 1;
+                                $sheet->mergeCells('A' . $targetRowStart . ':A' . $targetRowEnd);
 
-                            }
-                            else
-                            {
+                            } else {
                                 $sheet->row($counter, [
                                     $j . '.' . $k . '. ' . $target->name, null, null, null
                                 ]);
-                                $sheet->getStyle('A'.$counter)->getAlignment()->setWrapText(true);
-                                $sheet->cell('A'.$counter, function ($cells) {
+                                $sheet->getStyle('A' . $counter)->getAlignment()->setWrapText(true);
+                                $sheet->cell('A' . $counter, function ($cells) {
                                     $cells->setValignment('top');
                                 });
-                                $sheet->mergeCells('B'.$counter.':C'.$counter);
+                                $sheet->mergeCells('B' . $counter . ':C' . $counter);
 
                                 $counter++;
                             }
@@ -601,14 +648,14 @@ class AgreementController extends AdminController
 
 
                     // Set content style
-                    $sheet->getStyle('A'.$outlineRowStart.':D'.$outlineRowEnd)->applyFromArray(array(
+                    $sheet->getStyle('A' . $outlineRowStart . ':D' . $outlineRowEnd)->applyFromArray(array(
                         'borders' => array(
                             'outline' => array(
                                 'style' => PHPExcel_Style_Border::BORDER_THIN,
                             ),
                         ),
                     ));
-                    $sheet->getStyle('A'.$outlineRowStart.':D'.$outlineRowEnd)->applyFromArray(array(
+                    $sheet->getStyle('A' . $outlineRowStart . ':D' . $outlineRowEnd)->applyFromArray(array(
                         'borders' => array(
                             'vertical' => array(
                                 'style' => PHPExcel_Style_Border::BORDER_THIN,
@@ -619,10 +666,10 @@ class AgreementController extends AdminController
                     $counter++; // add empty line
 
                     $sheet->row($counter, [
-                        'Kegiatan', null,'Anggaran'
+                        'Kegiatan', null, 'Anggaran'
                     ]);
                     // Set footer style
-                    $sheet->cell('A'.$counter, function ($cells) {
+                    $sheet->cell('A' . $counter, function ($cells) {
                         $cells->setFontWeight('bold');
                     });
                     $counter++;
@@ -638,10 +685,10 @@ class AgreementController extends AdminController
                             $m . '. ' . $activity->name, null, isset($budget->pagu) ? $budget->pagu : '-'
                         ]);
                         // Set footer style
-                        $sheet->cell('A'.$counter, function ($cells) {
+                        $sheet->cell('A' . $counter, function ($cells) {
                             $cells->setFontWeight('bold');
                         });
-                        $sheet->getStyle('C'.$counter)
+                        $sheet->getStyle('C' . $counter)
                             ->getNumberFormat()
                             ->setFormatCode('_("$"* #,##0.00_);_("$"* \(#,##0.00\);_("$"* "-"??_);_(@_)');
                         $counter++;
@@ -652,10 +699,10 @@ class AgreementController extends AdminController
 
                     // Set signature content
                     $sheet->row($counter, [
-                        null, null, 'Jakarta, '. Carbon::parse($agreement->date)->formatLocalized('%d %B %Y')
+                        null, null, 'Jakarta, ' . Carbon::parse($agreement->date)->formatLocalized('%d %B %Y')
                     ]);
-                    $sheet->mergeCells('C'.$counter.':D'.$counter);
-                    $sheet->cells('A'.$counter.':C'.$counter, function ($cells) {
+                    $sheet->mergeCells('C' . $counter . ':D' . $counter);
+                    $sheet->cells('A' . $counter . ':C' . $counter, function ($cells) {
                         $cells->setAlignment('center');
                         $cells->setFontWeight('bold');
 
@@ -667,8 +714,8 @@ class AgreementController extends AdminController
                         null,
                         isset($agreement->firstPosition->position) ? $agreement->firstPosition->position : '',
                     ]);
-                    $sheet->mergeCells('C'.$counter.':D'.$counter);
-                    $sheet->cells('A'.$counter.':C'.$counter, function ($cells) {
+                    $sheet->mergeCells('C' . $counter . ':D' . $counter);
+                    $sheet->cells('A' . $counter . ':C' . $counter, function ($cells) {
                         $cells->setAlignment('center');
                         $cells->setFontWeight('bold');
 
@@ -681,8 +728,8 @@ class AgreementController extends AdminController
                         $agreement->firstPosition->user->name,
 
                     ]);
-                    $sheet->mergeCells('C'.$counter.':D'.$counter);
-                    $sheet->cells('A'.$counter.':C'.$counter, function ($cells) {
+                    $sheet->mergeCells('C' . $counter . ':D' . $counter);
+                    $sheet->cells('A' . $counter . ':C' . $counter, function ($cells) {
                         $cells->setAlignment('center');
                         $cells->setFontWeight('bold');
 
@@ -694,7 +741,7 @@ class AgreementController extends AdminController
                 $maxPrintAreaRow = $counter++;
 
                 $sheet->getPageSetup()->setOrientation(PHPExcel_Worksheet_PageSetup::ORIENTATION_LANDSCAPE);
-                $sheet->getPageSetup()->setPrintArea('A1:D'.$maxPrintAreaRow);
+                $sheet->getPageSetup()->setPrintArea('A1:D' . $maxPrintAreaRow);
                 $sheet->getPageMargins()->setTop(1);
                 $sheet->getPageMargins()->setRight(0.75);
                 $sheet->getPageMargins()->setLeft(0.75);
@@ -705,35 +752,360 @@ class AgreementController extends AdminController
         })->export('xls');
     }
 
-    public function getDocumentForm($id)
-    {
-        return view('private.agreement.dropzone')
-            ->with('id', $id);
-    }
-
-    public function postDocument(Request $request, $id)
-    {
-
-        $agreement = Agreement::find($id);
-        $agreement->media()->attach($request->get('mediaId'));
-
-        return $agreement->media;
-    }
-
     /**
+     * @param Agreement $agreement
+     * @param Plan $plan
+     * @return mixed
      * @author Fathur Rohman <fathur@dragoncapital.center>
-     * @source  http://stackoverflow.com/questions/13313048/phpexcel-dynamic-row-height-for-merged-cells
-     * @param $text
-     * @param int $width
-     * @return int
      */
-    protected function getRowCount($text, $width = 100)
+    private function exportToExcelDirjen(Agreement $agreement, Plan $plan)
     {
-        $rc = 0;
-        $line = explode("\n", $text);
-        foreach($line as $source) {
-            $rc += intval((strlen($source) / $width) +1);
-        }
-        return $rc;
+        return \Excel::create(Carbon::now()->toDateTimeString(), function ($excel) use ($agreement, $plan) {
+
+            $excel->sheet('Pendahuluan', function ($sheet) use ($agreement, $plan) {
+
+                //$sheet->setAutoSize(true); // fix
+                $sheet->setWidth('A', 20); // fix
+                $sheet->setWidth('B', 50); // fix
+                $sheet->setWidth('C', 70); // fix
+
+                $sheet->row(1, [null, 'KEMENTERIAN PEKERJAAN UMUM DAN PERUMAHAN RAKYAT']);
+                $sheet->row(2, [null, 'REPUBLIK INDONESIA']);
+                $sheet->row(3, [null, 'Jl. Patimura No.2, Kebayoran Baru Jakarta Selatan 12110']);
+                $sheet->row(4, [null, 'Telepon/Fax (021) 7245751, (021) 7226601']);
+                $sheet->row(5, [null, 'www.pu.go.id']);
+                $sheet->mergeCells('B1:C1'); // fix
+                $sheet->mergeCells('B2:C2'); // fix
+                $sheet->mergeCells('B3:C3'); // fix
+                $sheet->mergeCells('B4:C4'); // fix
+                $sheet->mergeCells('B5:C5'); // fix
+                $sheet->cells('B1:B2', function ($cells) {
+                    $cells->setAlignment('center'); // fix
+                    $cells->setFontSize(22); // fix
+                    $cells->setFontWeight('bold'); // fix
+                });
+                $sheet->cells('B3:B5', function ($cells) {
+                    $cells->setAlignment('center'); // fix
+                    $cells->setFontSize(10); // fix
+                });
+                $sheet->setHeight(3, 12); // fix
+                $sheet->setHeight(4, 12); // fix
+                $sheet->setHeight(5, 12); // fix
+
+                $sheet->row(8, ['Dalam rangka mewujudkan manajemen pemerintahan yang efektif, transparan dan akuntabel serta berorientasi pada hasil, kami yang bertandatangan di bawah ini:']);
+                $sheet->mergeCells('A8:C8'); // fix
+                $sheet->getStyle('A8')->getAlignment()->setWrapText(true);
+                $sheet->setHeight(8, 30); // fix
+
+                $sheet->row(10, ['Nama', ': ' . $agreement->firstPosition->user->name,]);
+                $sheet->row(11, ['Jabatan', ': ' . $agreement->firstPosition->position]);
+
+                // http://stackoverflow.com/questions/8045056/phpexcel-how-to-make-part-of-the-text-bold
+                $pihakPertamaText = new \PHPExcel_RichText();
+                $pihakPertamaText->createText('Selanjutnya disebut ');
+
+                $pihakPertamaTextBold = $pihakPertamaText->createTextRun('pihak pertama');
+                $pihakPertamaTextBold->getFont()->setBold(true);
+
+                $sheet->row(13, [$pihakPertamaText]);
+
+                $sheet->row(15, ['Nama', ': ' . $agreement->secondPosition->user->name,]);
+                $sheet->row(16, ['Jabatan', ': ' . $agreement->secondPosition->position]);
+
+                $pihakKeduaText = new \PHPExcel_RichText();
+                $pihakKeduaText->createText('Selanjutnya disebut ');
+
+                $pihakKeduaTextBold = $pihakKeduaText->createTextRun('pihak kedua');
+                $pihakKeduaTextBold->getFont()->setBold(true);
+
+                $sheet->row(18, [$pihakKeduaText]);
+
+                $sheet->row(20, ['Pihak pertama berjanji akan mewujudkan target kinerja tahunan yang seharusnya sesuai lampiran ' .
+                    'perjanjian ini, dalam rangka mencapai target kinerja jangka menengah seperti yang telah ditetapkan ' .
+                    'dalam dokumen perencanaan. Keberhasilan dan kegagalan pencapaian target kinerja tersebut ' .
+                    'menjadi tanggungjawab kami.']);
+                $sheet->mergeCells('A20:C20'); // fix
+                $sheet->getStyle('A20')->getAlignment()->setWrapText(true);
+                $sheet->setHeight(20, 45); // fix
+
+
+                $sheet->row(22, ['Pihak kedua akan memberikan supervisi yang diperlukan serta akan melakukan evaluasi terhadap ' .
+                    'capaian kinerja dari perjanjian ini dan mengambil tindakan yang diperlukan dalam rangka pemberian ' .
+                    'penghargaan dan sanksi.']);
+                $sheet->mergeCells('A22:C22'); // fix
+                $sheet->getStyle('A22')->getAlignment()->setWrapText(true);
+                $sheet->setHeight(22, 30); // fix
+
+
+                $sheet->row(26, [
+                    null, null, 'Jakarta, ' . Carbon::parse($agreement->date)->formatLocalized('%d %B %Y')
+                ]);
+                $sheet->row(27, [
+                    'Pihak Kedua',
+                    null,
+                    'Pihak Pertama',
+                ]);
+                $sheet->mergeCells('A27:B27'); // fix
+
+                $sheet->row(32, [
+                    $agreement->secondPosition->user->name,
+                    null,
+                    $agreement->firstPosition->user->name,
+                ]);
+                $sheet->mergeCells('A32:B32'); // fix
+
+                $sheet->cells('A26:C32', function ($cells) {
+                    $cells->setAlignment('center'); // fix
+                    $cells->setFontWeight('bold'); // fix
+                });
+
+                $sheet->getPageSetup()->setOrientation(PHPExcel_Worksheet_PageSetup::ORIENTATION_LANDSCAPE);
+                $sheet->getPageSetup()->setPrintArea('A1:C33');
+                //$sheet->getPageSetup()->setFitToWidth(1);
+                //$sheet->getPageSetup()->setFitToHeight(0);
+                $sheet->getPageMargins()->setTop(0.5);
+                $sheet->getPageMargins()->setRight(0.5);
+                $sheet->getPageMargins()->setLeft(0.75);
+                $sheet->getPageMargins()->setBottom(0.5);
+
+
+            });
+
+            // Sheet 2
+            $excel->sheet('Perjanjian kinerja', function ($sheet) use ($agreement, $plan) {
+
+                //$sheet->setAutoSize(true); // fix
+                //$sheet->getDefaultRowDimension()->setRowHeight(-1);
+                $sheet->setWidth('A', 50); // fix
+                $sheet->setWidth('B', 50); // fix
+                $sheet->setWidth('C', 30); // fix
+                $sheet->setWidth('D', 20); // fix
+
+                // Set content heading
+                $sheet->row(1, ['PERJANJIAN KINERJA TAHUN ' . $agreement->year]);
+                $sheet->row(2, [(isset($agreement->firstPosition->unit) ? strtoupper($agreement->firstPosition->unit->name) : '...') . ' - ' . (isset($agreement->secondPosition->unit) ? strtoupper($agreement->secondPosition->unit->name) : '...')]);
+                $sheet->row(3, ['KEMENTERIAN PEKERJAAN UMUM DAN PERUMAHAN RAKYAT']);
+
+                // Set style heading
+                $sheet->mergeCells('A1:D1'); // fix
+                $sheet->mergeCells('A2:D2'); // fix
+                $sheet->mergeCells('A3:D3'); // fix
+                $sheet->cells('A1:A3', function ($cells) {
+                    $cells->setAlignment('center'); // fix
+                    $cells->setBackground('#000000'); // fix
+                    $cells->setFontColor('#ffffff'); // fix
+                    $cells->setFontSize(14); // fix
+                    $cells->setFontWeight('bold'); // fix
+                });
+
+                // Set content title table
+                $sheet->row(5, ['SASARAN PROGRAM', 'INDIKATOR KINERJA', null, 'TARGET']); // fix
+                $sheet->row(6, ['(1)', '(2)', null, '(3)']); // fix
+
+                // Set title table style
+                $sheet->mergeCells('B5:C5'); // fix
+                $sheet->mergeCells('B6:C6'); // fix
+                $sheet->mergeCells('B7:C7'); // fix
+
+                $sheet->cells('A5:D6', function ($cells) {
+                    $cells->setAlignment('center'); // fix
+                    $cells->setValignment('middle'); // fix
+                    $cells->setFontWeight('bold'); // fix
+                });
+                $sheet->setHeight(5, 30); // fix
+                $sheet->setBorder('A5:D7', PHPExcel_Style_Border::BORDER_THIN);
+
+                $counter = 8;
+                foreach ($plan->programs as $program) {
+                    // Set program dan kegiatan
+                    $sheet->row($counter, ['PROGRAM ' . strtoupper($program->name)]);
+                    $sheet->mergeCells('A' . $counter . ':D' . $counter);
+                    $sheet->cells('A' . $counter . ':D' . $counter, function ($cells) {
+                        $cells->setFontWeight('bold');
+                    });
+                    $sheet->setBorder('A' . $counter . ':D' . $counter, PHPExcel_Style_Border::BORDER_THIN);
+                    $counter++;
+
+                    $targets = Target::with('indicators')
+                        ->program($program->id)
+                        ->get();
+
+                    $k = 1;
+                    $outlineRowStart = $counter;
+                    foreach ($targets as $target) {
+                        $sheet->mergeCells('B' . $counter . ':C' . $counter);
+                        $counter++; // tambah baris kosong baru
+                        if(count($target->indicators) > 0) {
+                            $targetRowStart = $counter;
+                            $l = 1;
+                            foreach ($target->indicators as $indicator) {
+                                $goal = Goal::where('year', $agreement->year)
+                                    ->where('indicator_id', $indicator->id)
+                                    ->first();
+
+                                if($l == 1)
+                                {
+                                    $sheet->row($counter, [
+                                        $k . '. ' . $target->name, $l . '. ' . $indicator->name, null, isset($goal->count) ? ($goal->count . ' ' . $indicator->unit) : '-'
+                                    ]);
+
+                                    $sheet->getStyle('A' . $counter)->getAlignment()->setWrapText(true);
+                                    $sheet->cell('A' . $counter, function ($cells) {
+                                        $cells->setValignment('top');
+                                    });
+
+                                    $sheet->mergeCells('B' . $counter . ':C' . $counter);
+                                    $sheet->getStyle('B' . $counter)->getAlignment()->setWrapText(true);
+
+                                    $numRows = $this->getRowCount($indicator->name);
+                                    $sheet->getRowDimension($counter)->setRowHeight($numRows * 15);
+
+                                    $sheet->cell('D' . $counter, function ($cells) {
+                                        $cells->setValignment('top');
+                                    });
+                                    $counter++;
+                                }
+                                else
+                                {
+                                    $sheet->row($counter, [
+                                        null, $l . '. ' . $indicator->name, null, isset($goal->count) ? ($goal->count . ' ' . $indicator->unit) : '-'
+                                    ]);
+
+                                    $sheet->mergeCells('B' . $counter . ':C' . $counter);
+                                    $sheet->getStyle('B' . $counter)->getAlignment()->setWrapText(true);
+
+                                    $numRows = $this->getRowCount($indicator->name);
+                                    $sheet->getRowDimension($counter)->setRowHeight($numRows * 15);
+                                    $sheet->cell('D' . $counter, function ($cells) {
+                                        $cells->setValignment('top');
+                                    });
+                                    $counter++;
+                                }
+                                $l++;
+
+                            }
+                            $targetRowEnd = $counter - 1;
+                            $sheet->mergeCells('A' . $targetRowStart . ':A' . $targetRowEnd);
+
+
+                        }
+                        else
+                        {
+                            $sheet->row($counter, [
+                                $k . '. ' . $target->name, null, null, null
+                            ]);
+                            $sheet->getStyle('A' . $counter)->getAlignment()->setWrapText(true);
+                            $sheet->cell('A' . $counter, function ($cells) {
+                                $cells->setValignment('top');
+                            });
+                            $sheet->mergeCells('B' . $counter . ':C' . $counter);
+
+                            $counter++;
+                        }
+                        $k++;
+
+                    }
+                    $outlineRowEnd = $counter - 1;
+
+                    // Set content style
+                    $sheet->getStyle('A' . $outlineRowStart . ':D' . $outlineRowEnd)->applyFromArray(array(
+                        'borders' => array(
+                            'outline' => array(
+                                'style' => PHPExcel_Style_Border::BORDER_THIN,
+                            ),
+                        ),
+                    ));
+                    $sheet->getStyle('A' . $outlineRowStart . ':D' . $outlineRowEnd)->applyFromArray(array(
+                        'borders' => array(
+                            'vertical' => array(
+                                'style' => PHPExcel_Style_Border::BORDER_THIN,
+                            ),
+                        ),
+                    ));
+
+                    $counter++; // add empty line
+
+                    $sheet->row($counter, [
+                        'Program', null, 'Anggaran'
+                    ]);
+                    // Set footer style
+                    $sheet->cell('A' . $counter, function ($cells) {
+                        $cells->setFontWeight('bold');
+                    });
+                    $counter++;
+
+                    $budget = ProgramBudget::where('year', $agreement->year)
+                        ->where('program_id', $program->id)
+                        ->first();
+
+                    $sheet->row($counter, [
+                        $program->name, null, isset($budget->pagu) ? $budget->pagu : '-'
+                    ]);
+
+                    // Set footer style
+                    $sheet->cell('A' . $counter, function ($cells) {
+                        $cells->setFontWeight('bold');
+                    });
+                    $sheet->getStyle('C' . $counter)
+                        ->getNumberFormat()
+                        ->setFormatCode('_("$"* #,##0.00_);_("$"* \(#,##0.00\);_("$"* "-"??_);_(@_)');
+                    $counter++;
+
+                    $counter = $counter + 2;
+
+                    // Set signature content
+                    $sheet->row($counter, [
+                        null, null, 'Jakarta, ' . Carbon::parse($agreement->date)->formatLocalized('%d %B %Y')
+                    ]);
+                    $sheet->mergeCells('C' . $counter . ':D' . $counter);
+                    $sheet->cells('A' . $counter . ':C' . $counter, function ($cells) {
+                        $cells->setAlignment('center');
+                        $cells->setFontWeight('bold');
+
+                    });
+                    $counter++;
+
+                    $sheet->row($counter, [
+                        isset($agreement->secondPosition->position) ? $agreement->secondPosition->position : '',
+                        null,
+                        isset($agreement->firstPosition->position) ? $agreement->firstPosition->position : '',
+                    ]);
+                    $sheet->mergeCells('C' . $counter . ':D' . $counter);
+                    $sheet->cells('A' . $counter . ':C' . $counter, function ($cells) {
+                        $cells->setAlignment('center');
+                        $cells->setFontWeight('bold');
+
+                    });
+                    $counter = $counter + 5;
+
+                    $sheet->row($counter, [
+                        $agreement->secondPosition->user->name,
+                        null,
+                        $agreement->firstPosition->user->name,
+
+                    ]);
+                    $sheet->mergeCells('C' . $counter . ':D' . $counter);
+                    $sheet->cells('A' . $counter . ':C' . $counter, function ($cells) {
+                        $cells->setAlignment('center');
+                        $cells->setFontWeight('bold');
+
+                    });
+                    $counter++;
+
+                }
+
+
+                $maxPrintAreaRow = $counter++;
+
+                $sheet->getPageSetup()->setOrientation(PHPExcel_Worksheet_PageSetup::ORIENTATION_LANDSCAPE);
+                $sheet->getPageSetup()->setPrintArea('A1:D' . $maxPrintAreaRow);
+                $sheet->getPageMargins()->setTop(1);
+                $sheet->getPageMargins()->setRight(0.75);
+                $sheet->getPageMargins()->setLeft(0.75);
+                $sheet->getPageMargins()->setBottom(1);
+
+            });
+
+        })->export('xls');
     }
 }
