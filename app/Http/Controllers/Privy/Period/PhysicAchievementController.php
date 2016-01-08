@@ -301,9 +301,6 @@ class PhysicAchievementController extends AdminController
         }])->find($targetId);
 
         $indicators = [];
-        $count      = [];
-        $real       = [];
-
         foreach ($target->indicators as $indicator) {
 
             $indicators[$indicator->name] = [
@@ -311,29 +308,30 @@ class PhysicAchievementController extends AdminController
                 'real'  => 0
             ];
 
-            //array_push($indicators, $indicator->name);
-
             if(count($indicator->goals) > 0) {
-                //array_push($count, (int) $indicator->goals[0]->count);
                 $indicators[$indicator->name]['pagu'] = (int) $indicator->goals[0]->count;
                 $indicators[$indicator->name]['real'] = (int) $indicator->goals[0]->achievements[3]->realization;
+            }
+        }
 
-               /* if(count($indicator->goals[0]->achievements) > 0)
-                {
-                    array_push($real, (int) $indicator->goals[0]->achievements[3]->realization);
-                }
-                else {
-                    array_push($real, 0);
+        if($target->type == 'activity')
+        {
+            $activity = Activity::with([
+                'program'   => function($query) {
+                    $query->with('plan');
+                },
+                'unit'
+            ])->find($target->type_id);
 
-                }*/
-            } /*else {
-                array_push($count, 0);
-            }*/
+            //$agreement = Agreement::
+
         }
 
         //dd($indicators);
 
         return view('private.physic_achievement.table_one_year')
-            ->with('indicators', $indicators);
+            ->with('indicators', $indicators)
+            ->with('activity', $activity)
+            ->with('target', $target);
     }
 }
