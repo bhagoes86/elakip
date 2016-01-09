@@ -30,9 +30,16 @@ class PhysicAchievementController extends AdminController
             $plans[$plan->id] = $plan->period->year_begin . ' - ' . $plan->period->year_end;
         }
 
-        $units = [];
-        foreach (Unit::all() as $unit) {
-            $units[$unit->id]   = $unit->name;
+        if($this->authUser->role->id == Role::OPERATOR_ID)
+        {
+            $units[$this->authUser->positions[0]->unit->id] = $this->authUser->positions[0]->unit->name;
+        }
+        else
+        {
+            $units = [ 0 => 'All'];
+            foreach (Unit::all() as $unit) {
+                $units[$unit->id] = $unit->name;
+            }
         }
 
         return view('private.physic_achievement.filter')
@@ -322,13 +329,8 @@ class PhysicAchievementController extends AdminController
                 },
                 'unit'
             ])->find($target->type_id);
-
-            //$agreement = Agreement::
-
         }
-
-        //dd($indicators);
-
+        
         return view('private.physic_achievement.table_one_year')
             ->with('indicators', $indicators)
             ->with('activity', $activity)

@@ -24,9 +24,16 @@ class BudgetAchievementController extends AdminController
             $plans[$plan->id] = $plan->period->year_begin . ' - ' . $plan->period->year_end;
         }
 
-        $units = [];
-        foreach (Unit::all() as $unit) {
-            $units[$unit->id]   = $unit->name;
+        if($this->authUser->role->id == Role::OPERATOR_ID)
+        {
+            $units[$this->authUser->positions[0]->unit->id] = $this->authUser->positions[0]->unit->name;
+        }
+        else
+        {
+            $units = [ 0 => 'All'];
+            foreach (Unit::all() as $unit) {
+                $units[$unit->id] = $unit->name;
+            }
         }
 
         return view('private.budget_achievement.filter')

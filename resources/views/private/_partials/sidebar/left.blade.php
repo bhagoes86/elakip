@@ -42,7 +42,7 @@ START @SIDEBAR LEFT
         <li>
             <a href="{{route('renstra.index')}}">
                 <span class="icon"><i class="fa fa-home"></i></span>
-                <span class="text">Rencana Strategis</span>
+                <span class="text">Persiapan PK</span>
 
             </a>
         </li>

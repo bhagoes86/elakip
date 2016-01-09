@@ -10,7 +10,7 @@
         @if(!Gate::check('read-only'))
         <div class="row mbot-15">
             <div class="col-md-12">
-                <a href="{{route('pk.create')}}" class="btn btn-success"><i class="fa fa-plus"></i> New</a>
+                <a href="{{route('pk.create')}}" class="btn btn-success"><i class="fa fa-plus"></i> Buat baru</a>
             </div>
         </div>
         @endif
