@@ -16,10 +16,20 @@
                         <div class="pull-left">
                             <h3 class="panel-title">Filter Evaluasi</h3>
                         </div>
+                        <div class="pull-right">
+                            <button class="btn btn-sm"
+                                    data-action="collapse"
+                                    data-container="body"
+                                    data-toggle="tooltip"
+                                    data-placement="top"
+                                    data-title="Collapse"
+                                    data-original-title=""
+                                    title=""><i class="fa fa-angle-down"></i></button>
+                        </div>
                         <div class="clearfix"></div>
                     </div>
 
-                    <div class="panel-body">
+                    <div class="panel-body" style="display: none">
                         <form action="{{route('kegiatan.evaluasi')}}" method="get">
 
                             <div class="form-group">

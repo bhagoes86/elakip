@@ -15,10 +15,20 @@
                         <div class="pull-left">
                             <h3 class="panel-title">Filter Indicator</h3>
                         </div>
+                        <div class="pull-right">
+                            <button class="btn btn-sm"
+                                    data-action="collapse"
+                                    data-container="body"
+                                    data-toggle="tooltip"
+                                    data-placement="top"
+                                    data-title="Collapse"
+                                    data-original-title=""
+                                    title=""><i class="fa fa-angle-down"></i></button>
+                        </div>
                         <div class="clearfix"></div>
                     </div>
 
-                    <div class="panel-body">
+                    <div class="panel-body" style="display: none">
                         <form action="{{route('capaian.renstra.fisik.indicator')}}" method="get">
                             <div class="form-group">
                                 <label for="year">Rencana Strategis</label>
@@ -59,7 +69,7 @@
         </div>
 
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <div class="panel rounded shadow">
 
                     <div class="panel-heading">
@@ -70,18 +80,18 @@
                     </div>
 
                     <div class="panel-body">
-                        <div class="btn-group">
+                        {{--<div class="btn-group">--}}
                             @foreach($indicators['header']['years'] as $year)
                                 <button type="button" class="btn btn-danger year-chart" data-year="{{$year}}" data-title="{{$year}}">
                                     <i class="fa fa-bar-chart"></i> {{$year}}
                                 </button>
                             @endforeach
-                        </div>
+                        {{--</div>--}}
                     </div>
                 </div>
             </div>
 
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <div class="panel rounded shadow">
 
                     <div class="panel-heading">
@@ -92,13 +102,35 @@
                     </div>
 
                     <div class="panel-body">
-                        <div class="btn-group">
+                        {{--<div class="btn-group">--}}
                             @foreach($indicators['header']['years'] as $year)
                                 <button type="button" class="btn btn-success year-table" data-year="{{$year}}" data-title="{{$year}}">
                                     <i class="fa fa-table"></i> {{$year}}
                                 </button>
                             @endforeach
+                        {{--</div>--}}
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="panel rounded shadow">
+
+                    <div class="panel-heading">
+                        <div class="pull-left">
+                            <h3 class="panel-title">Tabel Triwulan Satu Tahun</h3>
                         </div>
+                        <div class="clearfix"></div>
+                    </div>
+
+                    <div class="panel-body">
+                        {{--<div class="btn-group">--}}
+                            @foreach($indicators['header']['years'] as $year)
+                                <button type="button" class="btn btn-success year-table" data-year="{{$year}}" data-title="{{$year}}">
+                                    <i class="fa fa-table"></i> {{$year}}
+                                </button>
+                            @endforeach
+                        {{--</div>--}}
                     </div>
                 </div>
             </div>

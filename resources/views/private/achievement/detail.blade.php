@@ -3,19 +3,6 @@
 @section('content')
     <div class="header-content">
         <h2><i class="fa fa-home"></i>Capaian Kinerja Kegiatan Fisik</h2>
-        {{-- <div class="breadcrumb-wrapper hidden-xs">
-             <span class="label">You are here:</span>
-             <ol class="breadcrumb">
-                 <li>
-                     <i class="fa fa-home"></i>
-                     <a href="#">Pengaturan</a>
-                     <i class="fa fa-angle-right"></i>
-                 </li>
-                 <li>
-                     Year
-                 </li>
-             </ol>
-         </div>--}}
     </div>
 
     <div class="body-content animated fadeIn">
@@ -28,10 +15,20 @@
                         <div class="pull-left">
                             <h3 class="panel-title">Filter Indicator</h3>
                         </div>
+                        <div class="pull-right">
+                            <button class="btn btn-sm"
+                                    data-action="collapse"
+                                    data-container="body"
+                                    data-toggle="tooltip"
+                                    data-placement="top"
+                                    data-title="Collapse"
+                                    data-original-title=""
+                                    title=""><i class="fa fa-angle-down"></i></button>
+                        </div>
                         <div class="clearfix"></div>
                     </div>
 
-                    <div class="panel-body">
+                    <div class="panel-body" style="display: none">
                         <form action="{{route('capaian.fisik.indicator')}}" method="get">
                             <div class="form-group">
                                 <label for="year">Rencana Strategis</label>
