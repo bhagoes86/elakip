@@ -10,6 +10,7 @@ use App\Models\Plan;
 use App\Models\Position;
 use App\Models\Program;
 use App\Models\ProgramBudget;
+use App\Models\Role;
 use App\Models\Target;
 use App\Models\Unit;
 use Carbon\Carbon;
@@ -31,10 +32,17 @@ class AgreementController extends AdminController
      */
     public function index()
     {
-
         $units = [ 0 => 'All'];
-        foreach (Unit::all() as $unit) {
-            $units[$unit->id] = $unit->name;
+
+        if($this->authUser->role->id == Role::OPERATOR_ID)
+        {
+            $units[$this->authUser->positions[0]->unit->id] = $this->authUser->positions[0]->unit->name;
+        }
+        else
+        {
+            foreach (Unit::all() as $unit) {
+                $units[$unit->id] = $unit->name;
+            }
         }
 
         $periods = Period::where('year_begin', 2015)->first();
