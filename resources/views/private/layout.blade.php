@@ -38,7 +38,7 @@
     <link href="{{asset('css/layout.css')}}" rel="stylesheet">
     <link href="{{asset('css/components.css')}}" rel="stylesheet">
     <link href="{{asset('css/plugins.css')}}" rel="stylesheet">
-    <link href="{{asset('css/themes/default.theme.css')}}" rel="stylesheet" id="theme">
+    <link href="{{asset('css/themes/pupera.css')}}" rel="stylesheet" id="theme">
     <link href="{{asset('css/app.css')}}" rel="stylesheet">
     {{--/ END THEME STYLES --}}
 
