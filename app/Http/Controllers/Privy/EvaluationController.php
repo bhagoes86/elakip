@@ -144,9 +144,11 @@ class EvaluationController extends AdminController
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param $activityId
+     * @param $evaluationId
      * @return \Illuminate\Http\Response
+     * @internal param int $id
      */
     public function update(Request $request, $activityId, $evaluationId)
     {
@@ -201,8 +203,6 @@ class EvaluationController extends AdminController
         $agreementId  = $request->get('agreement');
         $programId    = $request->get('program');
 
-        //$program = Program::with('activities')->find($programId);
-
         $selectedAgreement = Agreement::where('year', $year)->get();
         $selectedProgram = Program::where('plan_id', Agreement::find($agreementId)->plan_id)->get();
 
@@ -231,19 +231,29 @@ class EvaluationController extends AdminController
     {
         $programId = $request->get('program');
         $agreementId = $request->get('agreement');
+        $year = $request->get('year');
 
-        $agreement = Agreement::find($agreementId);
+        $agreement = Agreement::with([
+            'firstPosition' => function ($query) {
+                $query->with([
+                    'user',
+                    'unit'
+                ]);
+            }
+        ])
+            ->find($agreementId);
 
-        $program = Program::with(['activities' => function ($query) use ($agreement) {
+        $program = Program::with(['activities' => function ($query) use ($agreement, $year) {
 
-            $query->with(['evaluations' => function($query) use ($agreement) {
+            $query->with(['evaluations' => function($query) use ($year) {
 
-                $query->where('year', $agreement->year);
+                $query->where('year', $year);
 
             }]);
 
-        }])->find($programId);
+            $query->where('unit_id', $agreement->firstPosition->unit->id);
 
+        }])->find($programId);
 
         return Datatables::of($program->activities)
             ->editColumn('name', function($data) use ($agreement) {
