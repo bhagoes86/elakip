@@ -274,11 +274,26 @@ class AgreementController extends AdminController
             ->where('year', $year)->get();
 
         $options = '<option>-Select One-</option>';
+
+
         foreach ($agreements as $agreement) {
-            $options .= '<option value="'.$agreement->id.'">'.
-                $agreement->firstPosition->user->name.' ('.$agreement->firstPosition->unit->name.')'.' - '.
-                $agreement->secondPosition->user->name.' ('.$agreement->secondPosition->unit->name.')'.
-                '</option>';
+
+            if($this->authUser->role->id == Role::OPERATOR_ID)
+            {
+                if($agreement->firstPosition->unit->id == $this->authUser->positions[0]->unit->id)
+                {
+                    $options .= '<option value="'.$agreement->id.'">'.
+                        $agreement->firstPosition->user->name.' ('.$agreement->firstPosition->unit->name.')'.' - '.
+                        $agreement->secondPosition->user->name.' ('.$agreement->secondPosition->unit->name.')'.
+                        '</option>';
+                }
+            }
+            else {
+                $options .= '<option value="' . $agreement->id . '">' .
+                    $agreement->firstPosition->user->name . ' (' . $agreement->firstPosition->unit->name . ')' . ' - ' .
+                    $agreement->secondPosition->user->name . ' (' . $agreement->secondPosition->unit->name . ')' .
+                    '</option>';
+            }
         }
 
         return $options;
