@@ -7,6 +7,7 @@ use App\Models\Activity;
 use App\Models\Budget;
 use App\Models\Plan;
 use App\Models\Program;
+use App\Models\Role;
 use App\Models\Target;
 use App\Models\Unit;
 use Illuminate\Database\Eloquent\Collection;
