@@ -72,9 +72,9 @@ body.page-sidebar-minimize #header .navbar-minimize:hover > a {
 #sidebar-left.sidebar-box .sidebar-menu > li > ul > li:hover:after,
 #sidebar-left.sidebar-rounded .sidebar-menu > li > ul > li:hover:after,
 #sidebar-left.sidebar-circle .sidebar-menu > li > ul > li:hover:after {
-    -webkit-box-shadow: 0 0 0 5px #628a14;
-    -moz-box-shadow: 0 0 0 5px #628a14;
-    box-shadow: 0 0 0 5px #628a14;
+    -webkit-box-shadow: 0 0 0 5px #425f94;
+    -moz-box-shadow: 0 0 0 5px #425f94;
+    box-shadow: 0 0 0 5px #425f94;
 }
 #sidebar-left .sidebar-menu ul li:hover:after {
     background-color: #5577b4;
@@ -118,7 +118,7 @@ body.page-sidebar-minimize-auto .navbar-minimize a i {
 @media (max-width: 768px) {
     body.page-sidebar-left-show .navbar-minimize-mobile,
     body.page-sidebar-right-show .navbar-minimize-mobile {
-        background-color: #628a14;
+        background-color: #425f94;
     }
     body.page-sidebar-left-show .navbar-minimize-mobile:hover,
     body.page-sidebar-right-show .navbar-minimize-mobile:hover {
@@ -182,7 +182,7 @@ a {
 a:hover,
 a:active,
 a:focus {
-    color: #628a14;
+    color: #425f94;
 }
 input.no-border-left:focus,
 textarea.no-border-left:focus {
@@ -221,12 +221,12 @@ textarea:focus {
  * PAGINATION
  * ======================================================================== */
 .pagination > li > a {
-    color: #628a14;
+    color: #425f94;
 }
 .pagination > .active > a,
 .pagination > .active > span {
-    background-color: #628a14;
-    border: 1px solid #628a14;
+    background-color: #425f94;
+    border: 1px solid #425f94;
 }
 .pagination > .active > a:hover,
 .pagination > .active > span:hover,
@@ -236,7 +236,7 @@ textarea:focus {
     border: 1px solid #5577b4;
 }
 .pager > li > a {
-    color: #628a14;
+    color: #425f94;
 }
 /* ========================================================================
  * RATING STAR
@@ -383,7 +383,7 @@ a.list-group-item.active:focus {
     border: 1px solid #5577b4;
 }
 .btn-theme.btn-alt:hover {
-    background-color: #628a14;
+    background-color: #425f94;
 }
 .btn-theme.btn-stroke {
     border: 1px double #5577b4;
@@ -423,7 +423,7 @@ a.list-group-item.active:focus {
     height: 0;
     top: 0;
     left: 0;
-    background-color: #628a14;
+    background-color: #425f94;
     z-index: -1;
 }
 .btn-theme.btn-slidedown:hover,
@@ -439,7 +439,7 @@ a.list-group-item.active:focus {
     height: 100%;
     top: 0;
     left: 0;
-    background-color: #628a14;
+    background-color: #425f94;
     z-index: -1;
 }
 .btn-theme.btn-slideright:hover,
@@ -455,7 +455,7 @@ a.list-group-item.active:focus {
     height: 103%;
     top: 50%;
     left: 50%;
-    background-color: #628a14;
+    background-color: #425f94;
     opacity: 0;
     -webkit-transform: translateX(-50%) translateY(-50%);
     -moz-transform: translateX(-50%) translateY(-50%);
@@ -479,7 +479,7 @@ a.list-group-item.active:focus {
     height: 0;
     top: 50%;
     left: 50%;
-    background-color: #628a14;
+    background-color: #425f94;
     opacity: 0;
     -webkit-transform: translateX(-50%) translateY(-50%) rotate(45deg);
     -moz-transform: translateX(-50%) translateY(-50%) rotate(45deg);
@@ -503,7 +503,7 @@ a.list-group-item.active:focus {
     height: 0;
     top: 50%;
     left: 50%;
-    background-color: #628a14;
+    background-color: #425f94;
     opacity: 0;
     -webkit-transform: translateX(-50%) translateY(-50%);
     -moz-transform: translateX(-50%) translateY(-50%);
@@ -521,32 +521,32 @@ a.list-group-item.active:focus {
 }
 .btn-theme.btn-push {
     background: #5577b4;
-    box-shadow: 0 6px #628a14;
+    box-shadow: 0 6px #425f94;
     -webkit-transition: none;
     -moz-transition: none;
     transition: none;
 }
 .btn-theme.btn-push:hover {
-    box-shadow: 0 4px #628a14;
+    box-shadow: 0 4px #425f94;
     top: 2px;
 }
 .btn-theme.btn-push:active {
-    box-shadow: 0 0 #628a14;
+    box-shadow: 0 0 #425f94;
     top: 6px;
 }
 .btn-theme.btn-pushright {
     background: #5577b4;
-    box-shadow: 6px 0 #628a14;
+    box-shadow: 6px 0 #425f94;
     -webkit-transition: none;
     -moz-transition: none;
     transition: none;
 }
 .btn-theme.btn-pushright:hover {
-    box-shadow: 4px 0 #628a14;
+    box-shadow: 4px 0 #425f94;
     left: 2px;
 }
 .btn-theme.btn-pushright:active {
-    box-shadow: 0 0 #628a14;
+    box-shadow: 0 0 #425f94;
     left: 6px;
 }
 /* ========================================================================
@@ -645,7 +645,7 @@ a.list-group-item.active:focus {
     color: rgba(255, 255, 255, 0.5) !important;
 }
 .bg-theme .morris-hover-row-label {
-    background-color: #628a14;
+    background-color: #425f94;
 }
 #back-top:hover {
     background: #5577b4;
@@ -657,7 +657,7 @@ a.list-group-item.active:focus {
 }
 .jqvmap-zoomin:hover,
 .jqvmap-zoomout:hover {
-    background: #628a14 !important;
+    background: #425f94 !important;
 }
 /* ========================================================================
  * CHOSEN
@@ -685,7 +685,7 @@ a.list-group-item.active:focus {
     background-color: #5577b4;
 }
 .datepicker table thead tr:last-child {
-    background-color: #628a14;
+    background-color: #425f94;
 }
 .datepicker table thead tr th {
     background-color: #5577b4;
@@ -706,7 +706,7 @@ a.list-group-item.active:focus {
     background-color: #5577b4;
 }
 .datepicker table tbody tr td.active.active:hover {
-    background-color: #628a14;
+    background-color: #425f94;
 }
 .datepicker .icon-arrow-left:before {
     font-family: "FontAwesome";
