@@ -10,7 +10,7 @@ START @SIDEBAR LEFT
 |=========================================================================================================================|
 
 --}}
-<aside id="sidebar-left" class="sidebar-circle">
+<aside id="sidebar-left" class="sidebar-warning sidebar-circle">
 
     <!-- Start left navigation - profile shortcut -->
     <div id="tour-8" class="sidebar-content">
