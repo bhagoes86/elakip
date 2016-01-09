@@ -2823,7 +2823,11 @@ body.page-footer-fixed #page-content .footer-content {
   background-color: #f5b633 !important;
 }
 .sidebar-warning > .sidebar-menu > li:hover {
-  background-color: #f5b22a !important;
+  background-color: #4888E1 !important;
+}
+.sidebar-warning > .sidebar-menu > li:hover > a > .icon i {
+  border: 2px solid #5577B4 !important;
+  background-color: #4888E1 !important;
 }
 .sidebar-warning > .sidebar-menu > li:hover.submenu > ul > li:hover a {
   background-color: #f4ad1b !important;
@@ -2925,7 +2929,9 @@ body.page-footer-fixed #page-content .footer-content {
 .sidebar-warning.sidebar-box .sidebar-menu > li > a > .icon:after, .sidebar-warning.sidebar-rounded .sidebar-menu > li > a > .icon:after, .sidebar-warning.sidebar-circle .sidebar-menu > li > a > .icon:after {
   border: 1px solid #f7c051;
 }
-.sidebar-warning.sidebar-box .sidebar-menu > li > a > .icon i, .sidebar-warning.sidebar-rounded .sidebar-menu > li > a > .icon i, .sidebar-warning.sidebar-circle .sidebar-menu > li > a > .icon i {
+.sidebar-warning.sidebar-box .sidebar-menu > li > a > .icon i,
+.sidebar-warning.sidebar-rounded .sidebar-menu > li > a > .icon i,
+.sidebar-warning.sidebar-circle .sidebar-menu > li > a > .icon i {
   border: 2px solid #f7c051;
   background-color: #f6bf4c;
 }
