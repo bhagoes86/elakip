@@ -32,7 +32,6 @@ class AgreementController extends AdminController
      */
     public function index()
     {
-        $units = [ 0 => 'All'];
 
         if($this->authUser->role->id == Role::OPERATOR_ID)
         {
@@ -40,6 +39,7 @@ class AgreementController extends AdminController
         }
         else
         {
+            $units = [ 0 => 'All'];
             foreach (Unit::all() as $unit) {
                 $units[$unit->id] = $unit->name;
             }
