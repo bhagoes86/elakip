@@ -62,7 +62,7 @@ START @SIDEBAR LEFT
                 @endif
 
                 <li><a href="{{route('pk.index')}}">Daftar perjanjian kinerja</a></li>
-                <li><a href="{{route('pk.index')}}">Tanpa PK</a></li>
+                {{-- <li><a href="{{route('pk.index')}}">Tanpa PK</a></li> --}}
             </ul>
         </li>
 
