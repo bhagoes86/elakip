@@ -337,4 +337,84 @@ class PhysicAchievementController extends AdminController
             ->with('activity', $activity)
             ->with('target', $target);
     }
+
+    public function getTableQuarterOneYear($targetId, $year)
+    {
+        $target = Target::with(['indicators' => function ($query)  use ($year) {
+            $query->with(['goals' => function ($query) use ($year) {
+                $query->with('achievements');
+                $query->where('year', $year);
+            }]);
+
+        }])->find($targetId);
+
+        $indicators = [];
+        foreach ($target->indicators as $indicator) {
+            $indicators[$indicator->name] = [
+                'target'    => 0,
+                'satuan'    => '',
+                'quarter'   => [
+                    1   => [
+                        'target'    => 0,
+                        'capaian'   => 0,
+                        'prosentase'    => 0
+                    ],
+                    2   => [
+                        'target'    => 0,
+                        'capaian'   => 0,
+                        'prosentase'    => 0
+                    ],
+                    3   => [
+                        'target'    => 0,
+                        'capaian'   => 0,
+                        'prosentase'    => 0
+                    ],
+                    4   => [
+                        'target'    => 0,
+                        'capaian'   => 0,
+                        'prosentase'    => 0
+                    ],
+                ]
+            ];
+
+
+            if(count($indicator->goals) > 0) {
+                $indicators[$indicator->name] = [
+                    'target'    => (int) $indicator->goals[0]->count,
+                    'satuan'    => $indicator->unit
+                ];
+
+                foreach ($indicator->goals[0]->achievements as $achievement) {
+                    $indicators[$indicator->name]['quarter'][$achievement->quarter] = [
+                        'target'    => $achievement->plan,
+                        'capaian'   => $achievement->realization,
+                    ];
+
+                    if($achievement->plan != 0) {
+                        $indicators[$indicator->name]['quarter'][$achievement->quarter]['prosentase'] = $achievement->realization / $achievement->plan  * 100;
+                    }
+                    else{
+                        $indicators[$indicator->name]['quarter'][$achievement->quarter]['prosentase'] = 0;
+                    }
+                }
+
+            }
+        }
+
+
+        if($target->type == 'activity')
+        {
+            $activity = Activity::with([
+                'program'   => function($query) {
+                    $query->with('plan');
+                },
+                'unit'
+            ])->find($target->type_id);
+        }
+
+        return view('private.physic_achievement.table_quarter_one_year')
+            ->with('indicators', $indicators)
+            ->with('activity', $activity)
+            ->with('target', $target);
+    }
 }

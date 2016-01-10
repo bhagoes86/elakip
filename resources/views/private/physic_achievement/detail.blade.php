@@ -126,7 +126,7 @@
                     <div class="panel-body">
                         {{--<div class="btn-group">--}}
                             @foreach($indicators['header']['years'] as $year)
-                                <button type="button" class="btn btn-success year-table" data-year="{{$year}}" data-title="{{$year}}">
+                                <button type="button" class="btn btn-success quarter-table" data-year="{{$year}}" data-title="{{$year}}">
                                     <i class="fa fa-table"></i> {{$year}}
                                 </button>
                             @endforeach
@@ -320,6 +320,22 @@
 
                 $('#' + modalId + '-label').html(title);
                 $.get('{{url('capaian/renstra/fisik/target') .'/'. $id['target']}}/year/'+year+'/table', function(r) {
+                    return $('#' + modalId + ' .modal-body').html(r);
+                });
+                return $('#' + modalId).modal();
+            });
+
+            $('.quarter-table').click(function(){
+                var $this = $(this);
+                var modalId = '{{$viewId}}-lg';
+                var title = $this.data('title');
+                var year = $this.data('year');
+
+                console.log($this);
+
+                $('#' + modalId + '-label').html(title);
+                $('#' + modalId + ' .modal-body').html('');
+                $.get('{{url('capaian/renstra/fisik/target') .'/'. $id['target']}}/year/'+year+'/quarter', function(r) {
                     return $('#' + modalId + ' .modal-body').html(r);
                 });
                 return $('#' + modalId).modal();
