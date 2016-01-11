@@ -28,10 +28,10 @@
                 <tr>
                     <th rowspan="2">Indikator</th>
                     <th rowspan="2">Target</th>
-                    <th colspan="3" class="text-center">I</th>
-                    <th colspan="3" class="text-center">II</th>
-                    <th colspan="3" class="text-center">III</th>
-                    <th colspan="2" class="text-center">IV</th>
+                    <th colspan="3" class="text-center">TW I</th>
+                    <th colspan="3" class="text-center">TW II</th>
+                    <th colspan="3" class="text-center">TW III</th>
+                    <th colspan="2" class="text-center">TW IV</th>
                     <th rowspan="2">Capian Kinerja</th>
                 </tr>
                 <tr>
@@ -60,19 +60,19 @@
 
                         <td>{{$attribute['quarter'][1]['target']}}</td>
                         <td>{{$attribute['quarter'][1]['capaian']}}</td>
-                        <td>{{$attribute['quarter'][1]['prosentase']}} %</td>
+                        <td>{{round($attribute['quarter'][1]['prosentase'], 2)}} %</td>
 
                         <td>{{$attribute['quarter'][2]['target']}}</td>
                         <td>{{$attribute['quarter'][2]['capaian']}}</td>
-                        <td>{{$attribute['quarter'][2]['prosentase']}} %</td>
+                        <td>{{round($attribute['quarter'][2]['prosentase'], 2)}} %</td>
 
                         <td>{{$attribute['quarter'][3]['target']}}</td>
                         <td>{{$attribute['quarter'][3]['capaian']}}</td>
-                        <td>{{$attribute['quarter'][3]['prosentase']}} %</td>
+                        <td>{{round($attribute['quarter'][3]['prosentase'], 2)}} %</td>
 
                         <td>{{$attribute['quarter'][4]['target']}}</td>
                         <td>{{$attribute['quarter'][4]['capaian']}}</td>
-                        <td>{{$attribute['quarter'][4]['prosentase']}} %</td>
+                        <td>{{round($attribute['quarter'][4]['prosentase'], 2)}} %</td>
                     </tr>
                     @endforeach
 
