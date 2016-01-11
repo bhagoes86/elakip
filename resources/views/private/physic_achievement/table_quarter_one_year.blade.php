@@ -35,20 +35,20 @@
                     <th rowspan="2">Capian Kinerja</th>
                 </tr>
                 <tr>
-                    <th>Target</th>
-                    <th>Capaian</th>
+                    <th>RN</th>
+                    <th>RL</th>
                     <th>Kinerja</th>
 
-                    <th>Target</th>
-                    <th>Capaian</th>
+                    <th>RN</th>
+                    <th>RL</th>
                     <th>Kinerja</th>
 
-                    <th>Target</th>
-                    <th>Capaian</th>
+                    <th>RN</th>
+                    <th>RL</th>
                     <th>Kinerja</th>
 
-                    <th>Target</th>
-                    <th>Capaian</th>
+                    <th>RN</th>
+                    <th>RL</th>
                 </tr>
                 </thead>
 
