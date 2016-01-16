@@ -60,7 +60,9 @@
                 },
                 columns: [
                     {data:'title',name:'title'}
-                ]
+                ],
+                // paging: false,
+                // "bFilter": false
             });
         });
     </script>

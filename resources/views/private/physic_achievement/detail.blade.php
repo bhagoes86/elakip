@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="header-content">
-        <h2><i class="fa fa-home"></i>Capaian Kinerja Kegiatan Fisik Renstra</h2>
+        <h2><i class="fa fa-home"></i>Capaian Kinerja Kegiatan Fisik</h2>
     </div>
 
     <div class="body-content animated fadeIn">
@@ -13,7 +13,7 @@
 
                     <div class="panel-heading">
                         <div class="pull-left">
-                            <h3 class="panel-title">Filter Indicator</h3>
+                            <h3 class="panel-title">Filter Indikator</h3>
                         </div>
                         <div class="pull-right">
                             <button class="btn btn-sm"
@@ -29,7 +29,7 @@
                     </div>
 
                     <div class="panel-body" style="display: none">
-                        <form action="{{route('capaian.renstra.fisik.indicator')}}" method="get">
+                        <form action="{{route('capaian.renstra.fisik.indikator')}}" method="get">
                             <div class="form-group">
                                 <label for="year">Rencana Strategis</label>
                                 {!! Form::select('plan', $plans, $id['plan'], [
@@ -74,14 +74,14 @@
 
                     <div class="panel-heading">
                         <div class="pull-left">
-                            <h3 class="panel-title">Grafik Satu Tahun</h3>
+                            <h3 class="panel-title">Grafik Per Tahun</h3>
                         </div>
                         <div class="clearfix"></div>
                     </div>
 
                     <div class="panel-body">
                         {{--<div class="btn-group">--}}
-                            @foreach($indicators['header']['years'] as $year)
+                            @foreach($indikators['header']['years'] as $year)
                                 <button type="button" class="btn btn-danger year-chart" data-year="{{$year}}" data-title="{{$year}}">
                                     <i class="fa fa-bar-chart"></i> {{$year}}
                                 </button>
@@ -96,14 +96,14 @@
 
                     <div class="panel-heading">
                         <div class="pull-left">
-                            <h3 class="panel-title">Tabel Satu Tahun</h3>
+                            <h3 class="panel-title">Tabel Per Tahun</h3>
                         </div>
                         <div class="clearfix"></div>
                     </div>
 
                     <div class="panel-body">
                         {{--<div class="btn-group">--}}
-                            @foreach($indicators['header']['years'] as $year)
+                            @foreach($indikators['header']['years'] as $year)
                                 <button type="button" class="btn btn-success year-table" data-year="{{$year}}" data-title="{{$year}}">
                                     <i class="fa fa-table"></i> {{$year}}
                                 </button>
@@ -118,14 +118,14 @@
 
                     <div class="panel-heading">
                         <div class="pull-left">
-                            <h3 class="panel-title">Tabel Triwulan Satu Tahun</h3>
+                            <h3 class="panel-title">Tabel Triwulan Per Tahun</h3>
                         </div>
                         <div class="clearfix"></div>
                     </div>
 
                     <div class="panel-body">
                         {{--<div class="btn-group">--}}
-                            @foreach($indicators['header']['years'] as $year)
+                            @foreach($indikators['header']['years'] as $year)
                                 <button type="button" class="btn btn-success quarter-table" data-year="{{$year}}" data-title="{{$year}}">
                                     <i class="fa fa-table"></i> {{$year}}
                                 </button>
@@ -142,7 +142,7 @@
 
                     <div class="panel-heading">
                         <div class="pull-left">
-                            <h3 class="panel-title">Detail indicator</h3>
+                            <h3 class="panel-title">Detil indikator</h3>
                         </div>
                         <div class="clearfix"></div>
                     </div>
@@ -155,16 +155,16 @@
                                 <th rowspan="2">Indikator</th>
                                 <th rowspan="2" class="text-center">Satuan</th>
 
-                                <th colspan="{{count($indicators['header']['years'])+1}}" class="text-center">Target</th>
-                                <th colspan="{{count($indicators['header']['years'])+1}}" class="text-center">Capaian</th>
+                                <th colspan="{{count($indikators['header']['years'])+1}}" class="text-center">Target</th>
+                                <th colspan="{{count($indikators['header']['years'])+1}}" class="text-center">Capaian</th>
                             </tr>
                             <tr>
-                                @foreach($indicators['header']['years'] as $year)
+                                @foreach($indikators['header']['years'] as $year)
                                     <th class="text-center">{{$year}}</th>
                                 @endforeach
                                 <th class="text-center"><b>Total</b></th>
 
-                                @foreach($indicators['header']['years'] as $year)
+                                @foreach($indikators['header']['years'] as $year)
                                     <th class="text-center">{{$year}}</th>
                                 @endforeach
                                 <th class="text-center"><b>Total</b></th>
@@ -173,30 +173,30 @@
 
                             </thead>
                             <tbody>
-                            @foreach($indicators['data'] as $indicator)
+                            @foreach($indikators['data'] as $indikator)
                                 <tr>
                                     <td>
-                                        <span>{{$indicator['name']}}</span>
+                                        <span>{{$indikator['name']}}</span>
                                         <button class="btn btn-xs btn-primary btn-chart"
                                                 onclick="showEdit(this)"
                                                 data-modal-id="{{$viewId}}"
-                                                data-url="{{route('capaian.renstra.fisik.indicator.chart', $indicator['id'])}}"
-                                                data-title="{{$indicator['name']}}">
+                                                data-url="{{route('capaian.renstra.fisik.indikator.chart', $indikator['id'])}}"
+                                                data-title="{{$indikator['name']}}">
 
                                             <i class="fa fa-bar-chart"></i>
                                         </button>
                                     </td>
-                                    <td>{{$indicator['unit']}}</td>
+                                    <td>{{$indikator['unit']}}</td>
 
-                                    @foreach($indicator['goal']['years'] as $year => $value)
+                                    @foreach($indikator['goal']['years'] as $year => $value)
                                         <td>{{$value}}</td>
                                     @endforeach
-                                    <td>{{$indicator['goal']['total']}}</td>
+                                    <td>{{$indikator['goal']['total']}}</td>
 
-                                    @foreach($indicator['achievement']['years'] as $year => $value)
+                                    @foreach($indikator['achievement']['years'] as $year => $value)
                                         <td>{{$value}}</td>
                                     @endforeach
-                                    <td>{{$indicator['achievement']['total']}}</td>
+                                    <td>{{$indikator['achievement']['total']}}</td>
 
                                 </tr>
                             @endforeach
