@@ -159,12 +159,14 @@
     <script src="{{asset('lib/datatables/media/js/jquery.dataTables.min.js')}}"></script>
     <script src="{{asset('lib/datatables/media/js/dataTables.bootstrap.min.js')}}"></script>
     <script src="{{asset('lib/x-editable/dist/bootstrap3-editable/js/bootstrap-editable.min.js')}}"></script>
+    <script src="{{asset('lib/dropzone/dist/min/dropzone.min.js')}}"></script>
+
 @stop
 
 @section('styles')
     <link rel="stylesheet" href="{{asset('lib/datatables/media/css/dataTables.bootstrap.min.css')}}"/>
     <link rel="stylesheet" href="{{asset('lib/x-editable/dist/bootstrap3-editable/css/bootstrap-editable.css')}}"/>
-
+    <link rel="stylesheet" href="{{asset('lib/dropzone/dist/min/dropzone.min.css')}}">
 @stop
 
 @section('script')

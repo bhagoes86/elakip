@@ -17,6 +17,10 @@
         <i class="fa fa-file-excel-o"></i>
     </a>
 
+    <a href="{{$pdf_action}}" class="btn btn-xs btn-danger" title="Download pdf">
+        <i class="fa fa-file-pdf-o"></i>
+    </a>
+
 </div>
 
 {{--

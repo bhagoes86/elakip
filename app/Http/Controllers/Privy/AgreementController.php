@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Privy;
 use App\Models\Agreement;
 use App\Models\Budget;
 use App\Models\Goal;
+use App\Models\Media;
 use App\Models\Period;
 use App\Models\Plan;
 use App\Models\Position;
@@ -247,6 +248,7 @@ class AgreementController extends AdminController
 
                     ->with('show_action', route('pk.program.index', [$data->id]))
                     ->with('export_action', route('pk.export', $data->id))
+                    ->with('pdf_action', route('pk.scanned', $data->id))
                     ->render();
 
             })
@@ -1130,5 +1132,30 @@ class AgreementController extends AdminController
             });
 
         })->export('xls');
+    }
+
+    /**
+     * @author Fathur Rohman <fathur@dragoncapital.center>
+     * @param $agreementId
+     * @return \Symfony\Component\HttpFoundation\BinaryFileResponse
+     */
+    public function getScanned($agreementId)
+    {
+        $am = \DB::table('agreement_media')
+            ->orderBy('created_at', 'desc')
+            ->where('agreement_id', $agreementId)
+            ->first();
+
+
+        if($am != null) {
+            $media = Media::find($am->media_id);
+
+            return \Response::download(public_path() . '/' . $media->location, $media->original_name);
+        }
+        else {
+            return \Redirect::back();
+        }
+
+
     }
 }
