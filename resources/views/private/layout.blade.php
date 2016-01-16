@@ -49,7 +49,9 @@
     <script src="{{asset('lib/respond-minmax/dest/respond.min.js')}}"></script>
     <![endif]-->
     <!--/ END IE SUPPORT -->
-
+    <script>
+        var baseUrl = '{{url('/')}}';
+    </script>
     @yield('style')
 </head>
 

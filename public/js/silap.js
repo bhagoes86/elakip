@@ -193,6 +193,11 @@ function confirmDelete (anchor) {
 
 
 $(function(){
+    if(window.location.href == baseUrl + '/profile') {
+        console.log('profile');
+        localStorage.removeItem('menu-active-id');
+    }
+
     $('.sidebar-menu li > a').click(function(){
         var $this = $(this);
         var href = $this.attr('href');
@@ -221,6 +226,8 @@ $(function(){
         // $('.submenu#setting').addClass('active');
         $('.sidebar-menu .active > a').append('<span class="selected"></span>');
     }
+
+    
 });
 
 // Execute here
