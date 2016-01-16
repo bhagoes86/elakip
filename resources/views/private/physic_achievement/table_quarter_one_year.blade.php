@@ -32,20 +32,20 @@
                     <th colspan="3" class="text-center">TW II</th>
                     <th colspan="3" class="text-center">TW III</th>
                     <th colspan="2" class="text-center">TW IV</th>
-                    <th rowspan="2">Capian Kinerja</th>
+                    <th rowspan="2">Capaian Kinerja</th>
                 </tr>
                 <tr>
                     <th>RN</th>
                     <th>RL</th>
-                    <th>Kinerja</th>
+                    <th>%&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
 
                     <th>RN</th>
                     <th>RL</th>
-                    <th>Kinerja</th>
+                    <th>%&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
 
                     <th>RN</th>
                     <th>RL</th>
-                    <th>Kinerja</th>
+                    <th>%&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
 
                     <th>RN</th>
                     <th>RL</th>

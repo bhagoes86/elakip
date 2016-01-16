@@ -158,7 +158,7 @@
                                     <th rowspan="2" class="text-center">Satuan</th>
 
                                     <th colspan="{{count($indicators['header']['years'])+1}}" class="text-center">Target</th>
-                                    <th colspan="{{count($indicators['header']['years'])+1}}" class="text-center">Capaian</th>
+                                    <th colspan="{{count($indicators['header']['years'])+1}}" class="text-center">Realisasi</th>
                                 </tr>
                                 <tr>
                                     @foreach($indicators['header']['years'] as $year)

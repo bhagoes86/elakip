@@ -27,8 +27,8 @@
                 <tr>
                     <th>Indikator</th>
                     <th>Target</th>
-                    <th>Capaian</th>
-                    <th>Prosentase</th>
+                    <th>Realisasi</th>
+                    <th>%&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
                 </tr>
             </thead>
             <tbody>
