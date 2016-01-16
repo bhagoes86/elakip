@@ -237,7 +237,10 @@
                     @if(!Gate::check('read-only'))
                     {data:'action',name:'action', orderable:false, searchable:false}
                     @endif
-                ]
+                ],
+                bPaginate: false,
+                bInfo: false,
+                bFilter: false
             });
 
             var table = $('#{{$viewId}}-kegiatan-datatables').DataTable({
@@ -259,7 +262,10 @@
                     @if(!Gate::check('read-only'))
                     {data:'action',name:'action', orderable:false, searchable:false}
                     @endif
-                ]
+                ],
+                bPaginate: false,
+                bInfo: false,
+                bFilter: false
             });
 
             autosize($('textarea'));

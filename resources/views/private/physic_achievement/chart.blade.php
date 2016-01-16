@@ -6,7 +6,8 @@
             type: 'column'
         },
         title: {
-            text: 'Grafik Capaian Kinerja Kegiatan Fisik 2015-2019'
+            {{--text: 'Grafik Indikator {{$indicator->name}} 2015-2019'--}}
+            text: null
         },
 
         xAxis: {

@@ -7,6 +7,7 @@ use App\Models\Activity;
 use App\Models\Agreement;
 use App\Models\Goal;
 use App\Models\Indicator;
+use App\Models\Period;
 use App\Models\Plan;
 use App\Models\Program;
 use App\Models\Role;
@@ -26,10 +27,13 @@ class PhysicAchievementController extends AdminController
      */
     public function getFilter()
     {
-        $plans = [];
+        /*$plans = [];
         foreach (Plan::with('period')->get() as $plan) {
             $plans[$plan->id] = $plan->period->year_begin . ' - ' . $plan->period->year_end;
-        }
+        }*/
+
+        $period = Period::where('year_begin', Period::YEAR_BEGIN)->first();
+        $plan = Plan::where('period_id', $period->id)->first();
 
         if($this->authUser->role->id == Role::OPERATOR_ID)
         {
@@ -44,7 +48,7 @@ class PhysicAchievementController extends AdminController
         }
 
         return view('private.physic_achievement.filter')
-            ->with('plans', $plans)
+            ->with('plan', $plan)
             ->with('units', $units);
     }
 
@@ -163,6 +167,7 @@ class PhysicAchievementController extends AdminController
 
     /**
      * @param Request $request
+     * @param $indicatorId
      * @return \BladeView|bool|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      * @author Fathur Rohman <fathur@dragoncapital.center>
      */
@@ -174,6 +179,8 @@ class PhysicAchievementController extends AdminController
         }])
             ->whereBetween('year', [2015,2019])
             ->where('indicator_id', $indicatorId)->get();
+
+        $indicator = Indicator::find($indicatorId);
 
         //dd($goals->toArray());
 
@@ -192,6 +199,7 @@ class PhysicAchievementController extends AdminController
         $real = $real_holder;
 
         return view('private.physic_achievement.chart')
+            ->with('indicator', $indicator)
             ->with('years', json_encode($years))
             ->with('count', json_encode($count))
             ->with('real', json_encode($real));

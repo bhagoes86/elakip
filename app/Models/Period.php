@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Period extends Model
 {
+    const YEAR_BEGIN = 2015;    // Tahun awal
+    const LONG = 5;             // Lama periode
+
     protected $fillable = ['year_begin', 'year_end'];
 
     /**

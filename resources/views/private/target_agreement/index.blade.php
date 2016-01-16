@@ -108,7 +108,10 @@
                 },
                 columns: [
                     {data:'name',name:'name'}
-                ]
+                ],
+                bPaginate: false,
+                bInfo: false,
+                bFilter: false
             });
         });
     </script>

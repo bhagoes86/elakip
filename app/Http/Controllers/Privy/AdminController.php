@@ -19,7 +19,7 @@ class AdminController extends Controller {
     function __construct()
     {
 
-
+        setlocale(LC_MONETARY, 'id_ID');
         view()->share('viewId', $this->identifier);
 
         if(\Auth::check()) {

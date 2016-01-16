@@ -13,7 +13,7 @@
         <div class="navbar-header">
 
             <!-- Start brand -->
-            <a id="tour-1" class="navbar-brand" href="dashboard.html">
+            <a id="tour-1" class="navbar-brand" href="{{route('dashboard')}}">
                 <img class="logo" src="{{asset('img/logoPU.jpg')}}" alt="brand logo">
             </a><!-- /.navbar-brand -->
             <!--/ End brand -->
@@ -47,7 +47,7 @@
                 </li>
                 <!--/ End sidebar shrink -->
 
-                <!-- Start form search -->
+                {{--<!-- Start form search -->
                 <li class="navbar-search">
                     <!-- Just view on mobile screen-->
                     <a href="#" class="trigger-search"><i class="fa fa-search"></i></a>
@@ -58,7 +58,7 @@
                         </div>
                     </form>
                 </li>
-                <!--/ End form search -->
+                <!--/ End form search -->--}}
 
             </ul><!-- /.nav navbar-nav navbar-left -->
             <!--/ End left navigation -->

@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="header-content">
-        <h2><i class="fa fa-home"></i>Capaian Kinerja Kegiatan Fisik</h2>
+        <h2><i class="fa fa-home"></i>Capaian Kinerja Sasaran Program/Kegiatan</h2>
     </div>
 
     <div class="body-content animated fadeIn">
@@ -29,14 +29,16 @@
                     </div>
 
                     <div class="panel-body" style="display: none">
-                        <form action="{{route('capaian.renstra.fisik.indikator')}}" method="get">
-                            <div class="form-group">
+                        <form action="{{route('capaian.renstra.fisik.indicator')}}" method="get">
+                            {!! Form::hidden('plan', $id['plan'], ['id' => 'plan']) !!}
+
+                            {{--<div class="form-group">
                                 <label for="year">Rencana Strategis</label>
                                 {!! Form::select('plan', $plans, $id['plan'], [
                                     'placeholder' => '-Select Renstra-',
                                     'class' => 'form-control',
                                     'id'=>'plan']) !!}
-                            </div>
+                            </div>--}}
 
                             <div class="form-group">
                                 <label for="unit">Unit</label>
@@ -81,7 +83,7 @@
 
                     <div class="panel-body">
                         {{--<div class="btn-group">--}}
-                            @foreach($indikators['header']['years'] as $year)
+                            @foreach($indicators['header']['years'] as $year)
                                 <button type="button" class="btn btn-danger year-chart" data-year="{{$year}}" data-title="{{$year}}">
                                     <i class="fa fa-bar-chart"></i> {{$year}}
                                 </button>
@@ -103,7 +105,7 @@
 
                     <div class="panel-body">
                         {{--<div class="btn-group">--}}
-                            @foreach($indikators['header']['years'] as $year)
+                            @foreach($indicators['header']['years'] as $year)
                                 <button type="button" class="btn btn-success year-table" data-year="{{$year}}" data-title="{{$year}}">
                                     <i class="fa fa-table"></i> {{$year}}
                                 </button>
@@ -125,7 +127,7 @@
 
                     <div class="panel-body">
                         {{--<div class="btn-group">--}}
-                            @foreach($indikators['header']['years'] as $year)
+                            @foreach($indicators['header']['years'] as $year)
                                 <button type="button" class="btn btn-success quarter-table" data-year="{{$year}}" data-title="{{$year}}">
                                     <i class="fa fa-table"></i> {{$year}}
                                 </button>
@@ -155,16 +157,16 @@
                                 <th rowspan="2">Indikator</th>
                                 <th rowspan="2" class="text-center">Satuan</th>
 
-                                <th colspan="{{count($indikators['header']['years'])+1}}" class="text-center">Target</th>
-                                <th colspan="{{count($indikators['header']['years'])+1}}" class="text-center">Capaian</th>
+                                <th colspan="{{count($indicators['header']['years'])+1}}" class="text-center">Target</th>
+                                <th colspan="{{count($indicators['header']['years'])+1}}" class="text-center">Capaian</th>
                             </tr>
                             <tr>
-                                @foreach($indikators['header']['years'] as $year)
+                                @foreach($indicators['header']['years'] as $year)
                                     <th class="text-center">{{$year}}</th>
                                 @endforeach
                                 <th class="text-center"><b>Total</b></th>
 
-                                @foreach($indikators['header']['years'] as $year)
+                                @foreach($indicators['header']['years'] as $year)
                                     <th class="text-center">{{$year}}</th>
                                 @endforeach
                                 <th class="text-center"><b>Total</b></th>
@@ -173,30 +175,32 @@
 
                             </thead>
                             <tbody>
-                            @foreach($indikators['data'] as $indikator)
+                            @foreach($indicators['data'] as $indicator)
                                 <tr>
                                     <td>
-                                        <span>{{$indikator['name']}}</span>
+                                        <span>{{$indicator['name']}}</span>
                                         <button class="btn btn-xs btn-primary btn-chart"
                                                 onclick="showEdit(this)"
                                                 data-modal-id="{{$viewId}}"
-                                                data-url="{{route('capaian.renstra.fisik.indikator.chart', $indikator['id'])}}"
-                                                data-title="{{$indikator['name']}}">
+                                                data-url="{{route('capaian.renstra.fisik.indicator.chart', $indicator['id'])}}"
+{{--                                                data-title="{{$indicator['name']}}">--}}
+                                                data-title="Grafik Indikator {{$indicator['name']}} 2015-2019">
+
 
                                             <i class="fa fa-bar-chart"></i>
                                         </button>
                                     </td>
-                                    <td>{{$indikator['unit']}}</td>
+                                    <td>{{$indicator['unit']}}</td>
 
-                                    @foreach($indikator['goal']['years'] as $year => $value)
+                                    @foreach($indicator['goal']['years'] as $year => $value)
                                         <td>{{$value}}</td>
                                     @endforeach
-                                    <td>{{$indikator['goal']['total']}}</td>
+                                    <td>{{$indicator['goal']['total']}}</td>
 
-                                    @foreach($indikator['achievement']['years'] as $year => $value)
+                                    @foreach($indicator['achievement']['years'] as $year => $value)
                                         <td>{{$value}}</td>
                                     @endforeach
-                                    <td>{{$indikator['achievement']['total']}}</td>
+                                    <td>{{$indicator['achievement']['total']}}</td>
 
                                 </tr>
                             @endforeach
@@ -232,40 +236,15 @@
         $(function() {
             "use strict";
 
-            var $yearFilter = $('#year-filter');
-
-
-            $yearFilter.change(function () {
-                var $this = $(this),
-                        value = $this.val();
-
-                table.ajax.reload();
-            });
-
-            $('#year').on('change', function () {
+            $('#unit').on('change', function () {
                 var $this = $(this);
 
-                $('#agreement').html('');
-                $('#program').html('');
+                $('#program').html('<option>..Loading..</option>');
                 $('#activity').html('');
                 $('#target').html('');
 
-                $.get('{{route('pk.select2')}}', {
-                    year: $this.find(':selected').val()
-                }, function (response) {
-                    $('#agreement').html(response);
-                })
-            });
-
-            $('#agreement').on('change', function () {
-                var $this = $(this);
-
-                $('#program').html('');
-                $('#activity').html('');
-                $('#target').html('');
-
-                $.get('{{route('program.select2')}}', {
-                    agreement: $this.find(':selected').val()
+                $.get('{{url('renstra/program/select2')}}', {
+                    plan: $('#plan').val()
                 }, function (response) {
                     $('#program').html(response);
                 })
@@ -274,11 +253,12 @@
             $('#program').on('change', function () {
                 var $this = $(this);
 
-                $('#activity').html('');
+                $('#activity').html('<option>..Loading..</option>');
                 $('#target').html('');
 
-                $.get('{{route('kegiatan.select2')}}', {
-                    program: $this.find(':selected').val()
+                $.get('{{url('renstra/activity/select2')}}', {
+                    program: $this.find(':selected').val(),
+                    unit: $('#unit').find(':selected').val()
                 }, function (response) {
                     $('#activity').html(response);
                 })

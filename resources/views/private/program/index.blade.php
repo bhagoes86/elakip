@@ -3,7 +3,7 @@
 @section('content')
 
     <div class="header-content">
-        <h2><i class="fa fa-home"></i>Program Renstra</h2>
+        <h2><i class="fa fa-home"></i>Program Persiapan PK</h2>
     </div>
 
     <div class="body-content animated fadeIn">
@@ -17,7 +17,7 @@
 
                     <div class="panel-heading">
                         <div class="pull-left">
-                            <h3 class="panel-title">Detail renstra</h3>
+                            <h3 class="panel-title">Detail Persiapan PK</h3>
                         </div>
                         <div class="clearfix"></div>
                     </div>
@@ -132,7 +132,10 @@
                     @if(!Gate::check('read-only'))
                     {data:'action',name:'action', orderable:false, searchable:false}
                     @endif
-                ]
+                ],
+                bPaginate: false,
+                bInfo: false,
+                bFilter: false
             });
         });
     </script>

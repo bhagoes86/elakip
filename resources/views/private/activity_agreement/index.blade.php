@@ -113,7 +113,10 @@
                     @if(!Gate::check('read-only'))
                     {data:'action',name:'action'},
                     @endif
-                ]
+                ],
+                bPaginate: false,
+                bInfo: false,
+                bFilter: false
             });
         });
     </script>

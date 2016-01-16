@@ -15,7 +15,7 @@ START @SIDEBAR LEFT
     <!-- Start left navigation - profile shortcut -->
     <div id="tour-8" class="sidebar-content">
         <div class="media">
-            <a class="pull-left has-notif avatar" href="page-profile.html">
+            <a class="pull-left has-notif avatar" href="#">
                 <img src="http://img.djavaui.com/?create=50x50,4888E1?f=ffffff" alt="admin">
                 <i class="online"></i>
             </a>
@@ -76,7 +76,7 @@ START @SIDEBAR LEFT
             </a>
             <ul>
                 {{--<li><a href="{{route('capaian.fisik.filter')}}">Kegiatan Fisik Triwulan</a></li>--}}
-                <li><a href="{{route('capaian.renstra.fisik.filter')}}">Kegiatan Fisik</a></li>
+                <li><a href="{{route('capaian.renstra.fisik.filter')}}">Sasaran Program/Kegiatan</a></li>
                 <li><a href="{{route('capaian.anggaran.filter')}}">Anggaran Per Tahun</a></li>
                 <li><a href="{{route('capaian.renstra.anggaran.filter')}}">Anggaran Per Periode</a></li>
             </ul>

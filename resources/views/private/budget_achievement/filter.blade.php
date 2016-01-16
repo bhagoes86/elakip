@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="header-content">
-        <h2><i class="fa fa-home"></i>Capaian Kinerja Anggaran Renstra</h2>
+        <h2><i class="fa fa-home"></i>Capaian Kinerja Anggaran Per Periode</h2>
     </div>
 
     <div class="body-content animated fadeIn">
@@ -20,13 +20,16 @@
 
                     <div class="panel-body">
                         <form action="{{route('capaian.renstra.anggaran.kegiatan')}}" method="get">
-                            <div class="form-group">
+
+                            {!! Form::hidden('plan', $plan->id, ['id' => 'plan']) !!}
+
+                            {{--<div class="form-group">
                                 <label for="year">Periode</label>
                                 {!! Form::select('plan', $plans, null, [
                                     'placeholder' => '-Pilih Periode-',
                                     'class' => 'form-control',
                                     'id'=>'plan']) !!}
-                            </div>
+                            </div>--}}
 
                             <div class="form-group">
                                 <label for="unit">Unit</label>
@@ -67,14 +70,14 @@
         $(function() {
             "use strict";
 
-            $('#plan').on('change', function () {
+            $('#unit').on('change', function () {
                 var $this = $(this);
 
                 $('#program').html('<option>..Loading..</option>');
                 $('#activity').html('');
 
                 $.get('{{url('renstra/program/select2')}}', {
-                    plan: $('#plan').find(':selected').val()
+                    plan: $('#plan').val()
                 }, function (response) {
                     $('#program').html(response);
                 })

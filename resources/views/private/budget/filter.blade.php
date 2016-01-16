@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="header-content">
-        <h2><i class="fa fa-home"></i>Capaian Kinerja Anggaran</h2>
+        <h2><i class="fa fa-home"></i>Capaian Kinerja Anggaran Per Tahun</h2>
 
     </div>
 
@@ -21,13 +21,14 @@
 
                     <div class="panel-body">
                         <form action="{{route('capaian.anggaran.kegiatan')}}" method="get">
-                            <div class="form-group">
+                            {!! Form::hidden('plan', $plan->id, ['id' => 'plan']) !!}
+                           {{-- <div class="form-group">
                                 <label for="year">Periode</label>
                                 {!! Form::select('plan', $plans, null, [
                                     'placeholder' => '-Pilih Periode-',
                                     'class' => 'form-control',
                                     'id'=>'plan']) !!}
-                            </div>
+                            </div>--}}
                             <div class="form-group">
                                 <label for="year">Tahun</label>
                                 {!! Form::select('year', $years, null, [
@@ -73,15 +74,6 @@
     <script type="text/javascript">
         $(function() {
             "use strict";
-
-            var $yearFilter = $('#year-filter');
-
-            $yearFilter.change(function () {
-                var $this = $(this),
-                        value = $this.val();
-
-                table.ajax.reload();
-            });
 
             $('#year').on('change', function () {
                 var $this = $(this);

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Privy\Period;
 use App\Http\Controllers\Privy\AdminController;
 use App\Models\Activity;
 use App\Models\Budget;
+use App\Models\Period;
 use App\Models\Plan;
 use App\Models\Program;
 use App\Models\Role;
@@ -20,10 +21,14 @@ class BudgetAchievementController extends AdminController
 {
     public function getFilter()
     {
-        $plans = [];
+        /*$plans = [];
         foreach (Plan::with('period')->get() as $plan) {
             $plans[$plan->id] = $plan->period->year_begin . ' - ' . $plan->period->year_end;
-        }
+        }*/
+
+        $period = Period::where('year_begin', Period::YEAR_BEGIN)->first();
+        $plan = Plan::where('period_id', $period->id)->first();
+
 
         if($this->authUser->role->id == Role::OPERATOR_ID)
         {
@@ -38,7 +43,7 @@ class BudgetAchievementController extends AdminController
         }
 
         return view('private.budget_achievement.filter')
-            ->with('plans', $plans)
+            ->with('plan', $plan)
             ->with('units', $units);
     }
 
@@ -263,5 +268,15 @@ class BudgetAchievementController extends AdminController
         $activitiesBucket['data'] = $data;
 
         return $activitiesBucket;
+    }
+
+    public function getChartOneYear()
+    {
+
+    }
+
+    public function getTableOneYear()
+    {
+
     }
 }

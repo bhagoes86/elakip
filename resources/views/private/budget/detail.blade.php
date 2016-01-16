@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="header-content">
-        <h2><i class="fa fa-home"></i>Capaian Kinerja Anggaran</h2>
+        <h2><i class="fa fa-home"></i>Capaian Kinerja Anggaran Per Tahun</h2>
     </div>
 
     <div class="body-content animated fadeIn">
@@ -30,14 +30,15 @@
 
                     <div class="panel-body" style="display: none">
                         <form action="{{route('capaian.anggaran.kegiatan')}}" method="get">
+                            {!! Form::hidden('plan', $plan->id, ['id' => 'plan']) !!}
 
-                            <div class="form-group">
+                           {{-- <div class="form-group">
                                 <label for="year">Rencana Strategis</label>
                                 {!! Form::select('plan', $plans, null, [
                                     'placeholder' => '-Select Renstra-',
                                     'class' => 'form-control',
                                     'id'=>'plan']) !!}
-                            </div>
+                            </div>--}}
                             <div class="form-group">
                                 <label for="year">Tahun</label>
                                 {!! Form::select('year', $years, $id['year'], [
@@ -85,7 +86,7 @@
                             <thead>
                             <tr>
                                 <th>Nama kegiatan</th>
-                                <th>Pagu</th>
+                                <th>Anggaran</th>
                                 <th>Realisasi</th>
                             </tr>
                             </thead>
@@ -93,7 +94,7 @@
                             @foreach($activities as $activity)
                                 <tr>
                                     <td>{{$activity->name}}</td>
-                                    <td>{{$activity->budget->pagu}}</td>
+                                    <td>{{money_format('%.2n', $activity->budget->pagu)}}</td>
                                     <td>
                                         @can('read-only')
                                         {{$activity->budget->realization}}
