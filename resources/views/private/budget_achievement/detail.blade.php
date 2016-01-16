@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="header-content">
-        <h2><i class="fa fa-home"></i>Capaian Kinerja Anggaran Renstra</h2>
+        <h2><i class="fa fa-home"></i>Capaian Kinerja Anggaran Per Periode</h2>
     </div>
 
     <div class="body-content animated fadeIn">
@@ -13,7 +13,7 @@
 
                     <div class="panel-heading">
                         <div class="pull-left">
-                            <h3 class="panel-title">Filter Indicator</h3>
+                            <h3 class="panel-title">Filter Indikator</h3>
                         </div>
                         <div class="pull-right">
                             <button class="btn btn-sm"
@@ -63,65 +63,68 @@
 
                     <div class="panel-heading">
                         <div class="pull-left">
-                            <h3 class="panel-title">Kegiatan</h3>
+                            <h3 class="panel-title">Detil Kegiatan</h3>
                         </div>
                         <div class="clearfix"></div>
                     </div>
 
                     <div class="panel-body">
-                        @foreach($activities['data'] as $activity)
-                        <div class="row mbot-15 item">
-                            <div class="col-md-12">
-                            <div class="mbot-15">
-                                <span><strong>{{$activity['name']}}</strong></span>
-                                <button class="btn btn-xs btn-primary btn-chart"
-                                        onclick="showEdit(this)"
-                                        data-modal-id="{{$viewId}}"
-                                        data-url="{{route('capaian.renstra.anggaran.kegiatan.chart', $activity['id'])}}"
-                                        data-title="{{$activity['name']}}">
 
-                                    <i class="fa fa-bar-chart"></i>
-                                </button>
-                            </div>
+                        <div class="table-responsive">
+                            <table class="table table-condensed table-bordered table-striped">
+                                <thead>
+                                <tr>
+                                    <th rowspan="2">Kegiatan</th>
 
-                            <div class="table-responsive">
-                                <table class="table table-condensed table-bordered table-striped">
+                                    <th colspan="{{count($activities['header']['years'])}}" class="text-center">Anggaran</th>
+                                    <th colspan="{{count($activities['header']['years'])}}" class="text-center">Realisasi</th>
+                                </tr>
+                                <tr>
+                                    @foreach($activities['header']['years'] as $year)
+                                        <th class="text-center">{{$year}}</th>
+                                    @endforeach
+                                    {{--<th class="text-center"><b>Total</b></th>--}}
 
-                                    <thead>
-                                        <tr>
-                                            <th colspan="{{count($activities['header']['years'])}}" class="text-center">Pagu</th>
-                                            <th colspan="{{count($activities['header']['years'])}}" class="text-center">Realisasi</th>
-                                        </tr>
-                                        <tr>
-                                            @foreach($activities['header']['years'] as $year)
-                                                <th class="text-center">{{$year}}</th>
-                                            @endforeach
-                                           {{-- <th class="text-center"><b>Total</b></th>
---}}
-                                            @foreach($activities['header']['years'] as $year)
-                                                <th class="text-center">{{$year}}</th>
-                                            @endforeach
-                                            {{--<th class="text-center"><b>Total</b></th>--}}
+                                    @foreach($activities['header']['years'] as $year)
+                                        <th class="text-center">{{$year}}</th>
+                                    @endforeach
+                                    {{--<th class="text-center"><b>Total</b></th>--}}
 
-                                        </tr>
-                                    </thead>
+                                </tr>
 
+                                </thead>
+                                <tbody>
+                                @foreach($activities['data'] as $activity)
+                                    <tr>
+                                        <td>
+                                            <span>{{$activity['name']}}</span>
+                                            <button class="btn btn-xs btn-primary btn-chart"
+                                                    onclick="showEdit(this)"
+                                                    data-modal-id="{{$viewId}}"
+                                                    data-url="{{route('capaian.renstra.anggaran.kegiatan.chart', $activity['id'])}}"
+                                                    data-title="{{$activity['name']}}">
 
-                                    <tbody>
-                                        <tr>
+                                                <i class="fa fa-bar-chart"></i>
+                                            </button>
+                                        </td>
+
                                         @foreach($activity['budget']['pagu'] as $pagu)
-                                            <td>{{$pagu}}</td>
+                                            <td>{{money_format('%.2n', $pagu)}}</td>
                                         @endforeach
+{{--                                        <td>{{$activity['goal']['total']}}</td>--}}
+
                                         @foreach($activity['budget']['real'] as $real)
-                                            <td>{{$real}}</td>
+                                            <td>{{money_format('%.2n', $real)}}</td>
                                         @endforeach
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            </div>
+{{--                                        <td>{{$activity['achievement']['total']}}</td>--}}
+
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
                         </div>
-                        @endforeach
+
+
                     </div>
                 </div>
             </div>

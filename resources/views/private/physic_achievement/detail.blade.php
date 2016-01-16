@@ -151,61 +151,61 @@
 
                     <div class="panel-body">
                         <div class="table-responsive">
-                        <table class="table table-condensed table-bordered table-striped">
-                            <thead>
-                            <tr>
-                                <th rowspan="2">Indikator</th>
-                                <th rowspan="2" class="text-center">Satuan</th>
-
-                                <th colspan="{{count($indicators['header']['years'])+1}}" class="text-center">Target</th>
-                                <th colspan="{{count($indicators['header']['years'])+1}}" class="text-center">Capaian</th>
-                            </tr>
-                            <tr>
-                                @foreach($indicators['header']['years'] as $year)
-                                    <th class="text-center">{{$year}}</th>
-                                @endforeach
-                                <th class="text-center"><b>Total</b></th>
-
-                                @foreach($indicators['header']['years'] as $year)
-                                    <th class="text-center">{{$year}}</th>
-                                @endforeach
-                                <th class="text-center"><b>Total</b></th>
-
-                            </tr>
-
-                            </thead>
-                            <tbody>
-                            @foreach($indicators['data'] as $indicator)
+                            <table class="table table-condensed table-bordered table-striped">
+                                <thead>
                                 <tr>
-                                    <td>
-                                        <span>{{$indicator['name']}}</span>
-                                        <button class="btn btn-xs btn-primary btn-chart"
-                                                onclick="showEdit(this)"
-                                                data-modal-id="{{$viewId}}"
-                                                data-url="{{route('capaian.renstra.fisik.indicator.chart', $indicator['id'])}}"
-{{--                                                data-title="{{$indicator['name']}}">--}}
-                                                data-title="Grafik Indikator {{$indicator['name']}} 2015-2019">
+                                    <th rowspan="2">Indikator</th>
+                                    <th rowspan="2" class="text-center">Satuan</th>
 
-
-                                            <i class="fa fa-bar-chart"></i>
-                                        </button>
-                                    </td>
-                                    <td>{{$indicator['unit']}}</td>
-
-                                    @foreach($indicator['goal']['years'] as $year => $value)
-                                        <td>{{$value}}</td>
+                                    <th colspan="{{count($indicators['header']['years'])+1}}" class="text-center">Target</th>
+                                    <th colspan="{{count($indicators['header']['years'])+1}}" class="text-center">Capaian</th>
+                                </tr>
+                                <tr>
+                                    @foreach($indicators['header']['years'] as $year)
+                                        <th class="text-center">{{$year}}</th>
                                     @endforeach
-                                    <td>{{$indicator['goal']['total']}}</td>
+                                    <th class="text-center"><b>Total</b></th>
 
-                                    @foreach($indicator['achievement']['years'] as $year => $value)
-                                        <td>{{$value}}</td>
+                                    @foreach($indicators['header']['years'] as $year)
+                                        <th class="text-center">{{$year}}</th>
                                     @endforeach
-                                    <td>{{$indicator['achievement']['total']}}</td>
+                                    <th class="text-center"><b>Total</b></th>
 
                                 </tr>
-                            @endforeach
-                            </tbody>
-                        </table>
+
+                                </thead>
+                                <tbody>
+                                @foreach($indicators['data'] as $indicator)
+                                    <tr>
+                                        <td>
+                                            <span>{{$indicator['name']}}</span>
+                                            <button class="btn btn-xs btn-primary btn-chart"
+                                                    onclick="showEdit(this)"
+                                                    data-modal-id="{{$viewId}}"
+                                                    data-url="{{route('capaian.renstra.fisik.indicator.chart', $indicator['id'])}}"
+    {{--                                                data-title="{{$indicator['name']}}">--}}
+                                                    data-title="Grafik Indikator {{$indicator['name']}} 2015-2019">
+
+
+                                                <i class="fa fa-bar-chart"></i>
+                                            </button>
+                                        </td>
+                                        <td>{{$indicator['unit']}}</td>
+
+                                        @foreach($indicator['goal']['years'] as $year => $value)
+                                            <td>{{$value}}</td>
+                                        @endforeach
+                                        <td>{{$indicator['goal']['total']}}</td>
+
+                                        @foreach($indicator['achievement']['years'] as $year => $value)
+                                            <td>{{$value}}</td>
+                                        @endforeach
+                                        <td>{{$indicator['achievement']['total']}}</td>
+
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>

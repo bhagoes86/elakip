@@ -122,14 +122,14 @@ class BudgetAchievementController extends AdminController
     {
         $this->validate($request, [
             'year'      => 'integer',
-            'agreement' => 'integer',
+            //'agreement' => 'integer',
             'program'   => 'integer',
             // 'activity'  => 'integer',
         ]);
 
         $year = $request->get('year');
         $planId = $request->get('plan');
-        $agreementId = $request->get('agreement');
+        //$agreementId = $request->get('agreement');
         $programId = $request->get('program');
         $activityId = $request->get('activity');
 
@@ -141,17 +141,18 @@ class BudgetAchievementController extends AdminController
 
         // $selectedActivity = Activity::where('program_id', $programId)->get();
 
-        $program = Program::with(['activities' => function ($query) use ($agreementId) {
+        $program = Program::with(['activities' => function ($query) {
 
-            $agreement = Agreement::with([
+            /*$agreement = Agreement::with([
                 'firstPosition' => function($query) {
                     $query->with(['user','unit']);
                 }
-            ])->find($agreementId);
+            ])->find($agreementId);*/
 
             $query->with('budget');
+            $query->with('unit');
             $query->inAgreement();
-            $query->where('unit_id', $agreement->firstPosition->unit->id);
+            //$query->where('unit_id', $agreement->firstPosition->unit->id);
         }])
             ->where('plan_id', $planId)
             ->find($programId);
@@ -178,11 +179,12 @@ class BudgetAchievementController extends AdminController
         /* foreach ($selectedActivity as $item)
             $activity_arr[$item->id] = $item->name;*/
 
+        // dd($program->activities->toArray());
 
         return view('private.budget.detail')
             ->with('id', [
                 'year'      => $year,
-                'agreement' => $agreementId,
+                //'agreement' => $agreementId,
                 'program'   => $programId,
                 'activity'  => $activityId,
             ])

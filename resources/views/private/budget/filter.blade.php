@@ -36,10 +36,10 @@
                                     'class' => 'form-control',
                                     'id'=>'year']) !!}
                             </div>
-                            <div class="form-group">
+                            {{--<div class="form-group">
                                 <label for="agreement">Perjanjian kinerja</label>
                                 <select id="agreement" name="agreement" class="form-control"></select>
-                            </div>
+                            </div>--}}
                             <div class="form-group">
                                 <label for="program">Program</label>
                                 <select id="program" name="program" class="form-control"></select>
@@ -82,14 +82,19 @@
                 $('#program').html('');
                 $('#activity').html('');
 
-                $.get('{{route('pk.select2')}}', {
+                /*$.get('{{route('pk.select2')}}', {
                     year: $this.find(':selected').val()
                 }, function (response) {
                     $('#agreement').html(response);
+                })*/
+
+                $.get('{{route('program.select2')}}', {
+                }, function (response) {
+                    $('#program').html(response);
                 })
             });
 
-            $('#agreement').on('change', function () {
+            /*$('#agreement').on('change', function () {
                 var $this = $(this);
 
                 $('#program').html('');
@@ -101,9 +106,9 @@
                 }, function (response) {
                     $('#program').html(response);
                 })
-            });
+            });*/
 
-            $('#program').on('change', function () {
+           /* $('#program').on('change', function () {
                 var $this = $(this);
 
                 $('#activity').html('');
@@ -114,7 +119,7 @@
                 }, function (response) {
                     $('#activity').html(response);
                 })
-            });
+            });*/
 
 
 

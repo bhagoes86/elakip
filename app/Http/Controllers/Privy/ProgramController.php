@@ -143,11 +143,17 @@ class ProgramController extends AdminController
      */
     public function getSelect2(Request $request)
     {
-        $agreement = $request->get('agreement');
+        if ($request->has('agreement')){
+            $agreement = $request->get('agreement');
 
-        $agreement = Agreement::find($agreement);
+            $agreement = Agreement::find($agreement);
 
-        $programs = Program::where('plan_id', $agreement->plan_id)->get();
+            $programs = Program::where('plan_id', $agreement->plan_id)->get();
+        }
+        else
+        {
+            $programs = Program::all();
+        }
 
         $options = '<option>-Select One-</option>';
         foreach ($programs as $program) {

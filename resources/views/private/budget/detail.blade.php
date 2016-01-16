@@ -46,13 +46,13 @@
                                     'class' => 'form-control',
                                     'id'=>'year']) !!}
                             </div>
-                            <div class="form-group">
+                            {{--<div class="form-group">
                                 <label for="agreement">Perjanjian kinerja</label>
                                 {!! Form::select('agreement', $agreements, $id['agreement'], [
                                     'placeholder' => '-Select Agreement-',
                                     'class' => 'form-control',
                                     'id'=>'agreement']) !!}
-                            </div>
+                            </div>--}}
                             <div class="form-group">
                                 <label for="program">Program</label>
                                 {!! Form::select('program', $programs, $id['program'], [
@@ -86,26 +86,50 @@
                             <thead>
                             <tr>
                                 <th>Nama kegiatan</th>
+                                <th>Unit</th>
                                 <th>Anggaran</th>
                                 <th>Realisasi</th>
+                                <th>%</th>
                             </tr>
                             </thead>
                             <tbody>
                             @foreach($activities as $activity)
                                 <tr>
                                     <td>{{$activity->name}}</td>
-                                    <td>{{money_format('%.2n', $activity->budget->pagu)}}</td>
+                                    <td>{{$activity->unit->name}}</td>
+                                    <td>
+                                        @if($activity->budget != null)
+                                            {{money_format('%.2n', $activity->budget->pagu)}}
+                                        @else
+                                            {{0}}
+                                        @endif
+                                    </td>
                                     <td>
                                         @can('read-only')
-                                        {{$activity->budget->realization}}
+                                            @if($activity->budget != null)
+                                                {{money_format('%.2n', $activity->budget->realization)}}
+                                            @else
+                                                {{0}}
+                                            @endif
                                         @else
-                                        <a href="#"
-                                           class="x-editable"
-                                           id="realization-{{$activity->budget->id}}"
-                                           data-type="text"
-                                           data-pk="{{$activity->budget->id}}"
-                                           data-url="{{route('capaian.anggaran.kegiatan.update', [$activity->budget->id])}}"
-                                           data-title="Realisasi">{{$activity->budget->realization}}</a>
+                                            @if($activity->budget != null)
+                                                <a href="#"
+                                                   class="x-editable"
+                                                   id="realization-{{$activity->budget->id}}"
+                                                   data-type="text"
+                                                   data-pk="{{$activity->budget->id}}"
+                                                   data-url="{{route('capaian.anggaran.kegiatan.update', [$activity->budget->id])}}"
+                                                   data-title="Realisasi">{{$activity->budget->realization}}</a>
+                                            @else
+                                                {{0}}
+                                            @endif
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if($activity->budget != null)
+                                            {{ round($activity->budget->realization / $activity->budget->pagu * 100, 2) }}%
+                                        @else
+                                            {{0}}%
                                         @endif
                                     </td>
                                 </tr>
