@@ -37,7 +37,8 @@ class ActivityController extends AdminController
 
         return view('private.activity.index')
             ->with('program', $program)
-            ->with('units', $units_arr);
+            ->with('units', $units_arr)
+            ->with('user', $this->authUser);
 
     }
 

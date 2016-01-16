@@ -89,6 +89,7 @@ class AuthServiceProvider extends ServiceProvider
 
         // Hanya dirjen dan admin saja yang bisa akses
         $gate->define('dirjen', function($user) {
+            //dd($user->role->id);
             if($user->role->id == 1 || $user->role->id == 3) { // administrator atau pimpinan
                 return true;
             }
@@ -100,6 +101,25 @@ class AuthServiceProvider extends ServiceProvider
 
                 if(count($position) == 1) {
                     if ($position->unit_id == 1) //Unit dirjen
+                        return true;
+                }
+
+            }
+        });
+
+        // Hanya operator dan admin saja yang bisa akses
+        $gate->define('operator', function($user) {
+            if($user->role->id == 1) { // administrator atau pimpinan
+                return true;
+            }
+
+            if($user->role->id == 2) { // operator
+                $position = Position::where('user_id', $user->id)
+                    ->where('year', Carbon::now()->year)
+                    ->first();
+
+                if(count($position) == 1) {
+                    if ($position->unit_id != 1) //Bukan Unit dirjen
                         return true;
                 }
 

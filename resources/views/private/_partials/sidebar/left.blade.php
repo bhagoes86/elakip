@@ -38,7 +38,7 @@ START @SIDEBAR LEFT
             </a>
         </li>
 
-        @can('read-user', null)
+        @if(!Gate::check('read-only'))
         <li>
             <a href="{{route('renstra.index')}}">
                 <span class="icon"><i class="fa fa-home"></i></span>

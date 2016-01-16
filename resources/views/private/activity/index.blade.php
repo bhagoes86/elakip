@@ -115,6 +115,8 @@
 
         <div class="row">
 
+            @if(Gate::check('operator', $user))
+
             @if(!Gate::check('read-only'))
 
             <div class="col-md-4">
@@ -167,6 +169,7 @@
             </div>
             @endif
 
+
             <div class="@can('read-only') col-md-12 @else col-md-8 @endcan">
 
                 <div class="panel rounded shadow">
@@ -195,6 +198,7 @@
                     </div>
                 </div>
             </div>
+            @endif
         </div>
     </div>
 
