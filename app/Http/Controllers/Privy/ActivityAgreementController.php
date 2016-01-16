@@ -154,7 +154,7 @@ class ActivityAgreementController extends AdminController
                 if(is_null($data->budget))
                     return 0;
                 else
-                    return $data->budget->pagu;
+                    return money_format('%.2n', $data->budget->pagu);
             })
             ->addColumn('action', function ($data) use ($agreementId, $programId) {
                 return view('private.activity_agreement.action')

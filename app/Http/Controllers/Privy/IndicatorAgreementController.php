@@ -137,7 +137,7 @@ class IndicatorAgreementController extends AdminController
 
         return \Datatables::of($target->indicators)
             ->addColumn('target', function($data) {
-                return 0 == count($data->goals) ? 0 : $data->goals[0]->count;
+                return (0 == count($data->goals)) ? 0 : $data->goals[0]->count . ' ' . $data->unit;
             })
             ->addColumn('action', function($data) use ($agreementId, $programId, $activityId, $targetId) {
                 return view('private.indicator_agreement.action')

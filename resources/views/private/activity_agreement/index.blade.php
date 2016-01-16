@@ -64,7 +64,7 @@
                             <tr>
                                 <th>Unit</th>
                                 <th>Kegiatan</th>
-                                <th>Pagu</th>
+                                <th>Anggaran</th>
 
                                 @if(!Gate::check('read-only'))
                                 <th>Action</th>
