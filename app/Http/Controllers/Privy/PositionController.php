@@ -152,6 +152,14 @@ class PositionController extends AdminController
 
         $this->validate($request, $this->roles);
 
+        $position = Position::find($id);
+
+        $position->user_id    = $request->get('user');
+        $position->unit_id    = $request->get('unit');
+        $position->year       = $request->get('year');
+        $position->position   = $request->get('position');
+        return (int) $position->save();
+
     }
 
     /**

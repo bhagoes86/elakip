@@ -227,7 +227,7 @@ $(function(){
         $('.sidebar-menu .active > a').append('<span class="selected"></span>');
     }
 
-    
+
 });
 
 // Execute here
