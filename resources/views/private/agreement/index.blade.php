@@ -32,7 +32,7 @@
                             <div class="col-md-6">
                                 <div class="form-horizontal">
                                     <div class="form-group">
-                                        <label for="year" class="col-sm-2 control-label">Year</label>
+                                        <label for="year" class="col-sm-2 control-label">Tahun</label>
                                         <div class="col-sm-10">
                                             {!! Form::select('year', $years, null, [
                                                 'class' => 'form-control',

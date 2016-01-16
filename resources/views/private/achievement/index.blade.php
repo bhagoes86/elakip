@@ -20,14 +20,14 @@
 
     <div class="body-content animated fadeIn">
 
-        <div class="row mbot-15">
+        {{--<div class="row mbot-15">
             <div class="col-md-12">
                 <a href="{{route('capaian.fisik.indicator')}}?plan={{$activity->program->plan->id}}&year={{$goal->year}}&agreement={{$agreement->id}}&program={{$activity->program->id}}&activity={{$activity->id}}&target={{$goal->indicator->target->id}}" class="btn btn-danger">
                     <i class="fa fa-arrow-left"></i> Back
                 </a>
 
             </div>
-        </div>
+        </div>--}}
 
         <div class="row">
             <div class="col-md-12">

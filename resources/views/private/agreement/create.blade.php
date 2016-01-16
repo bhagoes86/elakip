@@ -26,8 +26,8 @@
                        {{-- <input type="hidden" name="unit" id="unit_id"/>--}}
 
                         <div class="form-group">
-                            <label for="plan_id">Renstra</label>
-                            {!! Form::select('plan_id', $plans, null, ['class'=>"form-control", 'placeholder'=>"Renstr", 'id'=>"plan_id"]) !!}
+                            <label for="plan_id">Periode</label>
+                            {!! Form::select('plan_id', $plans, null, ['class'=>"form-control", 'placeholder'=>"Periode", 'id'=>"plan_id"]) !!}
                         </div>
 
                         <div class="form-group">

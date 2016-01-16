@@ -55,7 +55,9 @@
                 <tbody>
                     @foreach($indicators as $indicator => $attribute )
                     <tr>
-                        <td>{{$indicator}}</td>
+                        <td>
+                            <a href="{{url('capaian/fisik/goal/'.$attribute['goal_id'].'/achievement')}}" target="_blank">{{$indicator}}</a>
+                        </td>
                         <td>{{$attribute['target']}} {{$attribute['satuan']}}</td>
 
                         <td>{{$attribute['quarter'][1]['target']}}</td>

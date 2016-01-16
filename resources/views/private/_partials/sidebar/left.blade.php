@@ -53,7 +53,7 @@ START @SIDEBAR LEFT
                 <span class="icon">
                     <i class="fa fa-home"></i>
                 </span>
-                <span class="text">Perjanjian kinerja</span>
+                <span class="text">Perjanjian Kinerja</span>
                 <span class="arrow"></span>
             </a>
             <ul>
@@ -75,10 +75,10 @@ START @SIDEBAR LEFT
                 <span class="arrow"></span>
             </a>
             <ul>
-                <li><a href="{{route('capaian.fisik.filter')}}">Kegiatan Fisik</a></li>
-                <li><a href="{{route('capaian.anggaran.filter')}}">Anggaran</a></li>
-                <li><a href="{{route('capaian.renstra.fisik.filter')}}">Kegiatan Fisik Renstra</a></li>
-                <li><a href="{{route('capaian.renstra.anggaran.filter')}}">Anggaran Renstra</a></li>
+                {{--<li><a href="{{route('capaian.fisik.filter')}}">Kegiatan Fisik Triwulan</a></li>--}}
+                <li><a href="{{route('capaian.renstra.fisik.filter')}}">Kegiatan Fisik</a></li>
+                <li><a href="{{route('capaian.anggaran.filter')}}">Anggaran Per Tahun</a></li>
+                <li><a href="{{route('capaian.renstra.anggaran.filter')}}">Anggaran Per Periode</a></li>
             </ul>
         </li>
 {{--

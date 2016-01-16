@@ -381,7 +381,8 @@ class PhysicAchievementController extends AdminController
             if(count($indicator->goals) > 0) {
                 $indicators[$indicator->name] = [
                     'target'    => (int) $indicator->goals[0]->count,
-                    'satuan'    => $indicator->unit
+                    'satuan'    => $indicator->unit,
+                    'goal_id'   => $indicator->goals[0]->id
                 ];
 
                 foreach ($indicator->goals[0]->achievements as $achievement) {

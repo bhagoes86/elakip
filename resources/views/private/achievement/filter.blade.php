@@ -21,9 +21,9 @@
                     <div class="panel-body">
                         <form action="{{route('capaian.fisik.indicator')}}" method="get">
                             <div class="form-group">
-                                <label for="year">Rencana Strategis</label>
+                                <label for="year">Periode</label>
                                 {!! Form::select('plan', $plans, null, [
-                                    'placeholder' => '-Select Renstra-',
+                                    'placeholder' => '-Select Periode-',
                                     'class' => 'form-control',
                                     'id'=>'plan']) !!}
                             </div>
