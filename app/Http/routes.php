@@ -161,6 +161,15 @@ Route::group([
     post('kegiatan/{kegiatan}/pk/{pk}/evaluasi', ['uses' => 'EvaluationController@store', 'as' =>'kegiatan.agreement.evaluasi.store']);
     resource('kegiatan.evaluasi', 'EvaluationController', ['except' => ['store']]);
 
+    /**
+     * Profile editing
+     */
+    get('profile', ['uses' => 'ProfileController@index', 'as' => 'profile.index']);
+
+    // ganti nama, email, username
+    put('profile', ['uses' => 'ProfileController@update', 'as' => 'profile.update']);
+    put('profile/password', ['uses' => 'ProfileController@putPassword', 'as' => 'profile.password.update']);
+
 });
 
 Route::controller('error','Privy\ErrorController');

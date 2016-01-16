@@ -29,7 +29,7 @@ class User extends Model implements AuthenticatableContract,
      *
      * @var array
      */
-    protected $fillable = ['username','name', 'email', 'password','role_id'];
+    protected $fillable = ['username','name', 'email', 'password','role_id','picture_id'];
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -48,6 +48,11 @@ class User extends Model implements AuthenticatableContract,
     public function role()
     {
         return $this->belongsTo(Role::class);
+    }
+
+    public function media()
+    {
+        return $this->belongsTo(Media::class, 'picture_id');
     }
 
     public function getCurrentPositionAttribute()

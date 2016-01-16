@@ -28,13 +28,13 @@ class AdminController extends Controller {
             $authenticatedUser = \Auth::user();
 
             $user = User::with([
+                'media',
                 'role',
                 'positions' => function ($query) {
                     $query->with(['unit']);
                     $query->where('year', Carbon::now()->year);
                 }
             ])->find($authenticatedUser->id);
-
 
             $this->authUser = $user;
 

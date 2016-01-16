@@ -16,7 +16,11 @@ START @SIDEBAR LEFT
     <div id="tour-8" class="sidebar-content">
         <div class="media">
             <a class="pull-left has-notif avatar" href="#">
+                @if($authUser->media == null)
                 <img src="{{asset('img/profile.png')}}" alt="admin">
+                @else
+                <img src="{{asset($authUser->media->location)}}" alt="{{$authUser->username}}">
+                @endif
                 <i class="online"></i>
             </a>
             <div class="media-body">

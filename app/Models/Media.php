@@ -19,4 +19,9 @@ class Media extends Model
         return $this->belongsToMany(Agreement::class)
             ->withTimestamps();
     }
+
+    public function user()
+    {
+        return $this->hasOne(User::class);
+    }
 }

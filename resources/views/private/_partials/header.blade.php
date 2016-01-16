@@ -72,7 +72,13 @@
                 <li class="dropdown navbar-profile">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <span class="meta">
-                                    <span class="avatar"><img src="{{asset('img/profile.png')}}" class="img-circle" alt="admin"></span>
+                                    <span class="avatar">
+                                        @if($authUser->media == null)
+                                        <img src="{{asset('img/profile.png')}}" class="img-circle" alt="{{$authUser->username}}">
+                                        @else
+                                        <img src="{{asset($authUser->media->location)}}" alt="{{$authUser->username}}">
+                                        @endif
+                                    </span>
                                     <span class="text hidden-xs hidden-sm text-muted">{{Auth::user()->name}}</span>
                                     <span class="caret"></span>
                                 </span>
@@ -89,6 +95,7 @@
                         <li><a href="#"><i class="fa fa-download"></i>Withdrawals</a></li>
                         <li class="divider"></li>--}}
                         <li class="dropdown-header">Profile</li>
+                        <li><a href="{{route('profile.index')}}"><i class="fa fa-user"></i>Profil saya</a></li>
                         <li><a href="{{url('logout')}}"><i class="fa fa-sign-out"></i>Logout</a></li>
                         <li class="divider"></li>
                     </ul>
