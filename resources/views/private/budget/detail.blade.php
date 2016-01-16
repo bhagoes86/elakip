@@ -163,7 +163,6 @@
         $(function() {
             "use strict";
 
-            var $yearFilter = $('#year-filter');
 
             $('.x-editable').editable({
                 params: function (params) {
@@ -173,12 +172,7 @@
                 }
             });
 
-            $yearFilter.change(function () {
-                var $this = $(this),
-                        value = $this.val();
-
-                // table.ajax.reload();
-            });
+           
 
             $('#year').on('change', function () {
                 var $this = $(this);
@@ -188,14 +182,19 @@
                 $('#activity').html('');
                 $('#target').html('');
 
-                $.get('{{route('pk.select2')}}', {
+                /*$.get('{{route('pk.select2')}}', {
                     year: $this.find(':selected').val()
                 }, function (response) {
                     $('#agreement').html(response);
+                })*/
+
+                $.get('{{route('program.select2')}}', {
+                }, function (response) {
+                    $('#program').html(response);
                 })
             });
 
-            $('#agreement').on('change', function () {
+            /*$('#agreement').on('change', function () {
                 var $this = $(this);
 
                 $('#program').html('');
@@ -207,7 +206,7 @@
                 }, function (response) {
                     $('#program').html(response);
                 })
-            });
+            });*/
         });
     </script>
 @stop
