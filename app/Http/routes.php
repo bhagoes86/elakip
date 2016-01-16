@@ -92,6 +92,7 @@ Route::group([
     ]);
     get('pk/select2', ['uses' => 'AgreementController@getSelect2', 'as' => 'pk.select2']);
     get('pk/{pk}/export', ['uses' => 'AgreementController@getExport', 'as' => 'pk.export']);
+    get('pk/{pk}/scanned', ['uses' => 'AgreementController@getScanned', 'as' => 'pk.scanned']);
     get('pk/{id}/doc/create', ['uses' => 'AgreementController@getDocumentForm', 'as' => 'pk.doc.create']);
     post('pk/{id}/doc/create', ['uses' => 'AgreementController@postDocument', 'as' => 'pk.doc.store']);
     get('pk/program/data', 'ProgramAgreementController@data');
@@ -146,6 +147,8 @@ Route::group([
     get('capaian/renstra/anggaran/filter', ['uses'  => 'Period\BudgetAchievementController@getFilter', 'as'    => 'capaian.renstra.anggaran.filter']);
     get('capaian/renstra/anggaran/filter/activity', ['uses'  => 'Period\BudgetAchievementController@getActivity', 'as'    => 'capaian.renstra.anggaran.kegiatan']);
     get('capaian/renstra/anggaran/kegiatan/{kegiatan}/chart', ['uses'  => 'Period\BudgetAchievementController@getChart', 'as'    => 'capaian.renstra.anggaran.kegiatan.chart']);
+    get('capaian/renstra/anggaran/target/{target}/year/{year}/chart', ['uses'  => 'Period\BudgetAchievementController@getChartOneYear', 'as'    => 'capaian.renstra.anggaran.kegiatan.chart.year']);
+    get('capaian/renstra/anggaran/target/{target}/year/{year}/table', ['uses'  => 'Period\BudgetAchievementController@getTableOneYear', 'as'    => 'capaian.renstra.anggaran.kegiatan.table.year']);
 
     get('renstra/program/select2', ['uses' => 'Period\BudgetAchievementController@getSelectProgram']);
     get('renstra/activity/select2', ['uses' => 'Period\BudgetAchievementController@getSelectActivity']);
