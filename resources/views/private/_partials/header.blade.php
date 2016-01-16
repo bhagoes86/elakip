@@ -72,7 +72,7 @@
                 <li class="dropdown navbar-profile">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <span class="meta">
-                                    <span class="avatar"><img src="http://img.djavaui.com/?create=35x35,4888E1?f=ffffff" class="img-circle" alt="admin"></span>
+                                    <span class="avatar"><img src="{{asset('img/profile.png')}}" class="img-circle" alt="admin"></span>
                                     <span class="text hidden-xs hidden-sm text-muted">{{Auth::user()->name}}</span>
                                     <span class="caret"></span>
                                 </span>

@@ -16,7 +16,7 @@ START @SIDEBAR LEFT
     <div id="tour-8" class="sidebar-content">
         <div class="media">
             <a class="pull-left has-notif avatar" href="#">
-                <img src="http://img.djavaui.com/?create=50x50,4888E1?f=ffffff" alt="admin">
+                <img src="{{asset('img/profile.png')}}" alt="admin">
                 <i class="online"></i>
             </a>
             <div class="media-body">
