@@ -2858,7 +2858,7 @@ body.page-footer-fixed #page-content .footer-content {
   color: #FFFFFF;
 }
 .sidebar-warning > .sidebar-menu > li.active {
-  background-color: #f7c45a !important;
+  background-color: #4888E1 !important;
 }
 .sidebar-warning > .sidebar-menu > li.active > a > .icon {
   text-shadow: none !important;
@@ -2924,7 +2924,8 @@ body.page-footer-fixed #page-content .footer-content {
   background-color: #f8c764 !important;
 }
 .sidebar-warning.sidebar-box .sidebar-menu > li.active > a > .icon i, .sidebar-warning.sidebar-rounded .sidebar-menu > li.active > a > .icon i, .sidebar-warning.sidebar-circle .sidebar-menu > li.active > a > .icon i {
-  background-color: #f8cd73 !important;
+  background-color: #4888E1 !important;
+  border: 2px solid #5577B4 !important;
 }
 .sidebar-warning.sidebar-box .sidebar-menu > li > a > .icon:after, .sidebar-warning.sidebar-rounded .sidebar-menu > li > a > .icon:after, .sidebar-warning.sidebar-circle .sidebar-menu > li > a > .icon:after {
   border: 1px solid #f7c051;

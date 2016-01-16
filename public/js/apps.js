@@ -627,7 +627,7 @@ var BlankonApp = function(){
         // BOX MODAL
         // =========================================================================
         handleBoxModal: function () {
-            $('#setting').on('click', function(){
+            $('#settingxxx').on('click', function(){
                 // Add sound
                 ion.sound.play('camera_flashing');
                 bootbox.dialog({

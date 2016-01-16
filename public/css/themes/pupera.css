@@ -84,6 +84,9 @@ body.page-sidebar-minimize #header .navbar-minimize:hover > a {
 }
 #sidebar-left .sidebar-menu ul li.active:after {
     background-color: #5577b4;
+    -webkit-box-shadow: 0 0 0 5px #425f94;
+    -moz-box-shadow: 0 0 0 5px #425f94;
+    box-shadow: 0 0 0 5px #425f94;
 }
 #sidebar-left .sidebar-menu ul li.active > ul > li.active a:before {
     color: #5577b4;

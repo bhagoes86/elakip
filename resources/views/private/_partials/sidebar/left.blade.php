@@ -30,7 +30,7 @@ START @SIDEBAR LEFT
     <!-- Start left navigation - menu -->
     <ul id="tour-9" class="sidebar-menu">
 
-        <li>
+        <li id="dashboard">
             <a href="{{route('dashboard')}}">
                 <span class="icon"><i class="fa fa-home"></i></span>
                 <span class="text">Dashboard</span>
@@ -39,7 +39,7 @@ START @SIDEBAR LEFT
         </li>
 
         @if(!Gate::check('read-only'))
-        <li>
+        <li id="persiapan-pk">
             <a href="{{route('renstra.index')}}">
                 <span class="icon"><i class="fa fa-home"></i></span>
                 <span class="text">Persiapan PK</span>
@@ -48,7 +48,7 @@ START @SIDEBAR LEFT
         </li>
         @endcan
 
-        <li class="submenu">
+        <li class="submenu" id="perjanjian">
             <a href="javascript:void(0)">
                 <span class="icon">
                     <i class="fa fa-home"></i>
@@ -58,15 +58,15 @@ START @SIDEBAR LEFT
             </a>
             <ul>
                 @if(!Gate::check('read-only'))
-                <li><a href="{{route('pk.create')}}">Buat baru</a></li>
+                <li id="perjanjian-baru"><a href="{{route('pk.create')}}">Buat baru</a></li>
                 @endif
 
-                <li><a href="{{route('pk.index')}}">Daftar perjanjian kinerja</a></li>
+                <li id="perjanjian-daftar"><a href="{{route('pk.index')}}">Daftar perjanjian kinerja</a></li>
                 {{-- <li><a href="{{route('pk.index')}}">Tanpa PK</a></li> --}}
             </ul>
         </li>
 
-        <li class="submenu">
+        <li class="submenu" id="capaian">
             <a href="javascript:void(0)">
                 <span class="icon">
                     <i class="fa fa-home"></i>
@@ -76,9 +76,9 @@ START @SIDEBAR LEFT
             </a>
             <ul>
                 {{--<li><a href="{{route('capaian.fisik.filter')}}">Kegiatan Fisik Triwulan</a></li>--}}
-                <li><a href="{{route('capaian.renstra.fisik.filter')}}">Sasaran Program/Kegiatan</a></li>
-                <li><a href="{{route('capaian.anggaran.filter')}}">Anggaran Per Tahun</a></li>
-                <li><a href="{{route('capaian.renstra.anggaran.filter')}}">Anggaran Per Periode</a></li>
+                <li id="capaian-kegiatan"><a href="{{route('capaian.renstra.fisik.filter')}}">Sasaran Program/Kegiatan</a></li>
+                <li id="capaian-anggaran-tahun"><a href="{{route('capaian.anggaran.filter')}}">Anggaran Per Tahun</a></li>
+                <li id="capaian-anggaran-periode"><a href="{{route('capaian.renstra.anggaran.filter')}}">Anggaran Per Periode</a></li>
             </ul>
         </li>
 {{--
@@ -86,39 +86,39 @@ START @SIDEBAR LEFT
             <a href="">Kegiatan Prioritas</a>
         </li>--}}
 
-        <li>
+        <li id="evaluasi">
             <a href="{{route('kegiatan.evaluasi.filter')}}">
                 <span class="icon"><i class="fa fa-home"></i></span>
                 <span class="text">Evaluasi Kinerja</span>
-
             </a>
         </li>
 
         @can('read-user', null)
-        <li class="submenu">
+        <li class="submenu" id="content">
             <a href="javascript:void(0);">
                 <span class="icon"><i class="fa fa-home"></i></span>
                 <span class="text">Content</span>
                 <span class="arrow"></span>
             </a>
             <ul>
-                <li class=""><a href="{{route('page.index')}}">Page</a></li>
+                <li id="content-page"><a href="{{route('page.index')}}">Page</a></li>
 
             </ul>
         </li>
         @endcan
 
         @can('read-user', null)
-        <li class="submenu">
+        <li class="submenu" id="setting">
             <a href="javascript:void(0);">
                 <span class="icon"><i class="fa fa-home"></i></span>
                 <span class="text">Pengaturan</span>
                 <span class="arrow"></span>
-                <span class="selected"></span>
+
+                {{--<span class="selected"></span>--}}
             </a>
             <ul>
-                <li><a href="{{route('user.index')}}">User</a></li>
-                <li><a href="{{route('position.index')}}">Jabatan user</a></li>
+                <li id="setting-user"><a href="{{route('user.index')}}">User</a></li>
+                <li id="setting-position"><a href="{{route('position.index')}}">Jabatan user</a></li>
             </ul>
         </li>
         @endcan
@@ -128,12 +128,12 @@ START @SIDEBAR LEFT
     <!--/ End left navigation - menu -->
 
     <!-- Start left navigation - footer -->
-    <div id="tour-10" class="sidebar-footer hidden-xs hidden-sm hidden-md">
+    {{--<div id="tour-10" class="sidebar-footer hidden-xs hidden-sm hidden-md">
         <a id="setting" class="pull-left" href="javascript:void(0);" data-toggle="tooltip" data-placement="top" data-title="Setting"><i class="fa fa-cog"></i></a>
         <a id="fullscreen" class="pull-left" href="javascript:void(0);" data-toggle="tooltip" data-placement="top" data-title="Fullscreen"><i class="fa fa-desktop"></i></a>
         <a id="lock-screen" data-url="page-signin.html" class="pull-left" href="javascript:void(0);" data-toggle="tooltip" data-placement="top" data-title="Lock Screen"><i class="fa fa-lock"></i></a>
         <a id="logout" data-url="page-lock-screen.html" class="pull-left" href="javascript:void(0);" data-toggle="tooltip" data-placement="top" data-title="Logout"><i class="fa fa-power-off"></i></a>
-    </div><!-- /.sidebar-footer -->
+    </div>--}}<!-- /.sidebar-footer -->
     <!--/ End left navigation - footer -->
 
 </aside><!-- /#sidebar-left -->

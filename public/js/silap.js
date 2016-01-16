@@ -191,6 +191,38 @@ function confirmDelete (anchor) {
     });
 }
 
+
+$(function(){
+    $('.sidebar-menu li > a').click(function(){
+        var $this = $(this);
+        var href = $this.attr('href');
+
+        if (href != 'javascript:void(0)')
+        {
+            localStorage.setItem("menu-active-id", $this.parent().attr('id'));
+        }
+    });
+
+
+    $('.sidebar-menu .submenu').removeClass('active');
+    $('.sidebar-menu .submenu > ul > li').removeClass('active');
+    $('.sidebar-menu .submenu.active > a > span.selected').remove();
+
+    $('.sidebar-menu > li').removeClass('active');
+
+    var activeId = localStorage.getItem('menu-active-id');
+
+    if(activeId != undefined) {
+        $('.sidebar-menu .submenu #' + activeId).addClass('active');
+        $('.sidebar-menu .submenu #' + activeId).parent().parent().addClass('active');
+
+        $('.sidebar-menu #' + activeId).addClass('active');
+
+        // $('.submenu#setting').addClass('active');
+        $('.sidebar-menu .active > a').append('<span class="selected"></span>');
+    }
+});
+
 // Execute here
 
 saveForm();
