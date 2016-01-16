@@ -22,9 +22,9 @@
                     <div class="panel-body">
                         <form action="{{route('capaian.anggaran.kegiatan')}}" method="get">
                             <div class="form-group">
-                                <label for="year">Rencana Strategis</label>
+                                <label for="year">Periode</label>
                                 {!! Form::select('plan', $plans, null, [
-                                    'placeholder' => '-Select Renstra-',
+                                    'placeholder' => '-Pilih Periode-',
                                     'class' => 'form-control',
                                     'id'=>'plan']) !!}
                             </div>
