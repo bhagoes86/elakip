@@ -85,8 +85,8 @@
                         <table class="table table-striped table-bordered" id="{{$viewId}}-datatables">
                             <thead>
                             <tr>
-                                <th>Nama kegiatan</th>
                                 <th>Unit</th>
+                                <th>Nama kegiatan</th>
                                 <th>Anggaran</th>
                                 <th>Realisasi</th>
                                 <th>%</th>
@@ -95,8 +95,8 @@
                             <tbody>
                             @foreach($activities as $activity)
                                 <tr>
-                                    <td>{{$activity->name}}</td>
                                     <td>{{$activity->unit->name}}</td>
+                                    <td>{{$activity->name}}</td>
                                     <td>
                                         @if($activity->budget != null)
                                             {{money_format('%.2n', $activity->budget->pagu)}}
