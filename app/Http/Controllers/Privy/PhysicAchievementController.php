@@ -308,7 +308,7 @@ class PhysicAchievementController extends AdminController
 
         return Datatables::of($achievement->media)
             ->editColumn('name', function ($data) {
-                return '<a target="_blank" href="'.url('/').'/'.$data->location.'">'.$data->name.'</a>';
+                return '<a target="_blank" href="'.url('/').'/'.$data->location.'">'.$data->original_name.'</a>';
             })
             ->addColumn('action', function ($data) use ($achievementId, $key) {
 
