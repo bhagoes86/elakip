@@ -122,14 +122,11 @@ class BudgetAchievementController extends AdminController
     {
         $this->validate($request, [
             'year'      => 'integer',
-            //'agreement' => 'integer',
             'program'   => 'integer',
-            // 'activity'  => 'integer',
         ]);
 
         $year = $request->get('year');
         $planId = $request->get('plan');
-        //$agreementId = $request->get('agreement');
         $programId = $request->get('program');
         $activityId = $request->get('activity');
 
@@ -139,27 +136,17 @@ class BudgetAchievementController extends AdminController
 
         $selectedProgram = Program::where('plan_id', $planId)->get();
 
-        // $selectedActivity = Activity::where('program_id', $programId)->get();
-
         $program = Program::with(['activities' => function ($query) {
 
-            /*$agreement = Agreement::with([
-                'firstPosition' => function($query) {
-                    $query->with(['user','unit']);
-                }
-            ])->find($agreementId);*/
-
-            $query->with('budget');
-            $query->with('unit');
+            $query->with(['budget', 'unit']);
+            $query->where('unit_id', $this->authUser->positions[0]->unit->id);
             $query->inAgreement();
-            //$query->where('unit_id', $agreement->firstPosition->unit->id);
         }])
             ->where('plan_id', $planId)
             ->find($programId);
 
         $agreement_arr = [];
         $program_arr = [];
-        // $activity_arr = [];
 
         foreach ($selectedAgreement as $item)
             $agreement_arr[$item->id] = $item->firstPosition->user->name.' ('.$item->firstPosition->unit->name.')'.' - '.
@@ -168,23 +155,12 @@ class BudgetAchievementController extends AdminController
         foreach ($selectedProgram as $item)
             $program_arr[$item->id] = $item->name;
 
-       /* $plans = [];
-        foreach (Plan::with('period')->get() as $plan) {
-            $plans[$plan->id] = $plan->period->year_begin . ' - ' . $plan->period->year_end;
-        }*/
         $period = Period::where('year_begin', Period::YEAR_BEGIN)->first();
         $plan = Plan::where('period_id', $period->id)->first();
-
-
-        /* foreach ($selectedActivity as $item)
-            $activity_arr[$item->id] = $item->name;*/
-
-        // dd($program->activities->toArray());
 
         return view('private.budget.detail')
             ->with('id', [
                 'year'      => $year,
-                //'agreement' => $agreementId,
                 'program'   => $programId,
                 'activity'  => $activityId,
             ])
