@@ -215,6 +215,8 @@ class UserController extends AdminController
     }
 
     /**
+     * Second user / Pihak kedua
+     *
      * @param Request $request
      * @return string
      * @author Fathur Rohman <fathur@dragoncapital.center>
@@ -223,15 +225,20 @@ class UserController extends AdminController
     {
         $year = $request->get('year');
 
-        $positions = Position::with(['user','unit'])
+        $positions = Position::with(['user' => function($query){
+            $query->where('role_id', Role::PIMPINAN_ID);
+        },'unit'])
             ->where('year', $year)
             // ->whereNotIn('unit_id', [self::DITJEN_UNIT_ID])
             ->get();
 
+
         $html = '<option>- Pilih satu -</option>';
 
         foreach ($positions as $position) {
-            $html .= '<option value="'.$position->id.'" data-unit-id="'.$position->unit->id.'">'.$position->user->name . ' (' . $position->position . ' ' . $position->year . ' - ' . $position->unit->name . ')'.'</option>';
+            if($position->user != null) {
+                $html .= '<option value="' . $position->id . '" data-unit-id="' . $position->unit->id . '">' . $position->user->name . ' (' . $position->position . ' ' . $position->year . ' - ' . $position->unit->name . ')' . '</option>';
+            }
         }
 
         return $html;
