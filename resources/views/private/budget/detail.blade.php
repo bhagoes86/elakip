@@ -101,7 +101,7 @@
                                         @if($activity->budget != null)
                                             {{money_format('%.2n', $activity->budget->pagu)}}
                                         @else
-                                            {{0}}
+                                            {{money_format('%.2n', 0)}}
                                         @endif
                                     </td>
                                     <td>
@@ -109,25 +109,28 @@
                                             @if($activity->budget != null)
                                                 {{money_format('%.2n', $activity->budget->realization)}}
                                             @else
-                                                {{0}}
+                                                {{money_format('%.2n', 0)}}
                                             @endif
                                         @else
                                             @if($activity->budget != null)
                                                 <a href="#"
                                                    class="x-editable"
                                                    id="realization-{{$activity->budget->id}}"
+                                                   data-value="{{$activity->budget->realization}}"
                                                    data-type="text"
                                                    data-pk="{{$activity->budget->id}}"
                                                    data-url="{{route('capaian.anggaran.kegiatan.update', [$activity->budget->id])}}"
                                                    data-title="Realisasi">{{$activity->budget->realization}}</a>
                                             @else
-                                                {{0}}
+                                                {{money_format('%.2n', 0)}}
                                             @endif
                                         @endif
                                     </td>
                                     <td>
                                         @if($activity->budget != null)
+                                            <span id="percent-{{$activity->budget->id}}">
                                             {{ round($activity->budget->realization / $activity->budget->pagu * 100, 2) }}%
+                                            </span>
                                         @else
                                             {{0}}%
                                         @endif
@@ -165,10 +168,18 @@
 
 
             $('.x-editable').editable({
+                display: function(value) {
+                    $(this).text('Rp'+formatMoney(value, 2, ',', '.'));
+                },
                 params: function (params) {
                     params._token = '{{csrf_token()}}';
                     params._method = 'PUT';
                     return params;
+                },
+                success: function (data, config){
+                    console.log(data);
+                    var p = data.realization / data.pagu * 100;
+                    $('#percent-'+data.id).html(p.toFixed(2) + '%');
                 }
             });
 

@@ -85,7 +85,9 @@ class BudgetAchievementController extends AdminController
 
         $budget = Budget::find($budgetId);
         $budget->realization = $request->get('value');
-        return (int) $budget->save();
+        $budget->save();
+
+        return $budget;
     }
 
     /**
