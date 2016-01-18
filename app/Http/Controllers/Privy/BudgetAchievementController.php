@@ -140,7 +140,7 @@ class BudgetAchievementController extends AdminController
         $program = Program::with(['activities' => function ($query) {
 
             $query->with(['budget', 'unit']);
-            if($this->auhtUser->role->id == Role::OPERATOR_ID) {
+            if($this->authUser->role->id == Role::OPERATOR_ID) {
                 $query->where('unit_id', $this->authUser->positions[0]->unit->id);
             }
             $query->inAgreement();
