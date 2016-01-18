@@ -308,7 +308,7 @@ class AgreementController extends AdminController
         //
         // @reference   http://askubuntu.com/questions/76013/how-do-i-add-locale-to-ubuntu-server
         //              http://whplus.com/blog/2008/11/27/format-penulisan-tanggal-phpdalam-bahasa-indonesia.html
-        setlocale(LC_TIME, 'id_ID');
+
         Carbon::setLocale('id');
 
         $agreement = Agreement::with([
@@ -513,6 +513,16 @@ class AgreementController extends AdminController
 
 
             });
+
+            // Add logo to sheet number one
+            $objDrawing = new \PHPExcel_Worksheet_Drawing();
+            $objDrawing->setName('Logo');
+            $objDrawing->setDescription('Logo');
+            $logo = public_path('img/logoPU.jpg'); // Provide path to your logo file
+            $objDrawing->setPath($logo);  //setOffsetY has no effect
+            $objDrawing->setCoordinates('A1');
+            $objDrawing->setHeight(130); // logo height
+            $objDrawing->setWorksheet($excel->getActiveSheet());
 
             $excel->sheet('Perjanjian kinerja', function ($sheet) use ($agreement, $plan) {
 
