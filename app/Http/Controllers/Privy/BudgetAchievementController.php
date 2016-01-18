@@ -8,6 +8,7 @@ use App\Models\Budget;
 use App\Models\Period;
 use App\Models\Plan;
 use App\Models\Program;
+use App\Models\Role;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -139,7 +140,9 @@ class BudgetAchievementController extends AdminController
         $program = Program::with(['activities' => function ($query) {
 
             $query->with(['budget', 'unit']);
-            $query->where('unit_id', $this->authUser->positions[0]->unit->id);
+            if($this->auhtUser->role->id == Role::OPERATOR_ID) {
+                $query->where('unit_id', $this->authUser->positions[0]->unit->id);
+            }
             $query->inAgreement();
         }])
             ->where('plan_id', $planId)
