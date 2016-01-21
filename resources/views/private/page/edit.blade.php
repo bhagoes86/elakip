@@ -58,14 +58,14 @@
                             ]) !!}
                         </div>
 
-                        <div class="form-group">
+                       {{-- <div class="form-group">
                             <label for="excerpt">Excerpt</label>
                             {!! Form::textarea('excerpt', null, [
                                 'id'    => 'excerpt',
                                 'class' => 'form-control',
                                 'placeholder'   => 'Excerpt'
                             ]) !!}
-                        </div>
+                        </div>--}}
 
                         <button type="submit" class="btn btn-info btn-block btn-lg save">
                             <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Save
