@@ -17,11 +17,11 @@
         </div>
     </div>
 
-    @include('public.landing.intro')
+  {{--  @include('public.landing.intro')
 
     @include('public.landing.tupoksi')
     @include('public.landing.renstra')
     @include('public.landing.regulasi')
-    @include('public.landing.lakip')
+    @include('public.landing.lakip')--}}
 
 @stop
