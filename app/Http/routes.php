@@ -172,13 +172,20 @@ Route::group([
      * SDM User
      */
     get('sdm/data', ['uses' => 'SdmController@data', 'as' => 'sdm.data' ]);
-    resource('sdm', 'SdmController', []);
+    resource('sdm', 'SdmController', ['except' => 'show']);
 
     /**
      * Education sdm/staff
      */
     get('sdm.education/data', ['uses' => 'EducationController@data', 'as' => 'sdm.education.data' ]);
     resource('sdm.education', 'EducationController');
+
+    /**
+     * SDM report
+     */
+    get('sdm/report', ['uses' => 'StaffReportController@index', 'as' => 'sdm.report.index']);
+    get('sdm/report/filter', ['uses' => 'StaffReportController@filter', 'as' => 'sdm.report.filter']);
+
     /**
      * Profile editing
      */

@@ -106,6 +106,7 @@ START @SIDEBAR LEFT
             <ul>
                 <li id="sdm-struktur"><a href="{{route('structure.index')}}">Struktur Organisasi</a></li>
                 <li id="sdm-person"><a href="{{route('sdm.index')}}">SDM</a></li>
+                <li id="sdm-report"><a href="{{route('sdm.report.filter')}}">Laporan SDM</a></li>
 
             </ul>
         </li>
