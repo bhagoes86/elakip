@@ -101,6 +101,9 @@ class SdmController extends AdminController
         $staff = Staff::with('organization')->get();
 
         return Datatables::of($staff)
+            ->editColumn('name', function($data) {
+                return "<a href='".route('sdm.education.index', [$data->id])."'>".$data->name."</a>";
+            })
             ->editColumn('status', function($data) {
                 if($data->status == 'pns') {
                     return 'PNS';

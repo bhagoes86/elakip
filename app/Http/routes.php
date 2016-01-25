@@ -173,6 +173,12 @@ Route::group([
      */
     get('sdm/data', ['uses' => 'SdmController@data', 'as' => 'sdm.data' ]);
     resource('sdm', 'SdmController', []);
+
+    /**
+     * Education sdm/staff
+     */
+    get('sdm.education/data', ['uses' => 'EducationController@data', 'as' => 'sdm.education.data' ]);
+    resource('sdm.education', 'EducationController');
     /**
      * Profile editing
      */

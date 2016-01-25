@@ -34,11 +34,12 @@ class OrganizationStructureController extends AdminController
      */
     public function store(Request $request)
     {
+        $parentId = $request->get('parent_id');
 
-        if($request->has('parent_id')) {
-            $parentId = $request->get('parent_id');
+        $parent = Organization::find($parentId);
 
-            $parent = Organization::find($parentId);
+        if($parent != null) {
+
 
             $parent->children()->create([
                 'name' => $request->get('name')
@@ -139,7 +140,7 @@ class OrganizationStructureController extends AdminController
 
         $organization_opt = '';
         foreach ($organizations as $organization) {
-            $organization_opt .= '<option id="'.$organization->id.'">'.$organization->name.'</option>';
+            $organization_opt .= '<option value="'.$organization->id.'">'.$organization->name.'</option>';
         }
 
         return $organization_opt;

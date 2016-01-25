@@ -12,7 +12,7 @@ class CreateEducationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('educations', function (Blueprint $table) {
+        Schema::create('education', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('staff_id');
             $table->enum('level', ['smp','sma','s1','s2','s3']);
@@ -33,6 +33,6 @@ class CreateEducationsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('educations');
+        Schema::drop('education');
     }
 }

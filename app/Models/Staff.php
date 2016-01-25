@@ -25,7 +25,7 @@ class Staff extends Model
         return $this->belongsTo(Organization::class);
     }
 
-    public function educations()
+    public function education()
     {
         return $this->hasMany(Education::class);
     }
