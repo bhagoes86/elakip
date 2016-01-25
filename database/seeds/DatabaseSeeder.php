@@ -32,6 +32,9 @@ class DatabaseSeeder extends Seeder
         if(DB::table('plans')->count() == 0)
             $this->call(PlanTableSeeder::class);
 
+        if(DB::table('programs')->count() == 0)
+            $this->call(ProgramTableSeeder::class);
+
         Model::reguard();
     }
 }
