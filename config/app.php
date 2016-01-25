@@ -39,7 +39,7 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => 'Asia/Jakarta',
 
     /*
     |--------------------------------------------------------------------------
@@ -152,7 +152,8 @@ return [
         Cviebrock\EloquentSluggable\SluggableServiceProvider::class,
         yajra\Datatables\DatatablesServiceProvider::class,
         Barryvdh\Elfinder\ElfinderServiceProvider::class,
-        Maatwebsite\Excel\ExcelServiceProvider::class
+        Maatwebsite\Excel\ExcelServiceProvider::class,
+        Baum\Providers\BaumServiceProvider::class,
 
     ],
 

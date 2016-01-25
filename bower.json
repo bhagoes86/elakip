@@ -112,7 +112,8 @@
     "x-editable": "~1.5.1",
     "elfinder": "~2.0.*",
     "autosize": "jquery-autosize#~3.0.14",
-    "highcharts": "~4.2.1"
+    "highcharts": "~4.2.1",
+    "jquery-easyui": "jquery.easyui#*"
   },
   "resolutions": {
     "jquery": "1.11.* - 2",

@@ -14,7 +14,7 @@
         "yajra/laravel-datatables-oracle": "~5.0",
         "barryvdh/laravel-elfinder": "^0.3.5",
         "barryvdh/laravel-dompdf": "0.6.*",
-        "doctrine/dbal": "^2.5"
+        "baum/baum": "~1.1"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
@@ -22,7 +22,8 @@
         "phpunit/phpunit": "~4.0",
         "phpspec/phpspec": "~2.1",
         "barryvdh/laravel-ide-helper": "^2.0",
-        "barryvdh/laravel-debugbar": "~2.0"
+        "barryvdh/laravel-debugbar": "~2.0",
+        "doctrine/dbal": "^2.5"
     },
     "autoload": {
         "classmap": [

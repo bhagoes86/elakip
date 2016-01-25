@@ -97,6 +97,19 @@ START @SIDEBAR LEFT
             </a>
         </li>
 
+        <li class="submenu" id="sdm">
+            <a href="javascript:void(0);">
+                <span class="icon"><i class="fa fa-home"></i></span>
+                <span class="text">SDM</span>
+                <span class="arrow"></span>
+            </a>
+            <ul>
+                <li id="sdm-struktur"><a href="{{route('structure.index')}}">Struktur Organisasi</a></li>
+                <li id="sdm-person"><a href="{{route('sdm.index')}}">SDM</a></li>
+
+            </ul>
+        </li>
+
         @can('read-user', null)
         <li class="submenu" id="content">
             <a href="javascript:void(0);">

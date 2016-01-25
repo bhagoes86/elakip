@@ -162,6 +162,18 @@ Route::group([
     resource('kegiatan.evaluasi', 'EvaluationController', ['except' => ['store']]);
 
     /**
+     * Struktur organisasi
+     */
+    get('structure/parents', ['uses' => 'OrganizationStructureController@refreshParents', 'as' => 'structure.parent' ]);
+    get('structure/data', ['uses' => 'OrganizationStructureController@data', 'as' => 'structure.data' ]);
+    resource('structure', 'OrganizationStructureController', []);
+
+    /**
+     * SDM User
+     */
+    get('sdm/data', ['uses' => 'SdmController@data', 'as' => 'sdm.data' ]);
+    resource('sdm', 'SdmController', []);
+    /**
      * Profile editing
      */
     get('profile', ['uses' => 'ProfileController@index', 'as' => 'profile.index']);
