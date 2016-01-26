@@ -138,7 +138,7 @@
                 var $this = $(this);
 
                 $('#agreement').html('<option>...Loading...</option>');
-                
+
                 $.get('{{route('pk.select2')}}', {
                     year: $this.find(':selected').val()
                 }, function (response) {

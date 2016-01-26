@@ -193,14 +193,14 @@ class PhysicAchievementController extends AdminController
         $this->validate($request, [
             'year'      => 'integer',
             'agreement' => 'integer',
-            'program'   => 'integer',
+            //'program'   => 'integer',
             'activity'  => 'integer',
         ]);
 
-        $plan = $request->get('plan');
+        $plan       = Plan::FIX_PLAN_ID; //$request->get('plan');
+        $program    = Program::FIX_PROGRAM_ID;//$request->get('program');
         $year = $request->get('year');
         $agreement = $request->get('agreement');
-        $program = $request->get('program');
         $activity = $request->get('activity');
         $target = $request->get('target');
 

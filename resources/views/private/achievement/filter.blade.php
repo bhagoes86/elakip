@@ -20,13 +20,13 @@
 
                     <div class="panel-body">
                         <form action="{{route('capaian.fisik.indicator')}}" method="get">
-                            <div class="form-group">
+                            {{--<div class="form-group">
                                 <label for="year">Periode</label>
                                 {!! Form::select('plan', $plans, null, [
                                     'placeholder' => '-Select Periode-',
                                     'class' => 'form-control',
                                     'id'=>'plan']) !!}
-                            </div>
+                            </div>--}}
                             <div class="form-group">
                                 <label for="year">Tahun</label>
                                 {!! Form::select('year', $years, null, [
@@ -38,11 +38,11 @@
                                 <label for="agreement">Perjanjian kinerja</label>
                                 <select id="agreement" name="agreement" class="form-control"></select>
                             </div>
-                            <div class="form-group">
+                            {{--<div class="form-group">
                                 <label for="program">Program</label>
                                 <select id="program" name="program" class="form-control"></select>
 
-                            </div>
+                            </div>--}}
                             <div class="form-group">
                                 <label for="activity">Kegiatan</label>
                                 <select id="activity" name="activity" class="form-control"></select>
@@ -83,7 +83,7 @@
         $(function() {
             "use strict";
 
-            var $yearFilter = $('#year-filter');
+            /*var $yearFilter = $('#year-filter');
 
 
             $yearFilter.change(function () {
@@ -91,13 +91,13 @@
                         value = $this.val();
 
                 table.ajax.reload();
-            });
+            });*/
 
             $('#year').on('change', function () {
                 var $this = $(this);
 
-                $('#agreement').html('');
-                $('#program').html('');
+                $('#agreement').html('<option>...Loading...</option>');
+                //$('#program').html('');
                 $('#activity').html('');
                 $('#target').html('');
 
@@ -111,18 +111,25 @@
             $('#agreement').on('change', function () {
                 var $this = $(this);
 
-                $('#program').html('');
-                $('#activity').html('');
+                //$('#program').html('');
+                $('#activity').html('<option>...Loading...</option>');
                 $('#target').html('');
 
-                $.get('{{route('program.select2')}}', {
+                /*$.get('{{route('program.select2')}}', {
                     agreement: $this.find(':selected').val()
                 }, function (response) {
                     $('#program').html(response);
+                })*/
+
+                $.get('{{route('kegiatan.select2')}}', {
+                    program: 1, //$this.find(':selected').val(),
+                    agreement: $this.find(':selected').val()
+                }, function (response) {
+                    $('#activity').html(response);
                 })
             });
 
-            $('#program').on('change', function () {
+            /*$('#program').on('change', function () {
                 var $this = $(this);
 
                 $('#activity').html('');
@@ -134,12 +141,12 @@
                 }, function (response) {
                     $('#activity').html(response);
                 })
-            });
+            });*/
 
             $('#activity').on('change', function () {
                 var $this = $(this);
 
-                $('#target').html('');
+                $('#target').html('<option>...Loading...</option>');
                 $.get('{{route('sasaran.select2')}}', {
                     activity: $this.find(':selected').val()
                 }, function (response) {

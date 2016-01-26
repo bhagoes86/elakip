@@ -79,7 +79,7 @@ START @SIDEBAR LEFT
                 <span class="arrow"></span>
             </a>
             <ul>
-                {{--<li><a href="{{route('capaian.fisik.filter')}}">Kegiatan Fisik Triwulan</a></li>--}}
+                <li id="capaian-triwulan"><a href="{{route('capaian.fisik.filter')}}">Kegiatan Fisik Triwulan</a></li>
                 <li id="capaian-kegiatan"><a href="{{route('capaian.renstra.fisik.filter')}}">Sasaran Program/Kegiatan</a></li>
                 <li id="capaian-anggaran-tahun"><a href="{{route('capaian.anggaran.filter')}}">Anggaran Per Tahun</a></li>
                 <li id="capaian-anggaran-periode"><a href="{{route('capaian.renstra.anggaran.filter')}}">Anggaran Per Periode</a></li>

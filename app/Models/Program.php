@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Program extends Model
 {
+    const FIX_PROGRAM_ID = 1;
+
     protected $fillable = ['name'];
 
     public function plan()

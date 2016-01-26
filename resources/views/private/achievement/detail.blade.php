@@ -30,13 +30,13 @@
 
                     <div class="panel-body" style="display: none">
                         <form action="{{route('capaian.fisik.indicator')}}" method="get">
-                            <div class="form-group">
+                            {{--<div class="form-group">
                                 <label for="year">Rencana Strategis</label>
                                 {!! Form::select('plan', $plans, null, [
                                     'placeholder' => '-Select Renstra-',
                                     'class' => 'form-control',
                                     'id'=>'plan']) !!}
-                            </div>
+                            </div>--}}
                             <div class="form-group">
                                 <label for="year">Tahun</label>
                                 {!! Form::select('year', $years, $id['year'], [
@@ -51,14 +51,14 @@
                                     'class' => 'form-control',
                                     'id'=>'agreement']) !!}
                             </div>
-                            <div class="form-group">
+                            {{--<div class="form-group">
                                 <label for="program">Program</label>
                                 {!! Form::select('program', $programs, $id['program'], [
                                     'placeholder' => '-Select Program-',
                                     'class' => 'form-control',
                                     'id'=>'program']) !!}
 
-                            </div>
+                            </div>--}}
                             <div class="form-group">
                                 <label for="activity">Kegiatan</label>
                                 {!! Form::select('activity', $activities, $id['activity'], [
@@ -130,7 +130,6 @@
         $(function() {
             "use strict";
 
-            var $yearFilter = $('#year-filter');
 
             var table = $('#{{$viewId}}-datatables').DataTable({
                 processing: true,
@@ -152,22 +151,18 @@
                 ]
             });
 
-            $yearFilter.change(function () {
-                var $this = $(this),
-                        value = $this.val();
 
-                table.ajax.reload();
-            });
 
          /*   $('#target').select2({
                 placeholder: "-Pilih Sasaran-"
             });*/
 
+
             $('#year').on('change', function () {
                 var $this = $(this);
 
-                $('#agreement').html('');
-                $('#program').html('');
+                $('#agreement').html('<option>...Loading...</option>');
+                //$('#program').html('');
                 $('#activity').html('');
                 $('#target').html('');
 
@@ -181,34 +176,25 @@
             $('#agreement').on('change', function () {
                 var $this = $(this);
 
-                $('#program').html('');
-                $('#activity').html('');
+                $('#activity').html('<option>...Loading...</option>');
                 $('#target').html('');
 
-                $.get('{{route('program.select2')}}', {
-                    agreement: $this.find(':selected').val()
-                }, function (response) {
-                    $('#program').html(response);
-                })
-            });
-
-            $('#program').on('change', function () {
-                var $this = $(this);
-
-                $('#activity').html('');
-                $('#target').html('');
 
                 $.get('{{route('kegiatan.select2')}}', {
-                    program: $this.find(':selected').val()
+                    program: 1, //$this.find(':selected').val(),
+                    agreement: $this.find(':selected').val()
                 }, function (response) {
                     $('#activity').html(response);
                 })
             });
 
+
+
             $('#activity').on('change', function () {
                 var $this = $(this);
 
-                $('#target').html('');
+                $('#target').html('<option>...Loading...</option>');
+
                 $.get('{{route('sasaran.select2')}}', {
                     activity: $this.find(':selected').val()
                 }, function (response) {

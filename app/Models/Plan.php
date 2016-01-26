@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Plan extends Model
 {
+    const FIX_PLAN_ID = 1;
+
     protected $fillable = ['period_id'];
 
     public function period()
