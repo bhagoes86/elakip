@@ -1,10 +1,12 @@
-{!! Form::model($goal, [
-    'route' => ['pk.program.kegiatan.sasaran.indikator.update',
+{!! Form::model($detail, [
+    'route' => ['pk.program.kegiatan.sasaran.indikator.detail.update',
         $id['agreement'],
         $id['program'],
         $id['activity'],
         $id['target'],
         $id['indicator'],
+        $id['detail']
+
     ],
     'method' => 'PUT',
     'id' => 'form-'.$viewId.'-edit',
@@ -16,17 +18,8 @@
 <div class="alert-wrapper"></div>
 
 <div class="form-group">
-    <label for="count">Target</label>
-    <div class="input-group">
-        {!! Form::text('count', null, ['class'=>"form-control", 'placeholder'=>"Target", 'id'=>"count", 'aria-describedby'=>"basic-addon2"]) !!}
-        <span class="input-group-addon" id="basic-addon2">{{$goal->indicator->unit}}</span>
-    </div>
-</div>
-
-<div class="checkbox">
-    <label>
-        {!! Form::checkbox('with_detail', true, null) !!} Detail
-    </label>
+    <label for="description">Deskripsi</label>
+    {!! Form::textarea('description', null, ['class' => 'form-control']) !!}
 </div>
 
 <button type="submit" class="btn btn-info btn-block btn-lg save">

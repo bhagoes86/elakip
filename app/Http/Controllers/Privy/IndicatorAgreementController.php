@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Privy;
 use App\Models\Activity;
 use App\Models\Agreement;
 use App\Models\Goal;
+use App\Models\GoalDetails;
+use App\Models\Program;
 use App\Models\Target;
 use Illuminate\Http\Request;
 
@@ -118,13 +120,26 @@ class IndicatorAgreementController extends AdminController
             ->first();
 
         $goal->count = $request->get('count');
-        return (int) $goal->save();
+
+        if($request->has('with_detail')) {
+            $goal->with_detail = true;
+        }
+        else
+            $goal->with_detail = false;
+
+        $goalResult = $goal->save();
+
+        # dd($goal->toArray());
+
+        $this->insertDetail($goal->id, $goal->count);
+
+        return (int) $goalResult;
     }
 
 
     public function data(Request $request)
     {
-        $programId = $request->get('program');
+        $programId = Program::FIX_PROGRAM_ID; //$request->get('program');
         $agreementId = $request->get('agreement');
         $activityId = $request->get('activity');
         $targetId = $request->get('target');
@@ -136,6 +151,19 @@ class IndicatorAgreementController extends AdminController
         }])->find($targetId);
 
         return \Datatables::of($target->indicators)
+            ->editColumn('name', function($data) use ($agreementId, $programId, $activityId, $targetId) {
+                if($data->goals[0]->with_detail) {
+                    return '<a href="'.route('pk.program.kegiatan.sasaran.indikator.detail.index', [
+                        $agreementId,
+                        $programId,
+                        $activityId,
+                        $targetId,
+                        $data->id
+                    ]).'">'.$data->name.'</a>';
+                }
+                else
+                    return $data->name;
+            })
             ->addColumn('target', function($data) {
                 return (0 == count($data->goals)) ? 0 : $data->goals[0]->count . ' ' . $data->unit;
             })
@@ -155,5 +183,44 @@ class IndicatorAgreementController extends AdminController
                     ->render();
             })
             ->make(true);
+    }
+
+    /**
+     * @param $id
+     * @param $count
+     * @author Fathur Rohman <fathur@dragoncapital.center>
+     */
+    private function insertDetail($id, $count)
+    {
+        $details = GoalDetails::where('goal_id', $id)->get();
+
+        if(count($details) == 0)
+        {
+            $goal = Goal::find($id);
+
+            $goalDetails = [];
+            for($i = 0; $i < $count; $i++) {
+                array_push($goalDetails, new GoalDetails());
+            }
+
+            $goal->details()->saveMany($goalDetails);
+        }
+
+        elseif(count($details) < $count)
+        {
+            $goal = Goal::find($id);
+
+            $goalDetails = [];
+            for($i = 0; $i < ($count - count($details)); $i++) {
+                array_push($goalDetails, new GoalDetails());
+            }
+
+            $goal->details()->saveMany($goalDetails);
+
+        }
+        elseif(count($details) > $count)
+        {
+            die();
+        }
     }
 }

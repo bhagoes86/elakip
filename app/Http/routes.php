@@ -115,6 +115,12 @@ Route::group([
     get('pk/program/kegiatan/sasaran/indikator/data', ['uses' => 'IndicatorAgreementController@data', 'as' => 'pk.program.kegiatan.sasaran.indikator.data']);
     resource('pk.program.kegiatan.sasaran.indikator', 'IndicatorAgreementController', ['only' => ['index', 'edit', 'update']]);
 
+    /**
+     * Indikator detail
+     */
+    get('pk/program/kegiatan/sasaran/indikator/detail/data', ['uses' => 'IndicatorDetailController@data', 'as' => 'pk.program.kegiatan.sasaran.indikator.detail.data']);
+    resource('pk.program.kegiatan.sasaran.indikator.detail', 'IndicatorDetailController', ['only' => ['index', 'edit', 'update','destroy']]);
+
     get('capaian/media/data', ['uses' => 'PhysicAchievementController@getMediaData', 'as' => 'capaian.media.data']);
     delete('capaian/{achievementId}/media/{mediaId}/destroy', ['uses' => 'PhysicAchievementController@deleteMedia', 'as' => 'capaian.media.destroy']);
     get('goal/{goalId}/capaian/{achievementId}', ['uses' => 'PhysicAchievementController@getDocument', 'as' => 'goal.capaian.doc.create']);
