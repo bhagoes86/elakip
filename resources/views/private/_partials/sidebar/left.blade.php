@@ -1,15 +1,3 @@
-{{--
-
-START @SIDEBAR LEFT
-|=========================================================================================================================|
-|  TABLE OF CONTENTS (Apply to sidebar left class)                                                                        |
-|=========================================================================================================================|
-|  01. sidebar-box               |  Variant style sidebar left with box icon                                              |
-|  02. sidebar-rounded           |  Variant style sidebar left with rounded icon                                          |
-|  03. sidebar-circle            |  Variant style sidebar left with circle icon                                           |
-|=========================================================================================================================|
-
---}}
 <aside id="sidebar-left" class="sidebar-warning sidebar-circle">
 
     <!-- Start left navigation - profile shortcut -->
@@ -80,9 +68,7 @@ START @SIDEBAR LEFT
             </a>
             <ul>
                 <li id="capaian-triwulan"><a href="{{route('capaian.fisik.filter')}}">Kegiatan Fisik Triwulan</a></li>
-                <li id="capaian-kegiatan"><a href="{{route('capaian.renstra.fisik.filter')}}">Sasaran Program/Kegiatan</a></li>
                 <li id="capaian-anggaran-tahun"><a href="{{route('capaian.anggaran.filter')}}">Anggaran Per Tahun</a></li>
-                <li id="capaian-anggaran-periode"><a href="{{route('capaian.renstra.anggaran.filter')}}">Anggaran Per Periode</a></li>
             </ul>
         </li>
 {{--
@@ -104,10 +90,24 @@ START @SIDEBAR LEFT
                 <span class="arrow"></span>
             </a>
             <ul>
+
                 <li id="sdm-struktur"><a href="{{route('structure.index')}}">Struktur Organisasi</a></li>
                 <li id="sdm-person"><a href="{{route('sdm.index')}}">SDM</a></li>
-                <li id="sdm-report"><a href="{{route('sdm.report.filter')}}">Laporan SDM</a></li>
+                {{--<li id="sdm-report"><a href="{{route('sdm.report.filter')}}">Laporan SDM</a></li>--}}
 
+            </ul>
+        </li>
+
+        <li class="submenu" id="report">
+            <a href="javascript:void(0);">
+                <span class="icon"><i class="fa fa-home"></i></span>
+                <span class="text">Laporan</span>
+                <span class="arrow"></span>
+            </a>
+            <ul>
+                <li id="report-kegiatan"><a href="{{route('capaian.renstra.fisik.filter')}}">Laporan Program/Kegiatan</a></li>
+                <li id="report-anggaran"><a href="{{route('capaian.renstra.anggaran.filter')}}">Laporan Anggaran Kegiatan</a></li>
+                <li id="report-sdm"><a href="{{route('sdm.report.filter')}}">Laporan SDM</a></li>
             </ul>
         </li>
 

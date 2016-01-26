@@ -25,9 +25,10 @@ class PhysicAchievementController extends AdminController
      * Display a listing of the resource.
      *
      * @param $goalId
+     * @param Request $request
      * @return \Illuminate\Http\Response
      */
-    public function index($goalId)
+    public function index($goalId, Request $request)
     {
 
         $this->isAchievementExist($goalId);
@@ -96,6 +97,8 @@ class PhysicAchievementController extends AdminController
                 'budget_realization'   => isset($goal->achievements[3]) ? $goal->achievements[3]->budget_realization : 0
             ]
         ];
+
+
 
         return view('private.achievement.index')
             ->with('goal', $goal)

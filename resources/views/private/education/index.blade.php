@@ -8,6 +8,15 @@
 
     <div class="body-content animated fadeIn">
 
+        <div class="row mbot-15">
+            <div class="col-md-12">
+                <a href="{{ route('sdm.index') }}" class="btn btn-danger">
+                    <i class="fa fa-arrow-left"></i> Back
+                </a>
+            </div>
+        </div>
+        
+
         <div class="row">
             <div class="col-md-4">
                 <div class="panel rounded shadow">
@@ -21,7 +30,7 @@
                     <div class="panel-body">
 
                         {!! Form::open([
-                            'route' => ['sdm.education.store', $id['staff']],
+                            'route' => ['sdm.education.store', $staff->id],
                             'class' => 'app-form',
                             'id'    => 'form-' . $viewId,
                             'data-table' => $viewId . '-datatables'
@@ -56,7 +65,7 @@
 
                     <div class="panel-heading">
                         <div class="pull-left">
-                            <h3 class="panel-title">Daftar Pendidikan</h3>
+                            <h3 class="panel-title">Daftar Pendidikan {{ $staff->name }}</h3>
                         </div>
                         <div class="clearfix"></div>
                     </div>
@@ -102,7 +111,7 @@
                 ajax: {
                     url: "{{route('sdm.education.data')}}",
                     data: function(d) {
-                        d.staff = {{$id['staff']}};
+                        d.staff = {{$staff->id}};
 
                     }
                 },

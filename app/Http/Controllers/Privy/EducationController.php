@@ -27,12 +27,11 @@ class EducationController extends AdminController
      */
     public function index($staffId)
     {
+        $staff = Staff::find($staffId);
 
         return view('private.education.index')
             ->with('levels', $this->level)
-            ->with('id', [
-                'staff' => $staffId
-            ]);
+            ->with('staff', $staff);
 
     }
 
