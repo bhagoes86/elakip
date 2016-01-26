@@ -67,25 +67,33 @@ class PhysicAchievementController extends AdminController
                 'id'    => isset($goal->achievements[0]) ? $goal->achievements[0]->id : null,
                 'quarter' => isset($goal->achievements[0]) ? $goal->achievements[0]->quarter : 1,
                 'plan'  => isset($goal->achievements[0]) ? $goal->achievements[0]->plan : 0,
-                'realization'   => isset($goal->achievements[0]) ? $goal->achievements[0]->realization : 0
+                'realization'   => isset($goal->achievements[0]) ? $goal->achievements[0]->realization : 0,
+                'budget_plan'  => isset($goal->achievements[0]) ? $goal->achievements[0]->budget_plan : 0,
+                'budget_realization'   => isset($goal->achievements[0]) ? $goal->achievements[0]->budget_realization : 0
             ],
             'second_quarter' => [
                 'id'    => isset($goal->achievements[1]) ? $goal->achievements[1]->id : null,
                 'quarter' => isset($goal->achievements[1]) ? $goal->achievements[1]->quarter : 2,
                 'plan'  => isset($goal->achievements[1]) ? $goal->achievements[1]->plan : 0,
-                'realization'   => isset($goal->achievements[1]) ? $goal->achievements[1]->realization : 0
+                'realization'   => isset($goal->achievements[1]) ? $goal->achievements[1]->realization : 0,
+                'budget_plan'  => isset($goal->achievements[1]) ? $goal->achievements[1]->budget_plan : 0,
+                'budget_realization'   => isset($goal->achievements[1]) ? $goal->achievements[1]->budget_realization : 0
             ],
             'third_quarter' => [
                 'id'    => isset($goal->achievements[2]) ? $goal->achievements[2]->id : null,
                 'quarter' => isset($goal->achievements[2]) ? $goal->achievements[2]->quarter : 3,
                 'plan'  => isset($goal->achievements[2]) ? $goal->achievements[2]->plan : 0,
-                'realization'   => isset($goal->achievements[2]) ? $goal->achievements[2]->realization : 0
+                'realization'   => isset($goal->achievements[2]) ? $goal->achievements[2]->realization : 0,
+                'budget_plan'  => isset($goal->achievements[2]) ? $goal->achievements[2]->budget_plan : 0,
+                'budget_realization'   => isset($goal->achievements[2]) ? $goal->achievements[2]->budget_realization : 0
             ],
             'fourth_quarter' => [
                 'id'    => isset($goal->achievements[3]) ? $goal->achievements[3]->id : null,
                 'quarter' => isset($goal->achievements[3]) ? $goal->achievements[3]->quarter : 4,
                 'plan'  => isset($goal->achievements[3]) ? $goal->achievements[3]->plan : 0,
-                'realization'   => isset($goal->achievements[3]) ? $goal->achievements[3]->realization : 0
+                'realization'   => isset($goal->achievements[3]) ? $goal->achievements[3]->realization : 0,
+                'budget_plan'  => isset($goal->achievements[3]) ? $goal->achievements[3]->budget_plan : 0,
+                'budget_realization'   => isset($goal->achievements[3]) ? $goal->achievements[3]->budget_realization : 0
             ]
         ];
 
@@ -114,20 +122,24 @@ class PhysicAchievementController extends AdminController
      */
     public function store(Request $request, $goalId)
     {
+
         if(\Gate::allows('read-only'))
             abort(403);
 
         $this->validate($request, [
-            'plan'          => 'integer',
-            'realization'   => 'integer'
+            //'plan'          => 'integer',
+            //'realization'   => 'integer'
         ]);
 
         $achievementId  = (int) $request->get('id');
         $quarter        = (int) $request->get('quarter');
 
+
         $achievement = Achievement::where('quarter', $quarter)->find($achievementId);
-        $achievement->plan = $request->get('plan');
-        $achievement->realization = $request->get('realization');
+        $achievement->plan          = $request->get('plan');
+        $achievement->realization   = $request->get('realization');
+        $achievement->budget_plan   = $request->get('budget_plan');
+        $achievement->budget_realization = $request->get('budget_realization');
         return (int) $achievement->save();
     }
 

@@ -21,6 +21,18 @@
 
                 </div>
 
+                <hr/>
+
+                <div class="form-group">
+                    <label for="budget-{{$id}}-rn">Rencana Anggaran</label>
+                    <div class="form-control" id="budget-{{$id}}-rn">{{$achievements[$key]['budget_plan']}}</div>
+                </div>
+                <div class="form-group">
+                    <label for="budget-{{$id}}-rl">Realisasi Anggaran</label>
+                    <div class="form-control" id="budget-{{$id}}-rl">{{$achievements[$key]['budget_realization']}}</div>
+
+                </div>
+
             @else
 
                 {!! Form::open(['route' => ['capaian.fisik.goal.achievement.store', $goal->id], 'id' => 'form-' . $id, 'class' => 'achievement-form']) !!}
@@ -37,6 +49,23 @@
                 <div class="form-group">
                     <label for="{{$id}}-rl">Realisasi</label>
                     <input type="number" name="realization" id="{{$id}}-rl" placeholder="Realisasi" class="form-control" value="{{$achievements[$key]['realization']}}"/>
+                </div>
+
+                <hr/>
+
+                <div class="form-group">
+                    <label for="budget-{{$id}}-rn">Rencana Anggaran</label>
+                    <div class="input-group">
+                        <span class="input-group-addon">Rp.</span>
+                        <input type="text" name="budget_plan" id="budget-{{$id}}-rn" placeholder="Rencana" class="form-control" value="{{$achievements[$key]['budget_plan']}}"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="budget-{{$id}}-rl">Realisasi Anggaran</label>
+                    <div class="input-group">
+                        <span class="input-group-addon">Rp.</span>
+                        <input type="text" name="budget_realization" id="budget-{{$id}}-rl" placeholder="Realisasi" class="form-control" value="{{$achievements[$key]['budget_realization']}}"/>
+                    </div>
                 </div>
 
                 <button type="submit" class="btn btn-block btn-primary mbot-15 save">

@@ -11,15 +11,27 @@
         <div class="panel-body">
 
             @can('read-only')
-            <div class="form-group">
-                <label for="{{$id}}-rn">Rencana</label>
-                <div class="form-control" id="{{$id}}-rn">{{$achievements[$key]['plan']}}</div>
-            </div>
-            <div class="form-group">
-                <label for="{{$id}}-rl">Realisasi</label>
-                <div class="form-control" id="{{$id}}-rl">{{$achievements[$key]['realization']}}</div>
+                <div class="form-group">
+                    <label for="{{$id}}-rn">Rencana</label>
+                    <div class="form-control" id="{{$id}}-rn">{{$achievements[$key]['plan']}}</div>
+                </div>
+                <div class="form-group">
+                    <label for="{{$id}}-rl">Realisasi</label>
+                    <div class="form-control" id="{{$id}}-rl">{{$achievements[$key]['realization']}}</div>
 
-            </div>
+                </div>
+
+                <hr/>
+
+                <div class="form-group">
+                    <label for="{{$id}}-rn">Rencana Anggaran</label>
+                    <div class="form-control" id="{{$id}}-rn">{{$achievements[$key]['plan']}}</div>
+                </div>
+                <div class="form-group">
+                    <label for="{{$id}}-rl">Realisasi Anggaran</label>
+                    <div class="form-control" id="{{$id}}-rl">{{$achievements[$key]['realization']}}</div>
+
+                </div>
 
             @else
 
@@ -31,12 +43,35 @@
                 <div class="alert-wrapper"></div>
 
                 <div class="form-group">
-                    <label for="{{$id}}-rn">Rencana</label>
-                    <input type="text" name="plan" id="{{$id}}-rn" placeholder="Rencana" class="form-control" value="{{$achievements[$key]['plan']}}"/>
+                    <label for="{{$id}}-rn">Rencana (&percnt;)</label>
+                    <div class="input-group">
+                        <input type="text" name="plan" id="{{$id}}-rn" placeholder="Rencana" class="form-control" value="{{$achievements[$key]['plan']}}"/>
+                        <span class="input-group-addon">&percnt;</span>
+                    </div>
                 </div>
                 <div class="form-group">
-                    <label for="{{$id}}-rl">Realisasi</label>
-                    <input type="text" name="realization" id="{{$id}}-rl" placeholder="Realisasi" class="form-control" value="{{$achievements[$key]['realization']}}"/>
+                    <label for="{{$id}}-rl">Realisasi (&percnt;)</label>
+                    <div class="input-group">
+                        <input type="text" name="realization" id="{{$id}}-rl" placeholder="Realisasi" class="form-control" value="{{$achievements[$key]['realization']}}"/>
+                        <span class="input-group-addon">&percnt;</span>
+                    </div>
+                </div>
+
+                <hr/>
+
+                <div class="form-group">
+                    <label for="budget-{{$id}}-rn">Rencana Anggaran (&percnt;)</label>
+                    <div class="input-group">
+                        <input type="text" name="budget_plan" id="budget-{{$id}}-rn" placeholder="Rencana" class="form-control" value="{{$achievements[$key]['budget_plan']}}"/>
+                        <span class="input-group-addon">&percnt;</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="budget-{{$id}}-rl">Realisasi Anggaran (&percnt;)</label>
+                    <div class="input-group">
+                        <input type="text" name="budget_realization" id="budget-{{$id}}-rl" placeholder="Realisasi" class="form-control" value="{{$achievements[$key]['budget_realization']}}"/>
+                        <span class="input-group-addon">&percnt;</span>
+                    </div>
                 </div>
 
                 <button type="submit" class="btn btn-block btn-primary mbot-15 save">
