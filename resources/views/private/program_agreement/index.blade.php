@@ -39,6 +39,7 @@
                                         <th>Pihak kedua</th>
                                         <td>: {{$agreement->secondPosition->user->name}} ({{$agreement->secondPosition->position}})</td>
                                     </tr>
+
                                 </table>
 
                                 <h3>Dokumen</h3>

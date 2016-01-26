@@ -125,12 +125,11 @@ class BudgetAchievementController extends AdminController
     {
         $this->validate($request, [
             'year'      => 'integer',
-            'program'   => 'integer',
         ]);
 
         $year = $request->get('year');
-        $planId = $request->get('plan');
-        $programId = $request->get('program');
+        $planId = 1; //$request->get('plan');
+        $programId = 1; //$request->get('program');
         $activityId = $request->get('activity');
 
         $selectedAgreement = Agreement::where('year', $year)

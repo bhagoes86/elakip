@@ -69,12 +69,8 @@ class AgreementController extends AdminController
         if(\Gate::allows('read-only'))
             abort(403);
 
-        $plans = [];
-        foreach (Plan::with('period')->get() as $plan) {
-            $plans[$plan->id]   = $plan->period->year_begin .' - '. $plan->period->year_end;
-        }
+
         return view('private.agreement.create')
-            ->with('plans', $plans)
             ->with('years', $this->years);
     }
 
@@ -92,11 +88,11 @@ class AgreementController extends AdminController
         $agreement = Agreement::create([
 
             //'unit_id'           => $request->get('unit'),
-            'plan_id'   => $request->get('plan_id'),
-            'year'           => $request->get('year'),
+            'plan_id'               => 1, // Id 1 adalah id constant untuk plan 2015-2019
+            'year'                  => $request->get('year'),
             'first_position_id'     => $request->get('first_user_id'),
             'second_position_id'    => $request->get('second_user_id'),
-            'date'    => $request->get('date_agreement'),
+            'date'                  => $request->get('date_agreement'),
         ]);
 
         return \Redirect::route('pk.program.index', $agreement->id);

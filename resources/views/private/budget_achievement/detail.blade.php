@@ -44,11 +44,11 @@
                                 {!! Form::select('unit', $units, $id['unit'], ['class' => 'form-control','id'=> 'unit','placeholder' => '-Pilih Unit-']) !!}
                             </div>
 
-                            <div class="form-group">
+                           {{-- <div class="form-group">
                                 <label for="program">Program</label>
                                 {!! Form::select('program', $programs, $id['program'], ['class' => 'form-control','id'=> 'program','placeholder' => '-Pilih Program-']) !!}
 
-                            </div>
+                            </div>--}}
 
                             <button type="submit" class="btn btn-primary"> Load </button>
                         </form>
@@ -153,7 +153,7 @@
         $(function() {
             "use strict";
 
-            $('#unit').on('change', function () {
+           /* $('#unit').on('change', function () {
                 var $this = $(this);
 
                 $('#program').html('<option>..Loading..</option>');
@@ -164,7 +164,7 @@
                 }, function (response) {
                     $('#program').html(response);
                 })
-            });
+            });*/
         });
     </script>
 @stop

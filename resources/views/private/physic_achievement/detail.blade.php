@@ -45,12 +45,12 @@
                                 {!! Form::select('unit', $units, $id['unit'], ['class' => 'form-control','id'=> 'unit','placeholder' => '-Pilih Unit-']) !!}
                             </div>
 
-                            <div class="form-group">
+                            {{--<div class="form-group">
                                 <label for="program">Program</label>
                                 {!! Form::select('program', $programs, $id['program'], ['class' => 'form-control','id'=> 'program','placeholder' => '-Pilih Program-']) !!}
 
 
-                            </div>
+                            </div>--}}
                             <div class="form-group">
                                 <label for="activity">Kegiatan</label>
                                 {!! Form::select('activity', $activities, $id['activity'], ['class' => 'form-control','id'=> 'activity','placeholder' => '-Pilih Kegiatan-']) !!}
@@ -239,18 +239,25 @@
             $('#unit').on('change', function () {
                 var $this = $(this);
 
-                $('#program').html('<option>..Loading..</option>');
-                $('#activity').html('');
+                // $('#program').html('<option>..Loading..</option>');
+                $('#activity').html('<option>..Loading..</option>');
                 $('#target').html('');
 
-                $.get('{{url('renstra/program/select2')}}', {
+                /*$.get('{{url('renstra/program/select2')}}', {
                     plan: $('#plan').val()
                 }, function (response) {
                     $('#program').html(response);
+                })*/
+
+                $.get('{{url('renstra/activity/select2')}}', {
+                    program: 1, //$this.find(':selected').val(),
+                    unit: $this.find(':selected').val()
+                }, function (response) {
+                    $('#activity').html(response);
                 })
             });
 
-            $('#program').on('change', function () {
+            /*$('#program').on('change', function () {
                 var $this = $(this);
 
                 $('#activity').html('<option>..Loading..</option>');
@@ -262,12 +269,12 @@
                 }, function (response) {
                     $('#activity').html(response);
                 })
-            });
+            });*/
 
             $('#activity').on('change', function () {
                 var $this = $(this);
 
-                $('#target').html('');
+                $('#target').html('<option>..Loading..</option>');
                 $.get('{{route('sasaran.select2')}}', {
                     activity: $this.find(':selected').val()
                 }, function (response) {

@@ -23,13 +23,6 @@
                             'route' => 'pk.store'
                         ]) !!}
 
-                       {{-- <input type="hidden" name="unit" id="unit_id"/>--}}
-
-                        <div class="form-group">
-                            <label for="plan_id">Periode</label>
-                            {!! Form::select('plan_id', $plans, null, ['class'=>"form-control", 'placeholder'=>"Periode", 'id'=>"plan_id"]) !!}
-                        </div>
-
                         <div class="form-group">
                             <label for="name">Tahun</label>
                             {!! Form::select('year', $years, null, ['class'=>"form-control", 'placeholder'=>"Tahun", 'id'=>"year"]) !!}

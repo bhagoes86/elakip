@@ -31,11 +31,11 @@
                                 <label for="agreement">Perjanjian kinerja</label>
                                 <select id="agreement" name="agreement" class="form-control"></select>
                             </div>
-                            <div class="form-group">
+                            {{--<div class="form-group">
                                 <label for="program">Program</label>
                                 <select id="program" name="program" class="form-control"></select>
 
-                            </div>
+                            </div>--}}
 
                             <button type="submit" class="btn btn-primary"> Load </button>
                         </form>
@@ -66,22 +66,22 @@
         $(function() {
             "use strict";
 
-            var $yearFilter = $('#year-filter');
+            //var $yearFilter = $('#year-filter');
 
-            $yearFilter.change(function () {
+            /*$yearFilter.change(function () {
                 var $this = $(this),
                         value = $this.val();
 
                 table.ajax.reload();
-            });
+            });*/
 
             $('#year').on('change', function () {
                 var $this = $(this);
 
-                $('#agreement').html('');
-                $('#program').html('');
+                $('#agreement').html('<option>...Loading...</option>');
+                /*$('#program').html('');
                 $('#activity').html('');
-
+*/
                 $.get('{{route('pk.select2')}}', {
                     year: $this.find(':selected').val()
                 }, function (response) {
@@ -89,7 +89,7 @@
                 })
             });
 
-            $('#agreement').on('change', function () {
+            /*$('#agreement').on('change', function () {
                 var $this = $(this);
 
                 $('#program').html('');
@@ -101,9 +101,9 @@
                 }, function (response) {
                     $('#program').html(response);
                 })
-            });
+            });*/
 
-            $('#program').on('change', function () {
+            /*$('#program').on('change', function () {
                 var $this = $(this);
 
                 $('#activity').html('');
@@ -114,7 +114,7 @@
                 }, function (response) {
                     $('#activity').html(response);
                 })
-            });
+            });*/
         });
     </script>
 @stop

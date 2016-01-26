@@ -46,14 +46,14 @@
                                     'class' => 'form-control',
                                     'id'=>'agreement']) !!}
                             </div>
-                            <div class="form-group">
+                           {{-- <div class="form-group">
                                 <label for="program">Program</label>
                                 {!! Form::select('program', $programs, $id['program'], [
                                     'placeholder' => '-Select Program-',
                                     'class' => 'form-control',
                                     'id'=>'program']) !!}
 
-                            </div>
+                            </div>--}}
 
                             <button type="submit" class="btn btn-primary"> Load </button>
 
@@ -137,11 +137,8 @@
             $('#year').on('change', function () {
                 var $this = $(this);
 
-                $('#agreement').html('');
-                $('#program').html('');
-                $('#activity').html('');
-                $('#target').html('');
-
+                $('#agreement').html('<option>...Loading...</option>');
+                
                 $.get('{{route('pk.select2')}}', {
                     year: $this.find(':selected').val()
                 }, function (response) {
@@ -149,7 +146,7 @@
                 })
             });
 
-            $('#agreement').on('change', function () {
+            /*$('#agreement').on('change', function () {
                 var $this = $(this);
 
                 $('#program').html('');
@@ -161,7 +158,7 @@
                 }, function (response) {
                     $('#program').html(response);
                 })
-            });
+            });*/
         });
     </script>
 @stop

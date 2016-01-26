@@ -23,23 +23,17 @@
 
                             {!! Form::hidden('plan', $plan->id, ['id' => 'plan']) !!}
 
-                            {{--<div class="form-group">
-                                <label for="year">Periode</label>
-                                {!! Form::select('plan', $plans, null, [
-                                    'placeholder' => '-Pilih Periode-',
-                                    'class' => 'form-control',
-                                    'id'=>'plan']) !!}
-                            </div>--}}
+
 
                             <div class="form-group">
                                 <label for="unit">Unit</label>
                                 {!! Form::select('unit', $units, null, ['class' => 'form-control','id'=> 'unit','placeholder' => '-Pilih Unit-']) !!}
                             </div>
 
-                            <div class="form-group">
+                           {{-- <div class="form-group">
                                 <label for="program">Program</label>
                                 <select id="program" name="program" class="form-control"></select>
-                            </div>
+                            </div>--}}
 
                             <button type="submit" class="btn btn-primary"> Load </button>
                         </form>
@@ -70,7 +64,7 @@
         $(function() {
             "use strict";
 
-            $('#unit').on('change', function () {
+          /*  $('#unit').on('change', function () {
                 var $this = $(this);
 
                 $('#program').html('<option>..Loading..</option>');
@@ -81,7 +75,7 @@
                 }, function (response) {
                     $('#program').html(response);
                 })
-            });
+            });*/
 
         });
     </script>

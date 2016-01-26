@@ -73,8 +73,8 @@ class BudgetAchievementController extends AdminController
 
     public function getActivity(Request $request)
     {
-        $planId     = $request->get('plan'); // renstra
-        $programId  = $request->get('program');
+        $planId     = 1; //$request->get('plan'); // renstra
+        $programId  = 1; //$request->get('program');
         $unitId     = $request->get('unit');
 
         $program = Program::with([

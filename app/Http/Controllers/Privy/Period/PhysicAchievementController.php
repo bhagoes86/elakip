@@ -60,13 +60,13 @@ class PhysicAchievementController extends AdminController
      */
     public function getIndicator(Request $request)
     {
-        $planId         = $request->get('plan'); // renstra
+        $planId         = 1; //$request->get('plan'); // renstra
         $year           = $request->get('year');
         $targetId       = $request->get('target');
         $agreementId    = $request->get('agreement');
-        $programId      = $request->get('program');
+        $programId      = 1; //$request->get('program'); // Hanya ada 1 program yaitu dengan id 1
         $activityId     = $request->get('activity');
-        $unitId     = $request->get('unit');
+        $unitId         = $request->get('unit');
 
         $selectedAgreement = Agreement::with([
                 'firstPosition' => function ($query) {
@@ -80,7 +80,7 @@ class PhysicAchievementController extends AdminController
             ->where('plan_id', $planId)
             ->get();
 
-        $plan               = Plan::with(['period'])->find($planId);
+        //$plan               = Plan::with(['period'])->find($planId);
 
         $selectedActivity   = Activity::where('program_id', $programId)
                                 ->where('unit_id', $unitId)
@@ -95,7 +95,7 @@ class PhysicAchievementController extends AdminController
 
         $year_arr = $this->years;
         $agreement_arr = [];
-        $program_arr = [];
+        // $program_arr = [];
         $activity_arr = [];
         $target_arr = [];
 
@@ -107,9 +107,9 @@ class PhysicAchievementController extends AdminController
                 ' (' . $item->secondPosition->unit->name . ')';
         }
 
-        foreach ($plan->programs as $program) {
-            $program_arr[$program->id] = $program->name;
-        }
+//        foreach ($plan->programs as $program) {
+//            $program_arr[$program->id] = $program->name;
+//        }
 
         foreach ($selectedActivity as $item)
             $activity_arr[$item->id] = $item->name;
@@ -158,7 +158,7 @@ class PhysicAchievementController extends AdminController
            // ->with('period', $plan->period)
            ->with('indicators', $indicators)
            ->with('agreements', $agreement_arr) //ok
-           ->with('programs', $program_arr) //ok
+           // ->with('programs', $program_arr) //ok
            ->with('activities', $activity_arr) //ok
            ->with('targets', $target_arr) //ok
            ->with('units', $unit_arr)

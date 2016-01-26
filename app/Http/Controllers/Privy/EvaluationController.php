@@ -196,12 +196,12 @@ class EvaluationController extends AdminController
         $this->validate($request, [
             'year'      => 'integer',
             'agreement' => 'integer',
-            'program'   => 'integer',
+            //'program'   => 'integer',
         ]);
 
         $year       = $request->get('year');
         $agreementId  = $request->get('agreement');
-        $programId    = $request->get('program');
+        $programId    = 1; //$request->get('program');
 
         $selectedAgreement = Agreement::where('year', $year)->get();
         $selectedProgram = Program::where('plan_id', Agreement::find($agreementId)->plan_id)->get();
@@ -229,7 +229,7 @@ class EvaluationController extends AdminController
 
     public function getDataActivity(Request $request)
     {
-        $programId = $request->get('program');
+        $programId = 1; //$request->get('program');
         $agreementId = $request->get('agreement');
         $year = $request->get('year');
 

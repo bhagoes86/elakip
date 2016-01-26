@@ -32,34 +32,12 @@
                         <form action="{{route('capaian.anggaran.kegiatan')}}" method="get">
                             {!! Form::hidden('plan', $plan->id, ['id' => 'plan']) !!}
 
-                           {{-- <div class="form-group">
-                                <label for="year">Rencana Strategis</label>
-                                {!! Form::select('plan', $plans, null, [
-                                    'placeholder' => '-Select Renstra-',
-                                    'class' => 'form-control',
-                                    'id'=>'plan']) !!}
-                            </div>--}}
                             <div class="form-group">
                                 <label for="year">Tahun</label>
                                 {!! Form::select('year', $years, $id['year'], [
                                     'placeholder' => '-Select Year-',
                                     'class' => 'form-control',
                                     'id'=>'year']) !!}
-                            </div>
-                            {{--<div class="form-group">
-                                <label for="agreement">Perjanjian kinerja</label>
-                                {!! Form::select('agreement', $agreements, $id['agreement'], [
-                                    'placeholder' => '-Select Agreement-',
-                                    'class' => 'form-control',
-                                    'id'=>'agreement']) !!}
-                            </div>--}}
-                            <div class="form-group">
-                                <label for="program">Program</label>
-                                {!! Form::select('program', $programs, $id['program'], [
-                                    'placeholder' => '-Select Program-',
-                                    'class' => 'form-control',
-                                    'id'=>'program']) !!}
-
                             </div>
 
                             <button type="submit" class="btn btn-primary"> Load </button>
@@ -182,42 +160,6 @@
                     $('#percent-'+data.id).html(p.toFixed(2) + '%');
                 }
             });
-
-
-
-            $('#year').on('change', function () {
-                var $this = $(this);
-
-                $('#agreement').html('');
-                $('#program').html('');
-                $('#activity').html('');
-                $('#target').html('');
-
-                /*$.get('{{route('pk.select2')}}', {
-                    year: $this.find(':selected').val()
-                }, function (response) {
-                    $('#agreement').html(response);
-                })*/
-
-                $.get('{{route('program.select2')}}', {
-                }, function (response) {
-                    $('#program').html(response);
-                })
-            });
-
-            /*$('#agreement').on('change', function () {
-                var $this = $(this);
-
-                $('#program').html('');
-                $('#activity').html('');
-                $('#target').html('');
-
-                $.get('{{route('program.select2')}}', {
-                    agreement: $this.find(':selected').val()
-                }, function (response) {
-                    $('#program').html(response);
-                })
-            });*/
         });
     </script>
 @stop

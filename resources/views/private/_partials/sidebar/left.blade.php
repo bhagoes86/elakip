@@ -44,7 +44,7 @@ START @SIDEBAR LEFT
 
         @if(!Gate::check('read-only'))
         <li id="persiapan-pk">
-            <a href="{{route('renstra.index')}}">
+            <a href="{{url('renstra/1/program/1/kegiatan')}}">
                 <span class="icon"><i class="fa fa-home"></i></span>
                 <span class="text">Persiapan PK</span>
 

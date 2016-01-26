@@ -21,24 +21,17 @@
                     <div class="panel-body">
                         <form action="{{route('capaian.renstra.fisik.indicator')}}" method="get">
                             {!! Form::hidden('plan', $plan->id, ['id' => 'plan']) !!}
-                            {{--<div class="form-group">
-                                <label for="year">Periode</label>
-                                {!! Form::select('plan', $plans, null, [
-                                    'placeholder' => '-Pilih Periode-',
-                                    'class' => 'form-control',
-                                    'id'=>'plan']) !!}
-                            </div>--}}
 
                             <div class="form-group">
                                 <label for="unit">Unit</label>
                                 {!! Form::select('unit', $units, null, ['class' => 'form-control','id'=> 'unit','placeholder' => '-Pilih Unit-']) !!}
                             </div>
 
-                            <div class="form-group">
+                            {{--<div class="form-group">
                                 <label for="program">Program</label>
                                 <select id="program" name="program" class="form-control"></select>
 
-                            </div>
+                            </div>--}}
                             <div class="form-group">
                                 <label for="activity">Kegiatan</label>
                                 <select id="activity" name="activity" class="form-control"></select>
@@ -82,18 +75,25 @@
             $('#unit').on('change', function () {
                 var $this = $(this);
 
-                $('#program').html('<option>..Loading..</option>');
-                $('#activity').html('');
+                // $('#program').html('<option>..Loading..</option>');
+                $('#activity').html('<option>..Loading..</option>');
                 $('#target').html('');
 
-                $.get('{{url('renstra/program/select2')}}', {
+               /* $.get('{{url('renstra/program/select2')}}', {
                     plan: $('#plan').val()
                 }, function (response) {
                     $('#program').html(response);
+                })*/
+
+                $.get('{{url('renstra/activity/select2')}}', {
+                    program: 1,
+                    unit: $this.find(':selected').val()
+                }, function (response) {
+                    $('#activity').html(response);
                 })
             });
 
-            $('#program').on('change', function () {
+            /*$('#program').on('change', function () {
                 var $this = $(this);
 
                 $('#activity').html('<option>..Loading..</option>');
@@ -105,7 +105,7 @@
                 }, function (response) {
                     $('#activity').html(response);
                 })
-            });
+            });*/
 
             $('#activity').on('change', function () {
                 var $this = $(this);
