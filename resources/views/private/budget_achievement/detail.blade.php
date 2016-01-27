@@ -13,7 +13,7 @@
 
                     <div class="panel-heading">
                         <div class="pull-left">
-                            <h3 class="panel-title">Filter Indikator</h3>
+                            <h3 class="panel-title">Filter Kegiatan</h3>
                         </div>
                         <div class="pull-right">
                             <button class="btn btn-sm"
@@ -52,6 +52,44 @@
 
                             <button type="submit" class="btn btn-primary"> Load </button>
                         </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="panel rounded shadow">
+                    <div class="panel-heading">
+                        <div class="pull-left">
+                            <h3 class="panel-title">Grafik Per Tahun</h3>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="panel-body">
+                        @foreach($activities['header']['years'] as $year)
+                            <button type="button" class="btn btn-danger year-chart" data-year="{{$year}}" data-title="{{$year}}">
+                                <i class="fa fa-bar-chart"></i> {{$year}}
+                            </button>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="panel rounded shadow">
+                    <div class="panel-heading">
+                        <div class="pull-left">
+                            <h3 class="panel-title">Tabel Per Tahun</h3>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="panel-body">
+                        @foreach($activities['header']['years'] as $year)
+                            <button type="button" class="btn btn-success year-table" data-year="{{$year}}" data-title="{{$year}}">
+                                <i class="fa fa-table"></i> {{$year}}
+                            </button>
+                        @endforeach
                     </div>
                 </div>
             </div>
@@ -133,6 +171,8 @@
     </div>
 
     @include('private._partials.modal')
+    @include('private._partials.modal_large')
+
 @stop
 
 @section('scripts')
@@ -153,18 +193,35 @@
         $(function() {
             "use strict";
 
-           /* $('#unit').on('change', function () {
+            $('.year-chart').click(function(){
                 var $this = $(this);
+                var modalId = '{{$viewId}}-lg';
+                var title = $this.data('title');
+                var year = $this.data('year');
 
-                $('#program').html('<option>..Loading..</option>');
-                $('#activity').html('');
+                console.log($this);
 
-                $.get('{{url('renstra/program/select2')}}', {
-                    plan: $('#plan').val()
-                }, function (response) {
-                    $('#program').html(response);
-                })
-            });*/
+                $('#' + modalId + '-label').html(title);
+                $.get('{{url('capaian/renstra/anggaran/program') .'/'. $id['program']}}/year/'+year+'/chart?unit={{$id['unit']}}', function(r) {
+                    return $('#' + modalId + ' .modal-body').html(r);
+                });
+                return $('#' + modalId).modal();
+            });
+
+            $('.year-table').click(function(){
+                var $this = $(this);
+                var modalId = '{{$viewId}}-lg';
+                var title = $this.data('title');
+                var year = $this.data('year');
+
+                console.log($this);
+
+                $('#' + modalId + '-label').html(title);
+                $.get('{{url('capaian/renstra/anggaran/program') .'/'. $id['program']}}/year/'+year+'/table?unit={{$id['unit']}}', function(r) {
+                    return $('#' + modalId + ' .modal-body').html(r);
+                });
+                return $('#' + modalId).modal();
+            });
         });
     </script>
 @stop

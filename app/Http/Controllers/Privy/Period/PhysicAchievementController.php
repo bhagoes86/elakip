@@ -60,11 +60,11 @@ class PhysicAchievementController extends AdminController
      */
     public function getIndicator(Request $request)
     {
-        $planId         = 1; //$request->get('plan'); // renstra
+        $planId         = Plan::FIX_PLAN_ID; //$request->get('plan'); // renstra
+        $programId      = Program::FIX_PROGRAM_ID; //$request->get('program'); // Hanya ada 1 program yaitu dengan id 1
         $year           = $request->get('year');
         $targetId       = $request->get('target');
         $agreementId    = $request->get('agreement');
-        $programId      = 1; //$request->get('program'); // Hanya ada 1 program yaitu dengan id 1
         $activityId     = $request->get('activity');
         $unitId         = $request->get('unit');
 

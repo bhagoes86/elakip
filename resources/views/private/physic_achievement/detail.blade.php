@@ -71,7 +71,7 @@
         </div>
 
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-6">
                 <div class="panel rounded shadow">
 
                     <div class="panel-heading">
@@ -93,7 +93,7 @@
                 </div>
             </div>
 
-            <div class="col-md-4">
+            <div class="col-md-6">
                 <div class="panel rounded shadow">
 
                     <div class="panel-heading">
@@ -115,7 +115,7 @@
                 </div>
             </div>
 
-            <div class="col-md-4">
+            <div class="col-md-6">
                 <div class="panel rounded shadow">
 
                     <div class="panel-heading">
@@ -128,10 +128,32 @@
                     <div class="panel-body">
                         {{--<div class="btn-group">--}}
                             @foreach($indicators['header']['years'] as $year)
-                                <button type="button" class="btn btn-success quarter-table" data-year="{{$year}}" data-title="{{$year}}">
+                                <button type="button" class="btn btn-warning quarter-table" data-year="{{$year}}" data-title="{{$year}}">
                                     <i class="fa fa-table"></i> {{$year}}
                                 </button>
                             @endforeach
+                        {{--</div>--}}
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="panel rounded shadow">
+
+                    <div class="panel-heading">
+                        <div class="pull-left">
+                            <h3 class="panel-title">Tabel Anggaran Triwulan Per Tahun</h3>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+
+                    <div class="panel-body">
+                        {{--<div class="btn-group">--}}
+                        @foreach($indicators['header']['years'] as $year)
+                            <button type="button" class="btn btn-warning quarter-table" data-year="{{$year}}" data-title="{{$year}}">
+                                <i class="fa fa-table"></i> {{$year}}
+                            </button>
+                        @endforeach
                         {{--</div>--}}
                     </div>
                 </div>
@@ -239,15 +261,8 @@
             $('#unit').on('change', function () {
                 var $this = $(this);
 
-                // $('#program').html('<option>..Loading..</option>');
                 $('#activity').html('<option>..Loading..</option>');
                 $('#target').html('');
-
-                /*$.get('{{url('renstra/program/select2')}}', {
-                    plan: $('#plan').val()
-                }, function (response) {
-                    $('#program').html(response);
-                })*/
 
                 $.get('{{url('renstra/activity/select2')}}', {
                     program: 1, //$this.find(':selected').val(),
@@ -256,20 +271,6 @@
                     $('#activity').html(response);
                 })
             });
-
-            /*$('#program').on('change', function () {
-                var $this = $(this);
-
-                $('#activity').html('<option>..Loading..</option>');
-                $('#target').html('');
-
-                $.get('{{url('renstra/activity/select2')}}', {
-                    program: $this.find(':selected').val(),
-                    unit: $('#unit').find(':selected').val()
-                }, function (response) {
-                    $('#activity').html(response);
-                })
-            });*/
 
             $('#activity').on('change', function () {
                 var $this = $(this);

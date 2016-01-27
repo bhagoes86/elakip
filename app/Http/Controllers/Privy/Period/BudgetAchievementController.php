@@ -73,8 +73,8 @@ class BudgetAchievementController extends AdminController
 
     public function getActivity(Request $request)
     {
-        $planId     = 1; //$request->get('plan'); // renstra
-        $programId  = 1; //$request->get('program');
+        $planId     = Plan::FIX_PLAN_ID; //$request->get('plan'); // renstra
+        $programId  = Program::FIX_PROGRAM_ID; //$request->get('program');
         $unitId     = $request->get('unit');
 
         $program = Program::with([
@@ -270,13 +270,77 @@ class BudgetAchievementController extends AdminController
         return $activitiesBucket;
     }
 
-    public function getChartOneYear()
+    public function getChartOneYear($programId, $year, Request $request)
     {
+        $unitId = $request->get('unit');
+
+        $program = Program::with(['activities' => function($query) use ($year, $unitId) {
+
+            $query->with(['budget' => function($query) use ($year) {
+                $query->where('year', $year);
+            }]);
+
+            $query->where('unit_id', $unitId);
+
+        }])->find($programId);
+
+        $activities = [];
+        $pagu      = [];
+        $real       = [];
+
+        foreach ($program->activities as $activity) {
+
+            array_push($activities, $activity->name);
+
+            if(count($activity->budget) > 0) {
+                #dd($activity->toArray());
+                array_push($pagu, (int) $activity->budget->pagu);
+                array_push($real, (int) $activity->budget->realization);
+
+
+            } else {
+                array_push($pagu, 0);
+                array_push($real, 0);
+            }
+        }
+
+        return view('private.budget_achievement.chart_one_year')
+            ->with('activities', json_encode($activities))
+            ->with('pagu', json_encode($pagu))
+            ->with('real', json_encode($real));
 
     }
 
-    public function getTableOneYear()
+    public function getTableOneYear($programId, $year, Request $request)
     {
+        $unitId = $request->get('unit');
+
+        $program = Program::with(['activities' => function($query) use ($year, $unitId) {
+
+            $query->with(['budget' => function($query) use ($year) {
+                $query->where('year', $year);
+            }]);
+
+            $query->where('unit_id', $unitId);
+
+        }])->find($programId);
+
+        $activities = [];
+        foreach ($program->activities as $activity) {
+            $activities[$activity->name] = [
+                'pagu'  => 0,
+                'real'  => 0
+            ];
+
+            if(count($activity->budget) > 0) {
+                $activities[$activity->name]['pagu'] = (int) $activity->budget->pagu;
+                $activities[$activity->name]['real'] = (int) $activity->budget->realization;
+
+            }
+        }
+
+        return view('private.budget_achievement.table_one_year')
+            ->with('activities', $activities);
 
     }
 }
