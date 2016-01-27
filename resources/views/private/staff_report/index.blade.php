@@ -218,8 +218,8 @@
                                <th>{{count($resume['s3']) + count($resume['s2']) + count($resume['s1']) + count($resume['sma']) + count($resume['smp'])}}</th>
                                <th>{{count($resume['s3']) == 0 ? '-' : count($resume['s3'])}}</th>
                                <th>{{count($resume['s2']) == 0 ? '-' : count($resume['s2'])}}</th>
-                               <th>{{count($resume['d3']) == 0 ? '-' : count($resume['d3'])}}</th>
                                <th>{{count($resume['s1']) == 0 ? '-' : count($resume['s1'])}}</th>
+                               <th>{{count($resume['d3']) == 0 ? '-' : count($resume['d3'])}}</th>
                                <th>{{count($resume['sma']) == 0 ? '-' : count($resume['sma'])}}</th>
                            </tr>
                            </tfoot>
