@@ -28,7 +28,7 @@
                         </div>
 
                         <button type="submit" class="btn btn-primary">
-                            <i class="fa fa-search"></i> Filter
+                            <i class="fa fa-filter"></i> Filter
                         </button>
                         {!! Form::close() !!}
 
@@ -48,6 +48,11 @@
                         <div class="clearfix"></div>
                     </div>
                     <div class="panel-body">
+
+                        <a href="{{route('sdm.report.export')}}?organization={{$organization->id}}" class="btn btn-success mb-20">
+                            <i class="fa fa-file-excel-o"></i> Export
+                        </a>
+
                         <table class="table table-condensed table-striped table-bordered">
                             <thead>
                             <tr>

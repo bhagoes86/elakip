@@ -190,6 +190,7 @@ Route::group([
      * SDM report
      */
     get('sdm/report', ['uses' => 'StaffReportController@index', 'as' => 'sdm.report.index']);
+    get('sdm/report/export', ['uses' => 'StaffReportController@getExport', 'as' => 'sdm.report.export']);
     get('sdm/report/filter', ['uses' => 'StaffReportController@filter', 'as' => 'sdm.report.filter']);
 
     /**

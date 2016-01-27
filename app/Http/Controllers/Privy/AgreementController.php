@@ -541,7 +541,7 @@ class AgreementController extends AdminController
                 $sheet->mergeCells('A3:D3'); // fix
                 $sheet->cells('A1:A3', function ($cells) {
                     $cells->setAlignment('center'); // fix
-                    $cells->setBackground('#000000'); // fix
+                    $cells->setBackground('#11326f'); // fix
                     $cells->setFontColor('#ffffff'); // fix
                     $cells->setFontSize(14); // fix
                     $cells->setFontWeight('bold'); // fix
