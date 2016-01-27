@@ -74,11 +74,18 @@ class OrganizationStructureController extends AdminController
 
     /**
      * @param Request $request
+     * @param $id
      * @author Fathur Rohman <fathur@dragoncapital.center>
+     * @return int
      */
-    public function update(Request $request)
+    public function update(Request $request, $id)
     {
-
+        $organization = Organization::find($id);
+        if($request->has('parent_id') || $request->get('parent_id') != null) {
+            $organization->parent_id = $request->get('parent_id');
+        }
+        $organization->name = $request->get('name');
+        return (int) $organization->save();
     }
 
     /**
