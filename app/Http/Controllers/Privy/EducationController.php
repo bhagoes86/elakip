@@ -13,8 +13,8 @@ use Illuminate\Http\Request;
 class EducationController extends AdminController
 {
     protected $level = [
-        'smp'  => 'SMP',
-        'sma'  => 'SMA',
+        'smp'  => 'SLTP',
+        'sma'  => 'SLTA',
         'd3'    => 'D3',
         's1'   => 'S1',
         's2'   => 'S2',

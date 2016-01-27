@@ -41,7 +41,9 @@ class Staff extends Model
         if(in_array('s3', $level)) return 's3';
         if(in_array('s2', $level)) return 's2';
         if(in_array('s1', $level)) return 's1';
+        if(in_array('d3', $level)) return 'd3';
         if(in_array('sma', $level)) return 'sma';
+        if(in_array('smp', $level)) return 'smp';
 
     }
 }

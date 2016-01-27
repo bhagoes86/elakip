@@ -132,7 +132,7 @@ class StaffReportController extends AdminController
 
                 $sheet->row(4, [
                     null,
-                    'SMA',
+                    'SLTA',
                     'D3',
                     'S1',
                     'S2',

@@ -130,12 +130,13 @@
                                <th rowspan="2" class="text-center">Nama</th>
                                <th rowspan="2" class="text-center">Jabatan</th>
                                <th rowspan="2" class="text-center">Status</th>
-                               <th colspan="4" class="text-center">Pendidikan</th>
+                               <th colspan="5" class="text-center">Pendidikan</th>
                            </tr>
                            <tr>
                                <th class="text-center">S3</th>
                                <th class="text-center">S2</th>
                                <th class="text-center">S1</th>
+                               <th class="text-center">D3</th>
                                <th class="text-center">SLTA</th>
                            </tr>
                            </thead>
@@ -187,6 +188,15 @@
                                    @endif
                                </td>
                                <td>
+                                   @if(isset($educationCollection['d3']))
+                                       @foreach($educationCollection['d3'] as $item)
+                                           {{$item['major']}},
+                                       @endforeach
+                                   @else
+                                       -
+                                   @endif
+                               </td>
+                               <td>
                                    @if(isset($educationCollection['sma']))
                                        @foreach($educationCollection['sma'] as $item)
                                            SLTA
@@ -208,6 +218,7 @@
                                <th>{{count($resume['s3']) + count($resume['s2']) + count($resume['s1']) + count($resume['sma']) + count($resume['smp'])}}</th>
                                <th>{{count($resume['s3']) == 0 ? '-' : count($resume['s3'])}}</th>
                                <th>{{count($resume['s2']) == 0 ? '-' : count($resume['s2'])}}</th>
+                               <th>{{count($resume['d3']) == 0 ? '-' : count($resume['d3'])}}</th>
                                <th>{{count($resume['s1']) == 0 ? '-' : count($resume['s1'])}}</th>
                                <th>{{count($resume['sma']) == 0 ? '-' : count($resume['sma'])}}</th>
                            </tr>
