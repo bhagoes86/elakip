@@ -15,6 +15,7 @@ class EducationController extends AdminController
     protected $level = [
         'smp'  => 'SMP',
         'sma'  => 'SMA',
+        'd3'    => 'D3',
         's1'   => 'S1',
         's2'   => 'S2',
         's3'   => 'S3',

@@ -112,15 +112,25 @@ class StaffReportController extends AdminController
 
         $rekap = $this->generateRekapData($organization, $rekap);
 
-        return \Excel::create(Carbon::now()->toDateTimeString(), function($excel) use ($rekap) {
-            $excel->sheet('Rekap SDM', function($sheet) use ($rekap) {
+        return \Excel::create(Carbon::now()->toDateTimeString(), function($excel) use ($organization, $rekap) {
+            $excel->sheet('Rekap SDM', function($sheet) use ($organization, $rekap) {
 
                 $sheet->row(1, [
+                    'SDM - '. $organization->name
+                ]);
+                $sheet->mergeCells('A1:G1'); // fix
+
+                $sheet->cells('A1:G1', function ($cells) {
+                    $cells->setAlignment('center'); // fix
+                    $cells->setFontWeight('bold'); // fix
+                });
+
+                $sheet->row(3, [
                     'Status Pegawai',
                     'Jenjang Pendidikan'
                 ]);
 
-                $sheet->row(2, [
+                $sheet->row(4, [
                     null,
                     'SMA',
                     'D3',
@@ -130,7 +140,7 @@ class StaffReportController extends AdminController
                     'Total'
                 ]);
 
-                $sheet->row(3, [
+                $sheet->row(5, [
                     'PNS',
                     $rekap['pns']['sma'],
                     $rekap['pns']['d3'],
@@ -140,7 +150,7 @@ class StaffReportController extends AdminController
                     $rekap['pns']['total'],
                 ]);
 
-                $sheet->row(4, [
+                $sheet->row(6, [
                     'Non PNS',
                     $rekap['non_pns']['sma'],
                     $rekap['non_pns']['d3'],
@@ -150,7 +160,7 @@ class StaffReportController extends AdminController
                     $rekap['non_pns']['total'],
                 ]);
 
-                $sheet->row(5, [
+                $sheet->row(7, [
                     'Total',
                     $rekap['pns']['sma'] + $rekap['non_pns']['sma'],
                     $rekap['pns']['d3'] + $rekap['non_pns']['d3'],
@@ -162,10 +172,10 @@ class StaffReportController extends AdminController
 
                 $sheet->setWidth('A', 20); // fix
 
-                $sheet->mergeCells('A1:A2'); // fix
-                $sheet->mergeCells('B1:G1'); // fix
+                $sheet->mergeCells('A3:A4'); // fix
+                $sheet->mergeCells('B3:G3'); // fix
 
-                $sheet->getStyle('A1:G5')->applyFromArray(array(
+                $sheet->getStyle('A3:G7')->applyFromArray(array(
                     'borders' => array(
                         'allborders' => array(
                             'style' => PHPExcel_Style_Border::BORDER_THIN,
@@ -173,7 +183,7 @@ class StaffReportController extends AdminController
                     ),
                 ));
 
-                $sheet->cells('A1:G2', function ($cells) {
+                $sheet->cells('A3:G4', function ($cells) {
                     $cells->setAlignment('center'); // fix
                     $cells->setBackground('#11326f'); // fix
                     $cells->setFontColor('#ffffff'); // fix

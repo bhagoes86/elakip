@@ -15,7 +15,7 @@ class CreateEducationsTable extends Migration
         Schema::create('education', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('staff_id');
-            $table->enum('level', ['smp','sma','s1','s2','s3']);
+            $table->enum('level', ['smp','sma','d3','s1','s2','s3']);
             $table->string('institution');
             $table->string('major');
             $table->timestamps();
