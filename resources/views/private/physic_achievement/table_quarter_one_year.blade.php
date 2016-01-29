@@ -56,7 +56,8 @@
                     @foreach($indicators as $indicator => $attribute )
                     <tr>
                         <td>
-                            <a href="{{url('capaian/fisik/goal/'.$attribute['goal_id'].'/achievement')}}" target="_blank">{{$indicator}}</a>
+                            {{--<a href="{{url('capaian/fisik/goal/'.$attribute['goal_id'].'/achievement')}}" target="_blank">{{$indicator}}</a>--}}
+                            {{$indicator}}
                         </td>
                         <td>{{$attribute['target']}} {{$attribute['satuan']}}</td>
 
