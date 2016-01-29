@@ -321,12 +321,14 @@ class PhysicAchievementController extends AdminController
 
             $indicators[$indicator->name] = [
                 'pagu'  => 0,
-                'real'  => 0
+                'real'  => 0,
+                'percentation' => 0
             ];
 
             if(count($indicator->goals) > 0) {
                 $indicators[$indicator->name]['pagu'] = (int) $indicator->goals[0]->count;
                 $indicators[$indicator->name]['real'] = (int) $indicator->goals[0]->achievements[3]->realization;
+                $indicators[$indicator->name]['percentation'] = (int) $indicator->goals[0]->achievements[3]->percentation;
             }
         }
 

@@ -37,7 +37,8 @@
                     <td>{{$key}}</td>
                     <td>{{$val['pagu']}}</td>
                     <td>{{$val['real']}}</td>
-                    <td>{{round($val['real'] / $val['pagu'] * 100, 2)}} %</td>
+                    <td>{{$val['percentation']}}</td>
+                    {{--<td>{{round($val['real'] / $val['pagu'] * 100, 2)}} %</td>--}}
                 </tr>
                 @endforeach
             </tbody>
