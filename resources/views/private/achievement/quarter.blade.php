@@ -28,11 +28,11 @@
                 <hr/>
 
                 <div class="form-group">
-                    <label for="budget-{{$id}}-rn">Rencana Anggaran</label>
+                    <label for="budget-{{$id}}-rn">DIPA (Rp. 000)</label>
                     <div class="form-control" id="budget-{{$id}}-rn">{{$achievements[$key]['budget_plan']}}</div>
                 </div>
                 <div class="form-group">
-                    <label for="budget-{{$id}}-rl">Realisasi Anggaran</label>
+                    <label for="budget-{{$id}}-rl">Realisasi Total</label>
                     <div class="form-control" id="budget-{{$id}}-rl">{{$achievements[$key]['budget_realization']}}</div>
 
                 </div>
@@ -63,14 +63,14 @@
                 <hr/>
 
                 <div class="form-group">
-                    <label for="budget-{{$id}}-rn">Rencana Anggaran</label>
+                    <label for="budget-{{$id}}-rn">DIPA (Rp. 000)</label>
                     <div class="input-group">
                         <span class="input-group-addon">Rp.</span>
                         <input type="text" name="budget_plan" id="budget-{{$id}}-rn" placeholder="Rencana" class="form-control" value="{{$achievements[$key]['budget_plan']}}"/>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="budget-{{$id}}-rl">Realisasi Anggaran</label>
+                    <label for="budget-{{$id}}-rl">Realisasi Total</label>
                     <div class="input-group">
                         <span class="input-group-addon">Rp.</span>
                         <input type="text" name="budget_realization" id="budget-{{$id}}-rl" placeholder="Realisasi" class="form-control" value="{{$achievements[$key]['budget_realization']}}"/>
