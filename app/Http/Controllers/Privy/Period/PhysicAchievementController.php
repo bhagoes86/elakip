@@ -426,4 +426,9 @@ class PhysicAchievementController extends AdminController
             ->with('activity', $activity)
             ->with('target', $target);
     }
+
+    public function getBudgetTableQuarterOneYear($targetId, $year)
+    {
+        return view('private.physic_achievement.table_budget_quarter_one_year');
+    }
 }
