@@ -3,19 +3,6 @@
 @section('content')
     <div class="header-content">
         <h2><i class="fa fa-home"></i>Capaian Kinerja Kegiatan Fisik</h2>
-        {{-- <div class="breadcrumb-wrapper hidden-xs">
-             <span class="label">You are here:</span>
-             <ol class="breadcrumb">
-                 <li>
-                     <i class="fa fa-home"></i>
-                     <a href="#">Pengaturan</a>
-                     <i class="fa fa-angle-right"></i>
-                 </li>
-                 <li>
-                     Year
-                 </li>
-             </ol>
-         </div>--}}
     </div>
 
     <div class="body-content animated fadeIn">

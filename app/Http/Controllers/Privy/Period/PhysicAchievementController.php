@@ -399,11 +399,18 @@ class PhysicAchievementController extends AdminController
                         'capaian'   => $achievement->realization,
                     ];
 
-                    if($achievement->plan != 0) {
-                        $indicators[$indicator->name]['quarter'][$achievement->quarter]['prosentase'] = $achievement->realization / $achievement->plan  * 100;
+                    if($achievement->quarter == 4)
+                    {
+                        $indicators[$indicator->name]['quarter'][$achievement->quarter]['prosentase'] = $achievement->percentation;
                     }
-                    else{
-                        $indicators[$indicator->name]['quarter'][$achievement->quarter]['prosentase'] = 0;
+                    else {
+
+
+                        if ($achievement->plan != 0) {
+                            $indicators[$indicator->name]['quarter'][$achievement->quarter]['prosentase'] = $achievement->realization / $achievement->plan * 100;
+                        } else {
+                            $indicators[$indicator->name]['quarter'][$achievement->quarter]['prosentase'] = 0;
+                        }
                     }
                 }
 

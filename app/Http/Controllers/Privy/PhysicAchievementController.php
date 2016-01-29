@@ -94,7 +94,8 @@ class PhysicAchievementController extends AdminController
                 'plan'  => isset($goal->achievements[3]) ? $goal->achievements[3]->plan : 0,
                 'realization'   => isset($goal->achievements[3]) ? $goal->achievements[3]->realization : 0,
                 'budget_plan'  => isset($goal->achievements[3]) ? $goal->achievements[3]->budget_plan : 0,
-                'budget_realization'   => isset($goal->achievements[3]) ? $goal->achievements[3]->budget_realization : 0
+                'budget_realization'   => isset($goal->achievements[3]) ? $goal->achievements[3]->budget_realization : 0,
+                'percentation'   => isset($goal->achievements[3]) ? $goal->achievements[3]->percentation : 0
             ]
         ];
 
@@ -143,6 +144,9 @@ class PhysicAchievementController extends AdminController
         $achievement->realization   = $request->get('realization');
         $achievement->budget_plan   = $request->get('budget_plan');
         $achievement->budget_realization = $request->get('budget_realization');
+        if($request->has('percentation')) {
+            $achievement->percentation = $request->get('percentation');
+        }
         return (int) $achievement->save();
     }
 
