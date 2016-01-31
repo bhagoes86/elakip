@@ -27,7 +27,6 @@
                 <thead>
                 <tr>
                     <th rowspan="2">Indikator</th>
-                    <th rowspan="2">Target</th>
                     <th colspan="3" class="text-center">TW I</th>
                     <th colspan="3" class="text-center">TW II</th>
                     <th colspan="3" class="text-center">TW III</th>
@@ -55,10 +54,7 @@
                 <tbody>
                 @foreach($indicators as $indicator => $attribute )
                     <tr>
-                        <td>
-                            <a href="{{url('capaian/fisik/goal/'.$attribute['goal_id'].'/achievement')}}" target="_blank">{{$indicator}}</a>
-                        </td>
-                        <td>{{$attribute['target']}} {{$attribute['satuan']}}</td>
+                        <td>{{$indicator}}</td>
 
                         <td>{{$attribute['quarter'][1]['target']}}</td>
                         <td>{{$attribute['quarter'][1]['capaian']}}</td>

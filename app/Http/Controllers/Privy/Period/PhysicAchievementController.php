@@ -439,6 +439,89 @@ class PhysicAchievementController extends AdminController
 
     public function getBudgetTableQuarterOneYear($targetId, $year)
     {
-        return view('private.physic_achievement.table_budget_quarter_one_year');
+
+        $target = Target::with(['indicators' => function ($query)  use ($year) {
+            $query->with(['goals' => function ($query) use ($year) {
+                $query->with('achievements');
+                $query->where('year', $year);
+            }]);
+
+        }])->find($targetId);
+
+
+        $indicators = [];
+        foreach ($target->indicators as $indicator) {
+            $indicators[$indicator->name] = [
+                'quarter' => [
+                    1 => [
+                        'target' => 0,
+                        'capaian' => 0,
+                    ],
+                    2 => [
+                        'target' => 0,
+                        'capaian' => 0,
+                    ],
+                    3 => [
+                        'target' => 0,
+                        'capaian' => 0,
+                    ],
+                    4 => [
+                        'target' => 0,
+                        'capaian' => 0,
+                        'prosentase' => 0
+                    ],
+                ]
+            ];
+
+            if(count($indicator->goals) > 0) {
+
+
+                foreach ($indicator->goals[0]->achievements as $achievement) {
+
+                    if($achievement->budget_plan > 0 )
+                        $prosentase = $achievement->budget_realization / $achievement->budget_plan * 100;
+                    else
+                        $prosentase = 0;
+
+
+
+                    if($achievement->quarter == 4)
+                    {
+                        $indicators[$indicator->name]['quarter'][$achievement->quarter] = [
+                            'target'    => money_format('%.2n', $achievement->budget_plan),
+                            'capaian'   => money_format('%.2n', $achievement->budget_realization),
+                            'prosentase' => $prosentase
+                        ];
+                    }
+                    else
+                    {
+                        $indicators[$indicator->name]['quarter'][$achievement->quarter] = [
+                            'target'    => $achievement->budget_plan,
+                            'capaian'   => $achievement->budget_realization,
+                            'prosentase' => $prosentase
+                        ];
+                    }
+                }
+
+            }
+
+        }
+
+
+        if($target->type == 'activity')
+        {
+            $activity = Activity::with([
+                'program'   => function($query) {
+                    $query->with('plan');
+                },
+                'unit'
+            ])->find($target->type_id);
+        }
+
+
+        return view('private.physic_achievement.table_budget_quarter_one_year')
+            ->with('activity', $activity)
+            ->with('indicators', $indicators)
+            ->with('target', $target);
     }
 }
