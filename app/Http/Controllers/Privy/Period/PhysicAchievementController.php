@@ -403,6 +403,7 @@ class PhysicAchievementController extends AdminController
 
                     if($achievement->quarter == 4)
                     {
+                        $indicators[$indicator->name]['quarter'][$achievement->quarter]['target'] = $indicator->goals[0]->count;
                         $indicators[$indicator->name]['quarter'][$achievement->quarter]['prosentase'] = $achievement->percentation;
                     }
                     else {

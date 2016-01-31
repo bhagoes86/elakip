@@ -23,7 +23,7 @@
 <div class="row">
     <div class="col-md-12">
         <div class="table-responsive">
-            <table class="table table-condensed table-bordered table-striped table-hover">
+            <table class="table table-condensed table-bordered table-hover">
                 <thead>
                 <tr>
                     <th rowspan="2">Indikator</th>
@@ -31,8 +31,8 @@
                     <th colspan="3" class="text-center">TW I</th>
                     <th colspan="3" class="text-center">TW II</th>
                     <th colspan="3" class="text-center">TW III</th>
-                    <th colspan="2" class="text-center">TW IV</th>
-                    <th rowspan="2">Capaian Kinerja</th>
+                    <th colspan="2" class="text-center danger">TW IV</th>
+                    <th rowspan="2" class="danger">Capaian Kinerja</th>
                 </tr>
                 <tr>
                     <th>RN</th>
@@ -47,8 +47,8 @@
                     <th>RL</th>
                     <th>%&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
 
-                    <th>RN</th>
-                    <th>RL</th>
+                    <th class="danger">RN</th>
+                    <th class="danger">RL</th>
                 </tr>
                 </thead>
 
@@ -73,9 +73,9 @@
                         <td>{{$attribute['quarter'][3]['capaian']}}</td>
                         <td>{{round($attribute['quarter'][3]['prosentase'], 2)}} %</td>
 
-                        <td>{{$attribute['quarter'][4]['target']}}</td>
-                        <td>{{$attribute['quarter'][4]['capaian']}}</td>
-                        <td>{{round($attribute['quarter'][4]['prosentase'], 2)}} %</td>
+                        <td class="danger">{{$attribute['quarter'][4]['target']}}</td>
+                        <td class="danger">{{$attribute['quarter'][4]['capaian']}}</td>
+                        <td class="danger">{{round($attribute['quarter'][4]['prosentase'], 2)}} %</td>
                     </tr>
                     @endforeach
 
