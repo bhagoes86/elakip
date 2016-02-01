@@ -93,8 +93,9 @@
                         <table class="table table-striped table-bordered" id="{{$viewId}}-datatables">
                             <thead>
                             <tr>
-                                <th>Username</th>
+                                <th>Nama</th>
                                 <th>Email</th>
+                                <th>Role</th>
                                 <th>Action</th>
                             </tr>
                             </thead>
@@ -129,8 +130,9 @@
                     url: "{{route('user.data')}}"
                 },
                 columns: [
-                    {data:'username',name:'username'},
+                    {data:'name',name:'name'},
                     {data:'email',name:'email'},
+                    {data:'role.name',name:'role.name'},
                     {data:'action',name:'action',orderable:false,searchable:false}
                 ]
             });

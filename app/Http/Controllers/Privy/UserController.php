@@ -52,7 +52,7 @@ class UserController extends AdminController
             abort(403);
 
         $this->validate($request, [
-            'username'  => 'required|unique:users',
+            'username'  => 'unique:users',
             'email'     => 'required|unique:users',
             'password'  => 'required|min:7',
             'password2' => 'required|same:password'
@@ -158,9 +158,12 @@ class UserController extends AdminController
         if (\Gate::denies('read-user', $this->authUser))
             abort(403);
 
-        $years = User::all();
+        $years = User::with('role')->get();
 
         return Datatables::of($years)
+            ->editColumn('email', function($data) {
+                return '<a href="mailto:'.$data->email.'">'.$data->email.'</a>';
+            })
             ->addColumn('action', function($data){
 
                 return view('private.user.action')

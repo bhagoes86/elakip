@@ -38,7 +38,7 @@
 
             </a>
         </li>
-        @endcan
+        @endif
 
         <li class="submenu" id="perjanjian">
             <a href="javascript:void(0)">
@@ -83,6 +83,8 @@
             </a>
         </li>
 
+        @can('read-user', null)
+
         <li class="submenu" id="sdm">
             <a href="javascript:void(0);">
                 <span class="icon"><i class="fa fa-home"></i></span>
@@ -97,6 +99,7 @@
 
             </ul>
         </li>
+        @endcan
 
         <li class="submenu" id="report">
             <a href="javascript:void(0);">
