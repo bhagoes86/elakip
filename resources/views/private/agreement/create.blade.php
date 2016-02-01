@@ -18,29 +18,49 @@
                         <div class="clearfix"></div>
                     </div>
 
+
+
                     <div class="panel-body">
+                        @if (count($errors) > 0)
+                        <div class="alert-wrapper">
+                            <div class="alert alert-danger alert-dismissible fade in" role="alert" data-dismiss="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                    <li>{{$error}}</li>
+                                    @endforeach
+                                </ul>
+
+                            </div>
+                        </div>
+                        @endif
+
+
                         {!! Form::open([
                             'route' => 'pk.store'
                         ]) !!}
 
-                        <div class="form-group">
+                        <div class="form-group @if($errors->has('year')) has-error @endif">
                             <label for="name">Tahun</label>
                             {!! Form::select('year', $years, null, ['class'=>"form-control", 'placeholder'=>"Tahun", 'id'=>"year"]) !!}
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group @if($errors->has('first_user_id')) has-error @endif">
                             <label for="first_user">Pihak pertama</label>
                             <select name="first_user_id" id="first_user" class="form-control"></select>
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group @if($errors->has('second_user_id')) has-error @endif">
                             <label for="second_user">Pihak kedua</label>
                             <select name="second_user_id" id="second_user" class="form-control"></select>
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group @if($errors->has('date_agreement')) has-error @endif">
                             <label for="date_agreement">Tanggal perjanjian</label>
-                            <input type="text" class="form-control" id="date_agreement" name="date_agreement" placeholder="Tanggal perjanjian"/>
+                            {!! Form::text('date_agreement', null, ['class'=>"form-control", 'id'=>"date_agreement", 'placeholder'=>"Tanggal perjanjian"]) !!}
                         </div>
 
                         <button type="submit" class="btn btn-info btn-lg save">

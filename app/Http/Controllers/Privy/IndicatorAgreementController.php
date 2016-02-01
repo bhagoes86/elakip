@@ -15,6 +15,14 @@ use App\Http\Controllers\Controller;
 
 class IndicatorAgreementController extends AdminController
 {
+    protected $rules = [
+        'count' => 'required|integer'
+    ];
+    protected $messages = [
+        'count.required' => 'Target wajib diisi.',
+        'count.integer' => 'Target harus angka.'
+    ];
+
     /**
      * Display a listing of the resource.
      *
@@ -114,6 +122,8 @@ class IndicatorAgreementController extends AdminController
     {
         if(\Gate::allows('read-only'))
             abort(403);
+
+        $this->validate($request, $this->rules, $this->messages);
 
         $goal = Goal::where('year', Agreement::find($agreementId)->year)
             ->where('indicator_id', $indicatorId)

@@ -68,7 +68,7 @@
 
                         <div class="form-group">
                             <label for="name">Nama sasaran</label>
-                            <textarea name="name" id="name" placeholder="Nama sasaran program" class="form-control autosize"></textarea>
+                            <textarea name="name" id="name" placeholder="Nama sasaran" class="form-control autosize"></textarea>
                         </div>
 
                         <button type="submit" class="btn btn-info btn-block btn-lg save">
@@ -150,7 +150,7 @@
 
                         <div class="form-group">
                             <label for="name">Nama kegiatan</label>
-                            <textarea name="name" id="name" placeholder="Nama sasaran program" class="form-control autosize"></textarea>
+                            <textarea name="name" id="name" placeholder="Nama kegiatan" class="form-control autosize"></textarea>
                         </div>
 
                         <div class="checkbox">

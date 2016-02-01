@@ -12,7 +12,13 @@ use App\Http\Controllers\Controller;
 
 class TargetController extends AdminController
 {
-    protected $roles = [];
+    protected $roles = [
+        'name'  => 'required'
+    ];
+
+    protected $messages = [
+        'name.required'  => 'Nama sasaran wajib diisi.'
+    ];
 
     /**
      * Display a listing of the resource.
@@ -47,12 +53,12 @@ class TargetController extends AdminController
         if(\Gate::allows('read-only'))
             abort(403);
 
-        $this->validate($request, $this->roles);
+        $this->validate($request, $this->roles, $this->messages);
 
         $target = Target::create([
-            'type'   => 'program',
-            'type_id' => $programId,
-            'name'  => $request->get('name')
+            'type'      => 'program',
+            'type_id'   => $programId,
+            'name'      => $request->get('name')
         ]);
 
         return $target;
@@ -100,7 +106,7 @@ class TargetController extends AdminController
         if(\Gate::allows('read-only'))
             abort(403);
 
-        $this->validate($request, $this->roles);
+        $this->validate($request, $this->roles, $this->messages);
 
         $target = Target::find($targetId);
         $target->name = $request->get('name');

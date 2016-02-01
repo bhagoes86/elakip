@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Unit extends Model
 {
+    const DIRJEN_ID = 1;
+
     public function positions()
     {
         return $this->hasMany(Position::class);

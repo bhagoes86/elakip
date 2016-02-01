@@ -13,7 +13,17 @@ use App\Http\Requests;
 
 class ActivityController extends AdminController
 {
-    protected $roles = [];
+    protected $roles = [
+        'unit_id'   => 'required|integer',
+        'name'      => 'required'
+    ];
+
+    protected $messages = [
+        'unit_id.required'  => 'Unit wajib diisi.',
+        'unit_id.integer'  => 'Data yang anda masukkan di Unit tidak valid.',
+        'name.required'     => 'Nama kegiatan wajib diisi.'
+
+    ];
 
     /**
      * Display a listing of the resource.
@@ -25,15 +35,15 @@ class ActivityController extends AdminController
         /*if(\Gate::denies('has-position', null))
             abort(403);*/
 
-        $program = Program::with(['plan' => function ($query) {
-            $query->with('period');
-        }])->find($programId);
+        $program = Program::with([
+            'plan' => function ($query) {
+                $query->with('period');
+            }])->find($programId);
 
         $units_arr = [];
-        foreach (Unit::whereNotIn('id', [1])->get() as $unit) {
+        foreach (Unit::whereNotIn('id', [Unit::DIRJEN_ID])->get() as $unit) {
             $units_arr[$unit->id] = $unit->name;
         }
-
 
         return view('private.activity.index')
             ->with('program', $program)
@@ -62,6 +72,8 @@ class ActivityController extends AdminController
     {
         if(\Gate::allows('read-only'))
             abort(403);
+
+        $this->validate($request, $this->roles, $this->messages);
 
         $program = Program::find($programId);
         $program->activities()->save(new Activity([
@@ -129,6 +141,8 @@ class ActivityController extends AdminController
     {
         if(\Gate::allows('read-only'))
             abort(403);
+
+        $this->validate($request, $this->roles, $this->messages);
 
         $activity = Activity::find($activityId);
         $activity->name = $request->get('name');

@@ -13,6 +13,13 @@ use App\Http\Controllers\Controller;
 
 class TargetController extends AdminController
 {
+    protected $rules = [
+        'name'  => 'required'
+    ];
+    protected $messages = [
+        'name.required' => 'Nama sasaran wajib diisi'
+    ];
+
     /**
      * Display a listing of the resource.
      *
@@ -61,6 +68,8 @@ class TargetController extends AdminController
     {
         if(\Gate::allows('read-only'))
             abort(403);
+
+        $this->validate($request, $this->rules, $this->messages);
 
         $target = Target::create([
             'type'      => 'activity',
@@ -115,6 +124,8 @@ class TargetController extends AdminController
     {
         if(\Gate::allows('read-only'))
             abort(403);
+
+        $this->validate($request, $this->rules, $this->messages);
 
         $target = Target::find($targetId);
         $target->name = $request->get('name');

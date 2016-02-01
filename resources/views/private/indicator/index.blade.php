@@ -79,8 +79,8 @@
                         <div class="alert-wrapper"></div>
 
                         <div class="form-group">
-                            <label for="name">Nama indikator</label>
-                            <textarea name="name" id="name" placeholder="Nama sasaran program" class="form-control autosize"></textarea>
+                            <label for="name">Indikator</label>
+                            <textarea name="name" id="name" placeholder="Indikator" class="form-control autosize"></textarea>
                         </div>
 
                         <div class="form-group">

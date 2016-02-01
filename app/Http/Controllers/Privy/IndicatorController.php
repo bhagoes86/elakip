@@ -13,6 +13,15 @@ use App\Http\Controllers\Controller;
 
 class IndicatorController extends AdminController
 {
+    protected $rules = [
+        'name'  => 'required',
+        'unit'  => 'required'
+    ];
+    protected $messages = [
+        'name.required' => 'Indikator wajib diisi',
+        'unit.required' => 'Satuan wajib diisi',
+    ];
+
     /**
      * Display a listing of the resource.
      *
@@ -60,6 +69,8 @@ class IndicatorController extends AdminController
     {
         if(\Gate::allows('read-only'))
             abort(403);
+
+        $this->validate($request, $this->rules, $this->messages);
 
         $target = Target::find($targetId);
         $target->indicators()->save(new Indicator([
@@ -126,6 +137,9 @@ class IndicatorController extends AdminController
     {
         if(\Gate::allows('read-only'))
             abort(403);
+
+        $this->validate($request, $this->rules, $this->messages);
+
 
         $indicator = Indicator::find($indicatorId);
         $indicator->name = $request->get('name');

@@ -26,6 +26,18 @@ use PHPExcel_Worksheet_PageSetup;
 
 class AgreementController extends AdminController
 {
+    protected $rules = [
+        'year'  => 'required|size:4|in:2015,2016,2017,2018,2019',
+        'first_user_id' => 'required|integer',
+        'second_user_id' => 'required|integer',
+        'date_agreement' => 'required|date_format:Y-m-d'
+    ];
+
+    protected $messages = [
+        'first_user_id.integer' => 'The first person field is required',
+        'second_user_id.integer' => 'The second person field is required',
+    ];
+
     /**
      * Display a listing of the resource.
      *
@@ -85,10 +97,11 @@ class AgreementController extends AdminController
         if(\Gate::allows('read-only'))
             abort(403);
 
+        $this->validate($request, $this->rules, $this->messages);
+
         $agreement = Agreement::create([
 
-            //'unit_id'           => $request->get('unit'),
-            'plan_id'               => 1, // Id 1 adalah id constant untuk plan 2015-2019
+            'plan_id'               => Plan::FIX_PLAN_ID, // Id 1 adalah id constant untuk plan 2015-2019
             'year'                  => $request->get('year'),
             'first_position_id'     => $request->get('first_user_id'),
             'second_position_id'    => $request->get('second_user_id'),

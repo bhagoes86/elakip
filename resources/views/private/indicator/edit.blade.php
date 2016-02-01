@@ -16,8 +16,8 @@
 <div class="alert-wrapper"></div>
 
 <div class="form-group">
-    <label for="name">Nama sasaran</label>
-    {!! Form::textarea('name', null, ['class'=>"form-control autosize", "rows" => null, 'placeholder'=>"Nama sasaran", 'id'=>"name"]) !!}
+    <label for="name">Indikator</label>
+    {!! Form::textarea('name', null, ['class'=>"form-control autosize", "rows" => null, 'placeholder'=>"Indikator", 'id'=>"name"]) !!}
 </div>
 
 <div class="form-group">
@@ -26,8 +26,8 @@
 </div>
 
 <div class="form-group">
-    <label for="name">Location</label>
-    {!! Form::text('location', null, ['class'=>"form-control ", 'placeholder'=>"Location", 'id'=>"location"]) !!}
+    <label for="name">Lokasi</label>
+    {!! Form::text('location', null, ['class'=>"form-control ", 'placeholder'=>"Lokasi", 'id'=>"location"]) !!}
 </div>
 
 <button type="submit" class="btn btn-info btn-block btn-lg save">

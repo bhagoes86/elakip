@@ -16,13 +16,13 @@
 
 <div class="form-group">
     <label for="name">Indikator</label>
-    {!! Form::textarea('name', null, ['class'=>"form-control autosize", 'rows' => null, 'placeholder'=>"Nama sasaran", 'id'=>"name"]) !!}
+    {!! Form::textarea('name', null, ['class'=>"form-control autosize", 'rows' => null, 'placeholder'=>"Indikator", 'id'=>"name"]) !!}
 </div>
 
 
 <div class="form-group">
     <label for="name">Satuan</label>
-    {!! Form::text('unit', null, ['id' => 'unit', 'placeholder' => 'Unit', 'class' => 'form-control']) !!}
+    {!! Form::text('unit', null, ['id' => 'unit', 'placeholder' => 'Satuan', 'class' => 'form-control']) !!}
 </div>
 
 <div class="form-group">
