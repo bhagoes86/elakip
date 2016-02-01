@@ -31,6 +31,12 @@ class LandingController extends Controller
     public function page($slug)
     {
         $page = Page::findBySlug($slug);
+
+        if($page == null)
+        {
+            return abort(404);
+        }
+
         return view('public.page')
             ->with('page', $page);
     }
