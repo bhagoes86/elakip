@@ -28,6 +28,8 @@
 
                         ]) !!}
 
+                        <div class="alert-wrapper"></div>
+
                         <div class="form-group">
                             <label for="parent_id">Parent</label>
                             {{--<input id="parent-tree"/>

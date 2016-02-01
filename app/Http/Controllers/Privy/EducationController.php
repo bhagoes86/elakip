@@ -21,6 +21,16 @@ class EducationController extends AdminController
         's3'   => 'S3',
     ];
 
+    protected $rules = [
+        'level' => 'required',
+        // 'institution' => 'required'
+    ];
+
+    protected $messages = [
+        'level.required' => 'Jenjang wajib diisi.',
+        'institution.required' => 'Institusi wajib diisi.'
+    ];
+
     /**
      * @author Fathur Rohman <fathur@dragoncapital.center>
      * @param $staffId
@@ -42,6 +52,8 @@ class EducationController extends AdminController
      */
     public function store(Request $request, $staffId)
     {
+        $this->validate($request, $this->rules, $this->messages);
+
         $staff = Staff::find($staffId);
         $staff->education()->save(new Education([
             'level' => $request->get('level'),
@@ -79,6 +91,8 @@ class EducationController extends AdminController
      */
     public function update(Request $request, $staffId, $educationId)
     {
+        $this->validate($request, $this->rules, $this->messages);
+
         $education = Education::find($educationId);
 
         $education->level = $request->get('level');

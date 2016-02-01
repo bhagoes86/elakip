@@ -19,15 +19,31 @@
                     </div>
 
                     <div class="panel-body">
+                        @if (count($errors) > 0)
+                            <div class="alert-wrapper">
+                                <div class="alert alert-danger alert-dismissible fade in" role="alert" data-dismiss="alert">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">×</span>
+                                    </button>
+
+                                    <ul>
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{$error}}</li>
+                                        @endforeach
+                                    </ul>
+
+                                </div>
+                            </div>
+                        @endif
                         <form action="{{route('kegiatan.evaluasi')}}" method="get">
-                            <div class="form-group">
+                            <div class="form-group @if($errors->has('year')) has-error @endif">
                                 <label for="year">Tahun</label>
                                 {!! Form::select('year', $years, null, [
                                     'placeholder' => '-Select Year-',
                                     'class' => 'form-control',
                                     'id'=>'year']) !!}
                             </div>
-                            <div class="form-group">
+                            <div class="form-group @if($errors->has('agreement')) has-error @endif">
                                 <label for="agreement">Perjanjian kinerja</label>
                                 <select id="agreement" name="agreement" class="form-control"></select>
                             </div>

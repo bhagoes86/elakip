@@ -28,6 +28,8 @@
 
                         ]) !!}
 
+                        <div class="alert-wrapper"></div>
+
                         <div class="form-group">
                             <label for="name">Nama</label>
                             <input type="text" id="name" class="form-control" name="name"/>

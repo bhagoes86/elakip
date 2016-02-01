@@ -12,6 +12,17 @@ use Illuminate\Http\Request;
  */
 class SdmController extends AdminController
 {
+    protected $rules = [
+        'organization_id'   => 'required|integer',
+        'name'              => 'required',
+        'position'          => 'required'
+    ];
+    protected $messages = [
+        'organization_id.required' => 'Organisasi wajib diisi.',
+        'organization_id.integer' => 'Organisasi yang Anda pilih tidak valid.',
+        'name.required' => 'Nama wajib diisi.',
+        'position.required' => 'Posisi wajib diisi.',
+    ];
     /**
      * @author Fathur Rohman <fathur@dragoncapital.center>
      */
@@ -35,6 +46,8 @@ class SdmController extends AdminController
      */
     public function store(Request $request)
     {
+        $this->validate($request, $this->rules, $this->messages);
+
         $organization = Organization::find($request->get('organization_id'));
 
         $organization->staff()->save(new Staff([
@@ -73,6 +86,8 @@ class SdmController extends AdminController
      */
     public function update(Request $request, $id)
     {
+        $this->validate($request, $this->rules, $this->messages);
+
         $staff = Staff::find($id);
 
         $staff->organization_id = $request->get('organization_id');

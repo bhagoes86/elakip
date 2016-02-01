@@ -12,6 +12,15 @@ use Illuminate\Http\Request;
  */
 class OrganizationStructureController extends AdminController
 {
+    protected $rules = [
+        'parent_id' => 'required|integer',
+        'name'  => 'required'
+    ];
+    protected $messages = [
+        'parent_id.required' => 'Parent wajib dipilih',
+        'parent_id.integer' => 'Masukan yang Anda isi untuk parent tidak valid',
+        'name.required'              => 'Nama organisasi wajib diisi.'
+    ];
     /**
      * @author Fathur Rohman <fathur@dragoncapital.center>
      */
@@ -34,13 +43,14 @@ class OrganizationStructureController extends AdminController
      */
     public function store(Request $request)
     {
+        $this->validate($request, $this->rules, $this->messages);
+
         $parentId = $request->get('parent_id');
 
         $parent = Organization::find($parentId);
 
-        if($parent != null) {
-
-
+        if($parent != null)
+        {
             $parent->children()->create([
                 'name' => $request->get('name')
             ]);
@@ -80,6 +90,8 @@ class OrganizationStructureController extends AdminController
      */
     public function update(Request $request, $id)
     {
+        $this->validate($request, $this->rules, $this->messages);
+
         $organization = Organization::find($id);
         if($request->has('parent_id') || $request->get('parent_id') != null) {
             $organization->parent_id = $request->get('parent_id');

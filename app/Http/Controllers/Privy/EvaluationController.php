@@ -13,6 +13,9 @@ class EvaluationController extends AdminController
 {
     protected $identifier = 'evaluation';
 
+    protected $rules = [];
+
+    protected $messages = [];
 
     /**
      * Display a listing of the resource.
@@ -95,6 +98,7 @@ class EvaluationController extends AdminController
     {
         if(\Gate::allows('read-only'))
             abort(403);
+
 
         $activity = Activity::find($activityId);
         $agreement = Agreement::find($agreementId);
@@ -194,14 +198,14 @@ class EvaluationController extends AdminController
     public function getActivity(Request $request)
     {
         $this->validate($request, [
-            'year'      => 'integer',
-            'agreement' => 'integer',
+            'year'      => 'required|integer|in:2015,2016,2017,2018,2019',
+            'agreement' => 'required|integer',
             //'program'   => 'integer',
         ]);
 
         $year       = $request->get('year');
         $agreementId  = $request->get('agreement');
-        $programId    = 1; //$request->get('program');
+        $programId    = Program::FIX_PROGRAM_ID; //$request->get('program');
 
         $selectedAgreement = Agreement::where('year', $year)->get();
         $selectedProgram = Program::where('plan_id', Agreement::find($agreementId)->plan_id)->get();

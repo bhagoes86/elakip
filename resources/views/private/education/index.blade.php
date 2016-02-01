@@ -37,19 +37,21 @@
 
                         ]) !!}
 
+                        <div class="alert-wrapper"></div>
+
                         <div class="form-group">
                             <label for="level">Jenjang</label>
-                            {!! Form::select('level', $levels, null, ['class' => 'form-control', 'placeholder' => '- Pilih Satu -']) !!}
+                            {!! Form::select('level', $levels, null, ['class' => 'form-control', 'placeholder' => '- Pilih Satu -', 'id' => 'level']) !!}
                         </div>
 
                         <div class="form-group">
                             <label for="institution">Institusi</label>
-                            {!! Form::text('institution', null, ['class' => 'form-control']) !!}
+                            {!! Form::text('institution', null, ['class' => 'form-control', 'id' => 'institution']) !!}
                         </div>
 
                         <div class="form-group">
                             <label for="major">Jurusan</label>
-                            {!! Form::text('major', null, ['class' => 'form-control']) !!}
+                            {!! Form::text('major', null, ['class' => 'form-control', 'id' => 'major']) !!}
                         </div>
 
                         <button type="submit" class="btn btn-info btn-block btn-lg save">
