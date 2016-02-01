@@ -191,6 +191,33 @@ function confirmDelete (anchor) {
     });
 }
 
+function showGoalDetail(indicatorId, goalId) {
+    // event.preventDefault();
+
+    $('#list-indikator-fisik').animate({
+        width: 'toggle'
+    }, 350);
+
+
+
+    $.get(baseUrl + '/goal/detail', {
+        indicator: indicatorId,
+        goal: goalId
+    }, function(resp) {
+        $('#detail-goal .content').html(resp);
+        $('#detail-goal').show();
+    })
+}
+
+function backToListIndicatorPhysic() {
+    $('#list-indikator-fisik').animate({
+        width: 'toggle'
+    }, 350);
+
+    $('#detail-goal .content').html('');
+    $('#detail-goal').hide();
+}
+
 
 $(function(){
     if(window.location.href == baseUrl + '/profile') {

@@ -320,13 +320,21 @@ class PhysicAchievementController extends AdminController
         foreach ($target->indicators as $indicator) {
 
             $indicators[$indicator->name] = [
-                'pagu'  => 0,
+                'id'    => null,
+                'pagu'  => [
+                    'id'    => null,
+                    'with_detail' => false,
+                    'count' => 0
+                ],
                 'real'  => 0,
                 'percentation' => 0
             ];
 
             if(count($indicator->goals) > 0) {
-                $indicators[$indicator->name]['pagu'] = (int) $indicator->goals[0]->count;
+                $indicators[$indicator->name]['id'] = (int) $indicator->id;
+                $indicators[$indicator->name]['pagu']['id'] = (int) $indicator->goals[0]->id;
+                $indicators[$indicator->name]['pagu']['count'] = (int) $indicator->goals[0]->count;
+                $indicators[$indicator->name]['pagu']['with_detail'] = (boolean) $indicator->goals[0]->with_detail;
                 $indicators[$indicator->name]['real'] = (int) $indicator->goals[0]->achievements[3]->realization;
                 $indicators[$indicator->name]['percentation'] = (int) $indicator->goals[0]->achievements[3]->percentation;
             }
@@ -523,5 +531,19 @@ class PhysicAchievementController extends AdminController
             ->with('activity', $activity)
             ->with('indicators', $indicators)
             ->with('target', $target);
+    }
+
+    public function getGoalDetail(Request $request)
+    {
+        $indicatorId    = $request->get('indicator');
+        $goalId         = $request->get('goal');
+
+        $indicator = Indicator::find($indicatorId);
+        $goal = Goal::find($goalId);
+
+
+        return view('private.physic_achievement.goal_detail')
+            ->with('indicator', $indicator)
+            ->with('details', $goal->details);
     }
 }

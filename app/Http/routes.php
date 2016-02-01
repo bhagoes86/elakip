@@ -125,6 +125,7 @@ Route::group([
     delete('capaian/{achievementId}/media/{mediaId}/destroy', ['uses' => 'PhysicAchievementController@deleteMedia', 'as' => 'capaian.media.destroy']);
     get('goal/{goalId}/capaian/{achievementId}', ['uses' => 'PhysicAchievementController@getDocument', 'as' => 'goal.capaian.doc.create']);
     post('goal/{goalId}/capaian/{achievementId}', ['uses' => 'PhysicAchievementController@postDocument', 'as' => 'goal.capaian.doc.store']);
+    get('goal/detail', ['uses' => 'Period\PhysicAchievementController@getGoalDetail', 'as' => 'goal.detail']);
     get('capaian/fisik/filter', ['uses' => 'PhysicAchievementController@getFilter', 'as' => 'capaian.fisik.filter']);
     get('capaian/fisik/filter/indicator', ['uses' => 'PhysicAchievementController@getIndicator', 'as' => 'capaian.fisik.indicator']);
     get('capaian/fisik/indicator/data', ['uses' => 'PhysicAchievementController@getIndicatorData', 'as' => 'capaian.fisik.indicator.data']);
