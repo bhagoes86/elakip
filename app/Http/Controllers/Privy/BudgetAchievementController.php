@@ -127,9 +127,9 @@ class BudgetAchievementController extends AdminController
             'year'      => 'integer',
         ]);
 
-        $year = $request->get('year');
-        $planId = 1; //$request->get('plan');
-        $programId = 1; //$request->get('program');
+        $planId     = Plan::FIX_PLAN_ID; //$request->get('plan');
+        $programId  = Program::FIX_PROGRAM_ID; //$request->get('program');
+        $year       = $request->get('year');
         $activityId = $request->get('activity');
 
         $selectedAgreement = Agreement::where('year', $year)
@@ -138,9 +138,13 @@ class BudgetAchievementController extends AdminController
 
         $selectedProgram = Program::where('plan_id', $planId)->get();
 
-        $program = Program::with(['activities' => function ($query) {
+        $program = Program::with(['activities' => function ($query) use ($year) {
 
-            $query->with(['budget', 'unit']);
+            $query->with(['budget' => function($query) use ($year) {
+                $query->where('year', $year);
+
+            }, 'unit']);
+            
             if($this->authUser->role->id == Role::OPERATOR_ID) {
                 $query->where('unit_id', $this->authUser->positions[0]->unit->id);
             }
