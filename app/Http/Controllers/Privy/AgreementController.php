@@ -527,10 +527,11 @@ class AgreementController extends AdminController
             $objDrawing = new \PHPExcel_Worksheet_Drawing();
             $objDrawing->setName('Logo');
             $objDrawing->setDescription('Logo');
-            $logo = public_path('img/logoPU.jpg'); // Provide path to your logo file
+            $logo = public_path('img/logoPUExcel.jpg'); // Provide path to your logo file
             $objDrawing->setPath($logo);  //setOffsetY has no effect
             $objDrawing->setCoordinates('A1');
-            $objDrawing->setHeight(130); // logo height
+            // $objDrawing->setHeight(100); // logo height
+            // $objDrawing->setWidthAndHeight(100, 100);
             $objDrawing->setWorksheet($excel->getActiveSheet());
 
             $excel->sheet('Perjanjian kinerja', function ($sheet) use ($agreement, $plan) {
