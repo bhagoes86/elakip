@@ -3,7 +3,7 @@
 @section('content')
 
     <div class="header-content">
-        <h2><i class="fa fa-home"></i>Sturktur Organisasi</h2>
+        <h2><i class="fa fa-home"></i>Stuktur Organisasi</h2>
     </div>
 
     <div class="body-content animated fadeIn">
