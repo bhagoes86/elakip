@@ -9,6 +9,7 @@
 namespace App\Http\Controllers\Privy;
 
 
+use App\Models\Achievement;
 use App\Models\AchievementValue;
 use App\Models\Goal;
 use Illuminate\Http\Request;
@@ -72,11 +73,15 @@ class QuarterDetailController extends AdminController
         $goalDetailId = $request->get('detail_id');
 
         if($request->get('pk') == 0) {
-            return AchievementValue::create([
+            $achievementValue =  AchievementValue::create([
                 'achievement_id' => $achievementId,
                 'goal_detail_id' => $goalDetailId,
                 $field          => $value,
             ]);
+
+            $this->calculateMean($achievementId);
+
+            return $achievementValue;
         }
         else {
 
@@ -85,8 +90,26 @@ class QuarterDetailController extends AdminController
 
             $achievementValue->save();
 
+            $this->calculateMean($achievementValue->achievement_id);
+
             return $achievementValue;
         }
+
+    }
+
+    private function calculateMean($achievementId)
+    {
+        $meanFisikPlan = AchievementValue::where('achievement_id', $achievementId)->avg('fisik_plan');
+        $meanFisikReal = AchievementValue::where('achievement_id', $achievementId)->avg('fisik_real');
+        $meanBudgetPlan = AchievementValue::where('achievement_id', $achievementId)->avg('budget_plan');
+        $meanBudgetReal = AchievementValue::where('achievement_id', $achievementId)->avg('budget_real');
+
+        $achievement = Achievement::find($achievementId);
+        $achievement->plan = $meanFisikPlan;
+        $achievement->realization = $meanFisikReal;
+        $achievement->budget_plan = $meanBudgetPlan;
+        $achievement->budget_realization = $meanBudgetReal;
+        $achievement->save();
 
     }
 }
