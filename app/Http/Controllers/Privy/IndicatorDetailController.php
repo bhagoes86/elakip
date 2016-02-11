@@ -90,6 +90,8 @@ class IndicatorDetailController extends AdminController
     ) {
         $detail = GoalDetails::find($detailId);
         $detail->description = $request->get('description');
+        $detail->action_plan = $request->get('action_plan');
+        $detail->dipa = $request->get('dipa');
 
         return (int) $detail->save();
     }
@@ -112,7 +114,9 @@ class IndicatorDetailController extends AdminController
 
         $agreement = Agreement::find($agreementId);
 
-        $goal = Goal::with('details')
+        $goal = Goal::with(['details' => function($query) {
+            $query->orderBy('description','desc');
+        }])
             ->where('year', $agreement->year)
             ->where('indicator_id', $indicatorId)
             ->first();

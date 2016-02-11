@@ -69,42 +69,89 @@
 
         <div class="row">
 
-            @include('private.achievement.quarter_percent', [
-                'id' => 'tw1',
-                'panel_title' => 'Triwulan I',
-                'key' => 'first_quarter'
-            ])
-            @include('private.achievement.quarter_percent', [
-                'id' => 'tw2',
-                'panel_title' => 'Triwulan II',
-                'key' => 'second_quarter'
-            ])
-            @include('private.achievement.quarter_percent', [
-                'id' => 'tw3',
-                'panel_title' => 'Triwulan III',
-                'key' => 'third_quarter'
-            ])
-            @include('private.achievement.quarter', [
-                'id' => 'tw4',
-                'panel_title' => 'Triwulan IV',
-                'key' => 'fourth_quarter'
-            ])
+            @if($goal->with_detail)
+
+                @include('private.achievement.quarter_detail', [
+                    'id' => 'tw1',
+                    'panel_title' => 'Triwulan I',
+                    'key' => 'first_quarter'
+                ])
+                @include('private.achievement.quarter_detail', [
+                    'id' => 'tw2',
+                    'panel_title' => 'Triwulan II',
+                    'key' => 'second_quarter'
+                ])
+                @include('private.achievement.quarter_detail', [
+                    'id' => 'tw3',
+                    'panel_title' => 'Triwulan III',
+                    'key' => 'third_quarter'
+                ])
+                @include('private.achievement.quarter_detail', [
+                    'id' => 'tw4',
+                    'panel_title' => 'Triwulan IV',
+                    'key' => 'fourth_quarter'
+                ])
+            @else
+
+                @include('private.achievement.quarter', [
+                    'id' => 'tw1',
+                    'panel_title' => 'Triwulan I',
+                    'key' => 'first_quarter'
+                ])
+                @include('private.achievement.quarter', [
+                    'id' => 'tw2',
+                    'panel_title' => 'Triwulan II',
+                    'key' => 'second_quarter'
+                ])
+                @include('private.achievement.quarter', [
+                    'id' => 'tw3',
+                    'panel_title' => 'Triwulan III',
+                    'key' => 'third_quarter'
+                ])
+                @include('private.achievement.quarter', [
+                    'id' => 'tw4',
+                    'panel_title' => 'Triwulan IV',
+                    'key' => 'fourth_quarter'
+                ])
+            @endif
 
         </div>
     </div>
 
-    @include('private._partials.modal')
+    @include('private._partials.modal_large')
 @stop
 
 @section('scripts')
     <script src="{{asset('lib/datatables/media/js/jquery.dataTables.min.js')}}"></script>
     <script src="{{asset('lib/datatables/media/js/dataTables.bootstrap.min.js')}}"></script>
     <script src="{{asset('lib/dropzone/dist/dropzone.js')}}"></script>
+    <script src="{{asset('lib/x-editable/dist/bootstrap3-editable/js/bootstrap-editable.min.js')}}"></script>
 
 @stop
 
 @section('styles')
     <link rel="stylesheet" href="{{asset('lib/datatables/media/css/dataTables.bootstrap.min.css')}}"/>
     <link rel="stylesheet" href="{{asset('lib/dropzone/dist/dropzone.css')}}"/>
+    <link rel="stylesheet" href="{{asset('lib/x-editable/dist/bootstrap3-editable/css/bootstrap-editable.css')}}"/>
 
+@stop
+
+@section('script')
+<script>
+    $('.btn-documents').click(function(){
+        var $this = $(this);
+
+        $('#{{$viewId}}-lg .modal-title').html($this.html());
+
+        $.get('{{route('quarter.detail.edit')}}', {
+            goal: '{{$goal->id}}',
+            tw: $this.data('tw').split('tw')[1],
+            achievement: $this.data('achievementId')
+        }, function(response) {
+            $('#{{$viewId}}-lg .modal-body').html(response);
+        });
+
+        $('#{{$viewId}}-lg').modal('show');
+    });
+</script>
 @stop

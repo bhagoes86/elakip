@@ -204,6 +204,9 @@ Route::group([
     put('profile', ['uses' => 'ProfileController@update', 'as' => 'profile.update']);
     put('profile/password', ['uses' => 'ProfileController@putPassword', 'as' => 'profile.password.update']);
 
+    get('quarter/documents', ['uses' => 'QuarterDetailController@edit', 'as' => 'quarter.detail.edit']);
+    put('quarter/documents', ['uses' => 'QuarterDetailController@update', 'as' => 'quarter.detail.update']);
+
 });
 
 Route::controller('error','Privy\ErrorController');

@@ -86,7 +86,9 @@
                         <table class="table table-striped table-bordered" id="{{$viewId}}-datatables">
                             <thead>
                             <tr>
-                                <th>Detail target</th>
+                                <th>Deskripsi</th>
+                                <th>Rencana aksi</th>
+                                <th>Pagu</th>
 
                                 @if(!Gate::check('read-only'))
                                     <th>Action</th>
@@ -131,11 +133,13 @@
                 },
                 columns: [
                     {data:'description',name:'description'},
-
-                        @if(!Gate::check('read-only'))
+                    {data:'action_plan',name:'action_plan',title:'Rencana aksi'},
+                    {data:'dipa',name:'dipa'},
+                    @if(!Gate::check('read-only'))
                     {data:'action',name:'action'}
                     @endif
-                ]
+                ],
+                order: [[0, 'desc']]
             });
         });
     </script>

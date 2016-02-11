@@ -18,4 +18,9 @@ class Achievement extends Model
         return $this->belongsToMany(Media::class, 'achievement_media')
             ->withTimestamps();
     }
+
+    public function values()
+    {
+        return $this->hasMany(AchievementValue::class);
+    }
 }

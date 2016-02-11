@@ -95,7 +95,6 @@ class PhysicAchievementController extends AdminController
                 'realization'   => isset($goal->achievements[3]) ? $goal->achievements[3]->realization : 0,
                 'budget_plan'  => isset($goal->achievements[3]) ? $goal->achievements[3]->budget_plan : 0,
                 'budget_realization'   => isset($goal->achievements[3]) ? $goal->achievements[3]->budget_realization : 0,
-                'percentation'   => isset($goal->achievements[3]) ? $goal->achievements[3]->percentation : 0
             ]
         ];
 

@@ -18,13 +18,13 @@
 
                 </div>
 
-                <div class="form-group">
+               {{-- <div class="form-group">
                     <label for="{{$id}}-rl">Persentase</label>
                     <div class="input-group">
                         <div class="form-control" id="{{$id}}-rl">{{$achievements[$key]['percentation']}}</div>
                         <span class="input-group-addon">&percnt;</span>
                     </div>
-                </div>
+                </div>--}}
                 <hr/>
 
                 <div class="form-group">
@@ -51,14 +51,14 @@
                     <label for="{{$id}}-rl">Realisasi</label>
                     <input type="number" name="realization" id="{{$id}}-rl" placeholder="Realisasi" class="form-control" value="{{$achievements[$key]['realization']}}"/>
                 </div>
-                <div class="form-group">
+                {{--<div class="form-group">
                     <label for="{{$id}}-rl">Persentase</label>
                     <div class="input-group">
                         <input type="text" name="percentation" id="{{$id}}-rl" placeholder="Persentase" class="form-control" value="{{$achievements[$key]['percentation']}}"/>
 
                         <span class="input-group-addon">&percnt;</span>
                     </div>
-                </div>
+                </div>--}}
 
                 <hr/>
 

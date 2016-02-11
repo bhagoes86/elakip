@@ -22,7 +22,10 @@
     @foreach($details as $detail)
     <tr>
         <td>{{$i}}</td>
-        <td>{{$detail->description}}</td>
+        <td>
+            <h5><strong>{{$detail->description}}</strong></h5>
+            <div>{{$detail->action_plan}}</div>
+        </td>
     </tr>
         <?php $i++; ?>
     @endforeach

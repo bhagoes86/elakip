@@ -67,7 +67,7 @@
                 <span class="arrow"></span>
             </a>
             <ul>
-                <li id="capaian-triwulan"><a href="{{route('capaian.fisik.filter')}}">Kegiatan Fisik Triwulan</a></li>
+                <li id="capaian-triwulan"><a href="{{route('capaian.fisik.filter')}}">Kegiatan Triwulan</a></li>
                 <li id="capaian-anggaran-tahun"><a href="{{route('capaian.anggaran.filter')}}">Anggaran Per Tahun</a></li>
             </ul>
         </li>
