@@ -11,9 +11,10 @@
         <div class="panel-body">
 
             @can('read-only')
+                <h4>Fisik</h4>
 
                 <div class="form-group">
-                    <label for="{{$id}}-rl">Realisasi</label>
+                    <label for="{{$id}}-rn">Rencana</label>
                     <div class="form-control" id="{{$id}}-rn">{{$achievements[$key]['plan']}}</div>
 
                 </div>
@@ -23,21 +24,16 @@
 
                 </div>
 
-               {{-- <div class="form-group">
-                    <label for="{{$id}}-rl">Persentase</label>
-                    <div class="input-group">
-                        <div class="form-control" id="{{$id}}-rl">{{$achievements[$key]['percentation']}}</div>
-                        <span class="input-group-addon">&percnt;</span>
-                    </div>
-                </div>--}}
+
                 <hr/>
+                <h4>Anggaran</h4>
 
                 <div class="form-group">
-                    <label for="budget-{{$id}}-rn">DIPA (Rp)</label>
+                    <label for="budget-{{$id}}-rn">Pagu</label>
                     <div class="form-control" id="budget-{{$id}}-rn">{{$achievements[$key]['budget_plan']}}</div>
                 </div>
                 <div class="form-group">
-                    <label for="budget-{{$id}}-rl">Realisasi Total (Rp)</label>
+                    <label for="budget-{{$id}}-rl">Realisasi</label>
                     <div class="form-control" id="budget-{{$id}}-rl">{{$achievements[$key]['budget_realization']}}</div>
 
                 </div>
@@ -50,38 +46,42 @@
                 <input type="hidden" name="quarter" value="{{$achievements[$key]['quarter']}}"/>
 
                 <div class="alert-wrapper"></div>
-                <div class="form-group">
-                    <label for="{{$id}}-rl">Realisasi</label>
-                    <input type="number" name="realization" id="{{$id}}-rn" placeholder="Rencana" class="form-control" value="{{$achievements[$key]['plan']}}"/>
-                </div>
+                <h4>Fisik</h4>
 
                 <div class="form-group">
-                    <label for="{{$id}}-rl">Realisasi</label>
-                    <input type="number" name="realization" id="{{$id}}-rl" placeholder="Realisasi" class="form-control" value="{{$achievements[$key]['realization']}}"/>
-                </div>
-                {{--<div class="form-group">
-                    <label for="{{$id}}-rl">Persentase</label>
+                    <label for="{{$id}}-rn">Rencana</label>
                     <div class="input-group">
-                        <input type="text" name="percentation" id="{{$id}}-rl" placeholder="Persentase" class="form-control" value="{{$achievements[$key]['percentation']}}"/>
-
+                        <input type="number" name="realization" id="{{$id}}-rn" placeholder="Rencana" class="form-control" value="{{$achievements[$key]['plan']}}"/>
                         <span class="input-group-addon">&percnt;</span>
                     </div>
-                </div>--}}
-
-                <hr/>
+                </div>
 
                 <div class="form-group">
-                    <label for="budget-{{$id}}-rn">DIPA (Rp)</label>
+                    <label for="{{$id}}-rl">Realisasi</label>
                     <div class="input-group">
-                        <span class="input-group-addon">Rp.</span>
+                        <input type="number" name="realization" id="{{$id}}-rl" placeholder="Realisasi" class="form-control" value="{{$achievements[$key]['realization']}}"/>
+                        <span class="input-group-addon">&percnt;</span>
+                    </div>
+                </div>
+
+
+                <hr/>
+                <h4>Anggaran</h4>
+
+                <div class="form-group">
+                    <label for="budget-{{$id}}-rn">Pagu</label>
+                    <div class="input-group">
                         <input type="text" name="budget_plan" id="budget-{{$id}}-rn" placeholder="Rencana" class="form-control" value="{{$achievements[$key]['budget_plan']}}"/>
+                        <span class="input-group-addon">&percnt;</span>
+
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="budget-{{$id}}-rl">Realisasi Total (Rp)</label>
+                    <label for="budget-{{$id}}-rl">Realisasi</label>
                     <div class="input-group">
-                        <span class="input-group-addon">Rp.</span>
                         <input type="text" name="budget_realization" id="budget-{{$id}}-rl" placeholder="Realisasi" class="form-control" value="{{$achievements[$key]['budget_realization']}}"/>
+                        <span class="input-group-addon">&percnt;</span>
+
                     </div>
                 </div>
 

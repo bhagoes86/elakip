@@ -14,37 +14,40 @@
         <div class="panel-body">
 
             @can('read-only')
+            <h4>Fisik</h4>
 
             <div class="form-group">
-                <label for="{{$id}}-rl">Realisasi</label>
+                <label for="{{$id}}-rn">Rencana</label>
                 <div class="form-control" id="{{$id}}-rn">{{$achievements[$key]['plan']}}</div>
 
             </div>
 
             <div class="form-group">
-                <label for="{{$id}}-rl">Persentase</label>
+                <label for="{{$id}}-rl">Realisasi</label>
                 <div class="input-group">
                     <div class="form-control" id="{{$id}}-rl">{{$achievements[$key]['realization']}}</div>
                     <span class="input-group-addon">&percnt;</span>
                 </div>
             </div>
             <hr/>
+            <h4>Anggaran</h4>
 
             <div class="form-group">
-                <label for="budget-{{$id}}-rn">DIPA (Rp)</label>
+                <label for="budget-{{$id}}-rn">Pagu</label>
                 <div class="form-control" id="budget-{{$id}}-rn">{{$achievements[$key]['budget_plan']}}</div>
             </div>
             <div class="form-group">
-                <label for="budget-{{$id}}-rl">Realisasi Total (Rp)</label>
+                <label for="budget-{{$id}}-rl">Realisasi</label>
                 <div class="form-control" id="budget-{{$id}}-rl">{{$achievements[$key]['budget_realization']}}</div>
 
             </div>
 
             @else
 
+                <h4>Fisik</h4>
 
                 <div class="form-group">
-                    <label for="{{$id}}-rl">Rencana</label>
+                    <label for="{{$id}}-rn">Rencana</label>
                     <p class="form-control-static">{{$achievements[$key]['plan']}}%</p>
                 </div>
 
@@ -55,6 +58,7 @@
 
 
                 <hr/>
+                <h4>Anggaran</h4>
 
                 <div class="form-group">
                     <label for="budget-{{$id}}-rn">Pagu</label>
