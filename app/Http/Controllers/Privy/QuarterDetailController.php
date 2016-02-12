@@ -36,6 +36,7 @@ class QuarterDetailController extends AdminController
             $d['goal_id'] = $detail->goal_id;
             $d['description'] = $detail->description;
             $d['action_plan'] = $detail->action_plan;
+            $d['dipa'] = $detail->dipa;
 
             foreach ($detail->achievementValues as $value) {
                 $d['achievement_value'][$value->quarter] = [
@@ -46,7 +47,6 @@ class QuarterDetailController extends AdminController
                     "budget_plan" => $value->budget_plan,
                     "fisik_real" => $value->fisik_real,
                     "budget_real" => $value->budget_real,
-                    "dipa" => $value->dipa,
                     "quarter" => $value->quarter,
                 ];
             }
@@ -106,13 +106,17 @@ class QuarterDetailController extends AdminController
         $meanFisikReal = AchievementValue::where('achievement_id', $achievementId)->avg('fisik_real');
 
 
-        $allAv = AchievementValue::where('achievement_id', $achievementId)->get();
+        $allAv = AchievementValue::with('goalDetail')->where('achievement_id', $achievementId)->get();
 
         $budgetPlanArray = [];
         $budgetRealArray = [];
         foreach ($allAv as $av) {
-            $meanBudgetPlanAv = $av->budget_plan / $av->dipa * 100;
-            $meanBudgetRealAv = $av->budget_real / $av->budget_plan * $meanBudgetPlanAv;
+            $meanBudgetPlanAv = $av->budget_plan / $av->goalDetail->dipa * 100;
+            if($av->budget_plan == 0)
+                $meanBudgetRealAv = 0;
+            else
+                $meanBudgetRealAv = $av->budget_real / $av->budget_plan * $meanBudgetPlanAv;
+
             array_push($budgetPlanArray, $meanBudgetPlanAv);
             array_push($budgetRealArray, $meanBudgetRealAv);
         }

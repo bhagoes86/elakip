@@ -20,7 +20,6 @@ class CreateAchievementValuesTable extends Migration
             $table->integer('budget_plan')->nullable()->default(0);
             $table->integer('fisik_real')->nullable()->default(0);
             $table->integer('budget_real')->nullable()->default(0);
-            $table->integer('dipa')->nullable()->default(0);
             $table->timestamps();
 
             $table->foreign('achievement_id')

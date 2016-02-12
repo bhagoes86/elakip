@@ -19,12 +19,7 @@
     <tr class="document item" data-id="{{ isset($doc['achievement_value'][$quarter]) ? $doc['achievement_value'][$quarter]['id'] : 0}}">
         <td>{{$doc['description']}}</td>
         <td>
-            <a href="#"
-               class="pagu"
-               id="pagu-{{ isset($doc['achievement_value'][$quarter]) ? $doc['achievement_value'][$quarter]['id'] : $doc['id']}}"
-            >
-                {{ isset($doc['achievement_value'][$quarter]) ? $doc['achievement_value'][$quarter]['dipa'] : 0}}
-            </a>
+            {{$doc['dipa']}}
         </td>
         <td>
             <a href="#" class="fsk-plan" id="fsk-plan-{{ isset($doc['achievement_value'][$quarter]) ? $doc['achievement_value'][$quarter]['id'] : $doc['id']}}"

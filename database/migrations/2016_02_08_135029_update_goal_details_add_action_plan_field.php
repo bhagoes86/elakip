@@ -13,7 +13,8 @@ class UpdateGoalDetailsAddActionPlanField extends Migration
     public function up()
     {
         Schema::table('goal_details', function (Blueprint $table) {
-            $table->text('action_plan');
+            $table->text('action_plan')->nullable();
+            $table->integer('dipa')->nullable()->default(0);
         });
     }
 
@@ -26,6 +27,7 @@ class UpdateGoalDetailsAddActionPlanField extends Migration
     {
         Schema::table('goal_details', function (Blueprint $table) {
             $table->dropColumn('action_plan');
+            $table->dropColumn('dipa');
         });
     }
 }
