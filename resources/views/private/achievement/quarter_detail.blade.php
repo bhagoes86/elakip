@@ -17,14 +17,14 @@
 
             <div class="form-group">
                 <label for="{{$id}}-rl">Realisasi</label>
-                <div class="form-control" id="{{$id}}-rl">{{$achievements[$key]['realization']}}</div>
+                <div class="form-control" id="{{$id}}-rn">{{$achievements[$key]['plan']}}</div>
 
             </div>
 
             <div class="form-group">
                 <label for="{{$id}}-rl">Persentase</label>
                 <div class="input-group">
-                    <div class="form-control" id="{{$id}}-rl">{{$achievements[$key]['percentation']}}</div>
+                    <div class="form-control" id="{{$id}}-rl">{{$achievements[$key]['realization']}}</div>
                     <span class="input-group-addon">&percnt;</span>
                 </div>
             </div>
@@ -42,31 +42,17 @@
 
             @else
 
-                {{--{!! Form::open(['route' => ['capaian.fisik.goal.achievement.store', $goal->id], 'id' => 'form-' . $id, 'class' => 'achievement-form']) !!}
 
-                <input type="hidden" name="id" value="{{$achievements[$key]['id']}}"/>
-                <input type="hidden" name="quarter" value="{{$achievements[$key]['quarter']}}"/>
-
-                <div class="alert-wrapper"></div>--}}
                 <div class="form-group">
                     <label for="{{$id}}-rl">Rencana</label>
-                    {{--<input type="number" name="realization" id="{{$id}}-rl" placeholder="Realisasi" class="form-control" value="{{$achievements[$key]['realization']}}"/>--}}
                     <p class="form-control-static">{{$achievements[$key]['plan']}}%</p>
                 </div>
 
                 <div class="form-group">
                     <label for="{{$id}}-rl">Realisasi</label>
-                    {{--<input type="number" name="realization" id="{{$id}}-rl" placeholder="Realisasi" class="form-control" value="{{$achievements[$key]['realization']}}"/>--}}
                     <p class="form-control-static">{{$achievements[$key]['realization']}}%</p>
                 </div>
-                {{--<div class="form-group">
-                    <label for="{{$id}}-rl">Persentase</label>
-                    <div class="input-group">
-                        <input type="text" name="percentation" id="{{$id}}-rl" placeholder="Persentase" class="form-control" value="{{$achievements[$key]['percentation']}}"/>
 
-                        <span class="input-group-addon">&percnt;</span>
-                    </div>
-                </div>--}}
 
                 <hr/>
 
@@ -74,25 +60,13 @@
                     <label for="budget-{{$id}}-rn">Pagu</label>
                     <p class="form-control-static">{{$achievements[$key]['budget_plan']}}%</p>
 
-                    {{--<div class="input-group">--}}
-                        {{--<span class="input-group-addon">Rp.</span>--}}
-                        {{--<input type="text" name="budget_plan" id="budget-{{$id}}-rn" placeholder="Rencana" class="form-control" value="{{$achievements[$key]['budget_plan']}}"/>--}}
-                    {{--</div>--}}
+
                 </div>
                 <div class="form-group">
                     <label for="budget-{{$id}}-rl">Realisasi</label>
                     <p class="form-control-static">{{$achievements[$key]['budget_realization']}}%</p>
 
-                   {{-- <div class="input-group">
-                        <span class="input-group-addon">Rp.</span>
-                        <input type="text" name="budget_realization" id="budget-{{$id}}-rl" placeholder="Realisasi" class="form-control" value="{{$achievements[$key]['budget_realization']}}"/>
-                    </div>--}}
                 </div>
-
-               {{-- <button type="submit" class="btn btn-block btn-primary mbot-15 save">
-                    <i class="fa fa-save"></i> Save
-                </button>--}}
-               {{-- {!! Form::close() !!}--}}
 
                 @endcan
 

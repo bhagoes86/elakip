@@ -14,6 +14,11 @@
 
                 <div class="form-group">
                     <label for="{{$id}}-rl">Realisasi</label>
+                    <div class="form-control" id="{{$id}}-rn">{{$achievements[$key]['plan']}}</div>
+
+                </div>
+                <div class="form-group">
+                    <label for="{{$id}}-rl">Realisasi</label>
                     <div class="form-control" id="{{$id}}-rl">{{$achievements[$key]['realization']}}</div>
 
                 </div>
@@ -45,7 +50,10 @@
                 <input type="hidden" name="quarter" value="{{$achievements[$key]['quarter']}}"/>
 
                 <div class="alert-wrapper"></div>
-
+                <div class="form-group">
+                    <label for="{{$id}}-rl">Realisasi</label>
+                    <input type="number" name="realization" id="{{$id}}-rn" placeholder="Rencana" class="form-control" value="{{$achievements[$key]['plan']}}"/>
+                </div>
 
                 <div class="form-group">
                     <label for="{{$id}}-rl">Realisasi</label>
