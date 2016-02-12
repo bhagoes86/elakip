@@ -97,12 +97,29 @@ class QuarterDetailController extends AdminController
 
     }
 
+    /**
+     * @param $achievementId
+     */
     private function calculateMean($achievementId)
     {
         $meanFisikPlan = AchievementValue::where('achievement_id', $achievementId)->avg('fisik_plan');
         $meanFisikReal = AchievementValue::where('achievement_id', $achievementId)->avg('fisik_real');
-        $meanBudgetPlan = AchievementValue::where('achievement_id', $achievementId)->avg('budget_plan');
-        $meanBudgetReal = AchievementValue::where('achievement_id', $achievementId)->avg('budget_real');
+
+
+        $allAv = AchievementValue::where('achievement_id', $achievementId)->get();
+
+        $budgetPlanArray = [];
+        $budgetRealArray = [];
+        foreach ($allAv as $av) {
+            $meanBudgetPlanAv = $av->budget_plan / $av->dipa * 100;
+            $meanBudgetRealAv = $av->budget_real / $av->budget_plan * $meanBudgetPlanAv;
+            array_push($budgetPlanArray, $meanBudgetPlanAv);
+            array_push($budgetRealArray, $meanBudgetRealAv);
+        }
+
+        // Mean in percentation
+        $meanBudgetPlan = array_sum($budgetPlanArray) / count($budgetPlanArray);
+        $meanBudgetReal = array_sum($budgetRealArray) / count($budgetRealArray);
 
         $achievement = Achievement::find($achievementId);
         $achievement->plan = $meanFisikPlan;
