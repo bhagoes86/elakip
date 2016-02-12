@@ -19,7 +19,7 @@
     <tr class="document item" data-id="{{ isset($doc['achievement_value'][$quarter]) ? $doc['achievement_value'][$quarter]['id'] : 0}}">
         <td>{{$doc['description']}}</td>
         <td>
-            {{$doc['dipa']}}
+            {{money_format('%.2n',$doc['dipa'])}}
         </td>
         <td>
             <a href="#" class="fsk-plan" id="fsk-plan-{{ isset($doc['achievement_value'][$quarter]) ? $doc['achievement_value'][$quarter]['id'] : $doc['id']}}"
@@ -55,30 +55,6 @@
     @foreach($documents as $doc)
 
 
-    $('#pagu-{{ isset($doc['achievement_value'][$quarter]) ? $doc['achievement_value'][$quarter]['id'] : $doc['id']}}').editable({
-        type: 'text',
-        pk: function() {
-            return $(this).closest('tr.document.item').attr('data-id');
-        },
-        url: '{{route('quarter.detail.update')}}',
-        title: 'Pagu',
-        ajaxOptions: {
-            type: 'put'
-        },
-        params: function(params) {
-            params._token = '{{csrf_token()}}';
-            params.field = 'dipa';
-            params.achievement_id = '{{$id['achievement']}}';
-            params.detail_id = '{{$doc['id']}}';
-            return params;
-        },
-        success: function(response, newValue) {
-
-            var $this = $(this);
-            $this.closest('tr.document.item').attr('data-id', response.id);
-        }
-    });
-
     $('#fsk-plan-{{ isset($doc['achievement_value'][$quarter]) ? $doc['achievement_value'][$quarter]['id'] : $doc['id']}}').editable({
         type: 'text',
         pk: function() {
@@ -100,6 +76,9 @@
 
             var $this = $(this);
             $this.closest('tr.document.item').attr('data-id', response.id);
+        },
+        display: function(value) {
+            $(this).text(value + '%');
         }
     });
 
@@ -124,6 +103,10 @@
 
             var $this = $(this);
             $this.closest('tr.document.item').attr('data-id', response.id);
+        },
+        display: function(value) {
+            $(this).text(value + '%');
+
         }
     });
 
@@ -148,6 +131,9 @@
 
             var $this = $(this);
             $this.closest('tr.document.item').attr('data-id', response.id);
+        },
+        display: function(value) {
+            $(this).text('Rp'+formatMoney(value, 2, ',', '.'));
         }
     });
 
@@ -172,6 +158,9 @@
 
             var $this = $(this);
             $this.closest('tr.document.item').attr('data-id', response.id);
+        },
+        display: function(value) {
+            $(this).text('Rp'+formatMoney(value, 2, ',', '.'));
         }
     });
     @endforeach
