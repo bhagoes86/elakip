@@ -71,8 +71,8 @@
                 <hr/>
 
                 <div class="form-group">
-                    <label for="budget-{{$id}}-rn">DIPA (Rp)</label>
-                    <p class="form-control-static">Rp.{{$achievements[$key]['budget_plan']}}</p>
+                    <label for="budget-{{$id}}-rn">Pagu</label>
+                    <p class="form-control-static">{{$achievements[$key]['budget_plan']}}%</p>
 
                     {{--<div class="input-group">--}}
                         {{--<span class="input-group-addon">Rp.</span>--}}
@@ -80,8 +80,8 @@
                     {{--</div>--}}
                 </div>
                 <div class="form-group">
-                    <label for="budget-{{$id}}-rl">Realisasi Total (Rp)</label>
-                    <p class="form-control-static">Rp.{{$achievements[$key]['budget_realization']}}</p>
+                    <label for="budget-{{$id}}-rl">Realisasi</label>
+                    <p class="form-control-static">{{$achievements[$key]['budget_realization']}}%</p>
 
                    {{-- <div class="input-group">
                         <span class="input-group-addon">Rp.</span>
