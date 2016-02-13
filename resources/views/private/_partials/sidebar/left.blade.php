@@ -123,6 +123,7 @@
             </a>
             <ul>
                 <li id="content-page"><a href="{{route('page.index')}}">Page</a></li>
+                <li id="content-schedule"><a href="{{route('schedule.index')}}">Penjadwalan</a></li>
 
             </ul>
         </li>

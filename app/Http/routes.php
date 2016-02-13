@@ -207,6 +207,10 @@ Route::group([
     get('quarter/documents', ['uses' => 'QuarterDetailController@edit', 'as' => 'quarter.detail.edit']);
     put('quarter/documents', ['uses' => 'QuarterDetailController@update', 'as' => 'quarter.detail.update']);
 
+    // Penjadwalan
+    get('schedule/data', ['uses' => 'ScheduleController@data', 'as' => 'schedule.data' ]);
+    resource('schedule', 'ScheduleController');
+
 });
 
 Route::controller('error','Privy\ErrorController');
