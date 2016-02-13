@@ -65,7 +65,7 @@
                 
                 @if(Auth::check())
                 <li>
-                    <a href="{{url('pk')}}" class="btn btn-success btn-login">Dashboard</a>
+                    <a href="{{url('dashboard')}}" class="btn btn-success btn-login">Dashboard</a>
                 </li>
                 @else
                 <li>
