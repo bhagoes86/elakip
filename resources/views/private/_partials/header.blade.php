@@ -13,7 +13,7 @@
         <div class="navbar-header">
 
             <!-- Start brand -->
-            <a id="tour-1" class="navbar-brand" href="{{route('dashboard')}}">
+            <a id="tour-1" class="navbar-brand" href="{{url('/')}}">
                 <img class="logo" src="{{asset('img/logoPU.jpg')}}" alt="brand logo">
             </a><!-- /.navbar-brand -->
             <!--/ End brand -->
