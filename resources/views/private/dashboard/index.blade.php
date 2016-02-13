@@ -32,7 +32,7 @@
 
                     <div class="panel-body">
 
-                        @if($schedules != null))
+                        @if($schedules != null)
                         <table class="table table-condensed">
                             <thead>
                             <tr>
