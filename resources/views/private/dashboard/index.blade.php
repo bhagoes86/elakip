@@ -31,6 +31,8 @@
                     </div>
 
                     <div class="panel-body">
+
+                        @if(count($schedules > 0))
                         <table class="table table-condensed">
                             <thead>
                             <tr>
@@ -48,6 +50,9 @@
                             @endforeach
                             </tbody>
                         </table>
+                        @else
+                            <div>Tidak ada jadwal yang tersedia</div>
+                        @endif
                     </div>
                 </div>
             </div>
