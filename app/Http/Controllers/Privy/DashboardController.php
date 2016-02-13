@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Privy;
 
+use App\Models\Schedule;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -16,7 +17,9 @@ class DashboardController extends AdminController
      */
     public function index()
     {
-        return view('private.dashboard.index');
+        $schedules = Schedule::orderBy('date')->get();
+        return view('private.dashboard.index')
+            ->with('schedules', $schedules);
     }
 
     /**

@@ -22,13 +22,13 @@
     <!-- Start left navigation - menu -->
     <ul id="tour-9" class="sidebar-menu">
 
-        {{--<li id="dashboard">
+        <li id="dashboard">
             <a href="{{route('dashboard')}}">
                 <span class="icon"><i class="fa fa-home"></i></span>
                 <span class="text">Dashboard</span>
 
             </a>
-        </li>--}}
+        </li>
 
         @if(!Gate::check('read-only'))
         <li id="persiapan-pk">
