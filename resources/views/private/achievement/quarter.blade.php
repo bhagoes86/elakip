@@ -51,7 +51,7 @@
                 <div class="form-group">
                     <label for="{{$id}}-rn">Rencana</label>
                     <div class="input-group">
-                        <input type="number" name="realization" id="{{$id}}-rn" placeholder="Rencana" class="form-control" value="{{$achievements[$key]['plan']}}"/>
+                        <input type="number" name="plan" id="{{$id}}-rn" placeholder="Rencana" class="form-control" value="{{$achievements[$key]['plan']}}"/>
                         <span class="input-group-addon">&percnt;</span>
                     </div>
                 </div>
