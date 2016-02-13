@@ -491,24 +491,12 @@ class PhysicAchievementController extends AdminController
                     else
                         $prosentase = 0;
 
+                    $indicators[$indicator->name]['quarter'][$achievement->quarter] = [
+                        'target'    => $achievement->budget_plan,
+                        'capaian'   => $achievement->budget_realization,
+                        'prosentase' => $prosentase
+                    ];
 
-
-                    if($achievement->quarter == 4)
-                    {
-                        $indicators[$indicator->name]['quarter'][$achievement->quarter] = [
-                            'target'    => money_format('%.2n', $achievement->budget_plan),
-                            'capaian'   => money_format('%.2n', $achievement->budget_realization),
-                            'prosentase' => $prosentase
-                        ];
-                    }
-                    else
-                    {
-                        $indicators[$indicator->name]['quarter'][$achievement->quarter] = [
-                            'target'    => $achievement->budget_plan,
-                            'capaian'   => $achievement->budget_realization,
-                            'prosentase' => $prosentase
-                        ];
-                    }
                 }
 
             }
