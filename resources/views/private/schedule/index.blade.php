@@ -48,7 +48,7 @@
 
                         <div class="form-group">
                             <label for="date">Tanggal</label>
-                            <input type="text" name="date" id="date" placeholder="Tanggal" class="form-control"/>
+                            <input type="text" name="date" id="date" placeholder="Tanggal" class="form-control datepicker"/>
                         </div>
 
                         <button type="submit" class="btn btn-info btn-block btn-lg save">
@@ -91,16 +91,23 @@
 @section('scripts')
     <script src="{{asset('lib/datatables/media/js/jquery.dataTables.min.js')}}"></script>
     <script src="{{asset('lib/datatables/media/js/dataTables.bootstrap.min.js')}}"></script>
+    <script src="{{asset('lib/bootstrap-datepicker/dist/js/bootstrap-datepicker.js')}}"></script>
 @stop
 
 @section('styles')
     <link rel="stylesheet" href="{{asset('lib/datatables/media/css/dataTables.bootstrap.min.css')}}"/>
+    <link rel="stylesheet" href="{{asset('lib/bootstrap-datepicker/dist/css/bootstrap-datepicker.css')}}"/>
+
 @stop
 
 @section('script')
     <script type="text/javascript">
         $(function() {
             "use strict";
+
+            $('.datepicker').datepicker({
+                format: 'yyyy-mm-dd'
+            });
 
             var table = $('#{{$viewId}}-datatables').DataTable({
                 processing: true,

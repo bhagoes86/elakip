@@ -18,7 +18,7 @@
 
 <div class="form-group">
     <label for="date">Tanggal</label>
-    {!! Form::text('date', null, ['class' => 'form-control']) !!}
+    {!! Form::text('date', null, ['class' => 'form-control datepicker edit']) !!}
 </div>
 
 
@@ -30,6 +30,11 @@
 
 <script>
     "use strict";
+
+    $('.datepicker.edit').datepicker({
+        format: 'yyyy-mm-dd'
+    });
+
 
     updateForm();
 
