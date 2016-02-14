@@ -48,27 +48,26 @@
 
                 <div class="form-group">
                     <label for="{{$id}}-rn">Rencana</label>
-                    <p class="form-control-static">{{$achievements[$key]['plan']}}%</p>
+                    <p class="form-control-static" id="{{$id}}-rn">{{$achievements[$key]['plan']}}%</p>
                 </div>
 
                 <div class="form-group">
                     <label for="{{$id}}-rl">Realisasi</label>
-                    <p class="form-control-static">{{$achievements[$key]['realization']}}%</p>
+                    <p class="form-control-static" id="{{$id}}-rl">{{$achievements[$key]['realization']}}%</p>
                 </div>
 
 
                 <hr/>
                 <h4>Anggaran</h4>
-
                 <div class="form-group">
                     <label for="budget-{{$id}}-rn">Pagu</label>
-                    <p class="form-control-static">{{$achievements[$key]['budget_plan']}}%</p>
+                    <p class="form-control-static" id="budget-{{$id}}-rn">{{$achievements[$key]['budget_plan']}}%</p>
 
 
                 </div>
                 <div class="form-group">
                     <label for="budget-{{$id}}-rl">Realisasi</label>
-                    <p class="form-control-static">{{$achievements[$key]['budget_realization']}}%</p>
+                    <p class="form-control-static" id="budget-{{$id}}-rl">{{$achievements[$key]['budget_realization']}}%</p>
 
                 </div>
 

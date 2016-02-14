@@ -132,6 +132,7 @@ Route::group([
     Route::group([
         'prefix'    => 'capaian/fisik'
     ], function () {
+        get('goal/achievement/refresh', ['uses' => 'PhysicAchievementController@getRefreshValue', 'as' => 'capaian.fisik.goal.achievement.refresh']);
         resource('goal.achievement', 'PhysicAchievementController', ['only' => ['index','store']]);
     });
 

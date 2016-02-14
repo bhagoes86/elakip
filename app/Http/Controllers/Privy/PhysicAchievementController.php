@@ -421,4 +421,11 @@ class PhysicAchievementController extends AdminController
 
         return 1;
     }
+
+    public function getRefreshValue(Request $request)
+    {
+        $achievementId = $request->get('achievement');
+
+        return Achievement::find($achievementId);
+    }
 }

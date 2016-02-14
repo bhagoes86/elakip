@@ -69,7 +69,29 @@
 
         <div class="row">
 
-            @if($goal->with_detail)
+           {{-- @if($goal->with_detail)--}}
+
+            @include('private.achievement.quarter_detail', [
+                'id' => 'tw1',
+                'panel_title' => 'Triwulan I',
+                'key' => 'first_quarter'
+            ])
+            @include('private.achievement.quarter_detail', [
+                'id' => 'tw2',
+                'panel_title' => 'Triwulan II',
+                'key' => 'second_quarter'
+            ])
+            @include('private.achievement.quarter_detail', [
+                'id' => 'tw3',
+                'panel_title' => 'Triwulan III',
+                'key' => 'third_quarter'
+            ])
+            @include('private.achievement.quarter_detail', [
+                'id' => 'tw4',
+                'panel_title' => 'Triwulan IV',
+                'key' => 'fourth_quarter'
+            ])
+           {{-- @else
 
                 @include('private.achievement.quarter_detail', [
                     'id' => 'tw1',
@@ -91,29 +113,7 @@
                     'panel_title' => 'Triwulan IV',
                     'key' => 'fourth_quarter'
                 ])
-            @else
-
-                @include('private.achievement.quarter_detail', [
-                    'id' => 'tw1',
-                    'panel_title' => 'Triwulan I',
-                    'key' => 'first_quarter'
-                ])
-                @include('private.achievement.quarter_detail', [
-                    'id' => 'tw2',
-                    'panel_title' => 'Triwulan II',
-                    'key' => 'second_quarter'
-                ])
-                @include('private.achievement.quarter_detail', [
-                    'id' => 'tw3',
-                    'panel_title' => 'Triwulan III',
-                    'key' => 'third_quarter'
-                ])
-                @include('private.achievement.quarter_detail', [
-                    'id' => 'tw4',
-                    'panel_title' => 'Triwulan IV',
-                    'key' => 'fourth_quarter'
-                ])
-            @endif
+            @endif--}}
 
         </div>
     </div>
@@ -138,20 +138,41 @@
 
 @section('script')
 <script>
+
+    var achievementId = null;
+
     $('.btn-documents').click(function(){
         var $this = $(this);
+
+        achievementId = $this.data('achievementId');
 
         $('#{{$viewId}}-lg .modal-title').html($this.html());
 
         $.get('{{route('quarter.detail.edit')}}', {
             goal: '{{$goal->id}}',
             tw: $this.data('tw').split('tw')[1],
-            achievement: $this.data('achievementId')
+            achievement: achievementId
         }, function(response) {
             $('#{{$viewId}}-lg .modal-body').html(response);
         });
 
         $('#{{$viewId}}-lg').modal('show');
     });
+
+    $('#{{$viewId}}-lg').on('hidden.bs.modal', function (e) {
+        // do something...
+
+        $.get('{{route('capaian.fisik.goal.achievement.refresh')}}',{
+            achievement: achievementId
+        }, function(response) {
+            console.log(response);
+            $('#tw'+response.quarter+'-rn').html(response.plan+'&percnt;');
+            $('#tw'+response.quarter+'-rl').html(response.realization+'&percnt;');
+            $('#budget-tw'+response.quarter+'-rn').html(response.budget_plan+'&percnt;');
+            $('#budget-tw'+response.quarter+'-rl').html(response.budget_realization+'&percnt;');
+        });
+
+        achievementId = null;
+    })
 </script>
 @stop
