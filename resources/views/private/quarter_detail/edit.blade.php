@@ -116,7 +116,7 @@
             return $(this).closest('tr.document.item').attr('data-id');
         },
         url: '{{route('quarter.detail.update')}}',
-        title: 'Pagu',
+        title: 'Rencana',
         ajaxOptions: {
             type: 'put'
         },
