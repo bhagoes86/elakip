@@ -129,16 +129,15 @@ class IndicatorAgreementController extends AdminController
             ->where('indicator_id', $indicatorId)
             ->first();
 
-
-        $count = $this->insertDetail($goal->id, $request->get('count'));
-        $goal->count = $count;
-
-
         if($request->has('with_detail')) {
             $goal->with_detail = true;
+            $goal->count = $this->insertDetail($goal->id, $request->get('count'));
         }
-        else
+        else {
             $goal->with_detail = false;
+            $this->insertDetail($goal->id, 1);
+            $goal->count = $request->get('count');
+        }
 
         $goalResult = $goal->save();
 
@@ -162,7 +161,7 @@ class IndicatorAgreementController extends AdminController
 
         return \Datatables::of($target->indicators)
             ->editColumn('name', function($data) use ($agreementId, $programId, $activityId, $targetId) {
-                if($data->goals[0]->with_detail) {
+                //if($data->goals[0]->with_detail) {
                     return '<a href="'.route('pk.program.kegiatan.sasaran.indikator.detail.index', [
                         $agreementId,
                         $programId,
@@ -170,9 +169,9 @@ class IndicatorAgreementController extends AdminController
                         $targetId,
                         $data->id
                     ]).'">'.$data->name.'</a>';
-                }
+                /*}
                 else
-                    return $data->name;
+                    return $data->name;*/
             })
             ->addColumn('target', function($data) {
                 return (0 == count($data->goals)) ? 0 : $data->goals[0]->count . ' ' . $data->unit;
@@ -203,6 +202,7 @@ class IndicatorAgreementController extends AdminController
     private function insertDetail($id, $count)
     {
         $details = GoalDetails::where('goal_id', $id)->get();
+
 
         // Jika tidak ada detail
         // maka tambahkan empty detail sesuai dengan
