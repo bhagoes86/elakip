@@ -31,7 +31,6 @@
                     <th>Indikator</th>
                     <th>Target</th>
                     <th>Realisasi</th>
-                    <th>%&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
                 </tr>
             </thead>
             <tbody>
@@ -46,7 +45,7 @@
                         @endif
                     </td>
                     <td>{{$val['real']}}</td>
-                    <td>{{round($val['percentation'], 2)}} &percnt;</td>
+                    {{--<td>{{round($val['percentation'], 2)}} &percnt;</td>--}}
                     {{--<td>{{round($val['real'] / $val['pagu'] * 100, 2)}} %</td>--}}
                 </tr>
                 @endforeach

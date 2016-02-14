@@ -180,7 +180,7 @@
                                     <th rowspan="2" class="text-center">Satuan</th>
 
                                     <th colspan="{{count($indicators['header']['years'])+1}}" class="text-center">Target</th>
-                                    <th colspan="{{count($indicators['header']['years'])+1}}" class="text-center">Realisasi</th>
+                                    <th colspan="{{count($indicators['header']['years'])}}" class="text-center">Realisasi</th>
                                 </tr>
                                 <tr>
                                     @foreach($indicators['header']['years'] as $year)
@@ -191,7 +191,7 @@
                                     @foreach($indicators['header']['years'] as $year)
                                         <th class="text-center">{{$year}}</th>
                                     @endforeach
-                                    <th class="text-center"><b>Total</b></th>
+                                    {{--<th class="text-center"><b>Total</b></th>--}}
 
                                 </tr>
 
@@ -222,7 +222,7 @@
                                         @foreach($indicator['achievement']['years'] as $year => $value)
                                             <td>{{$value}}</td>
                                         @endforeach
-                                        <td>{{$indicator['achievement']['total']}}</td>
+                                        {{--<td>{{$indicator['achievement']['total']}}</td>--}}
 
                                     </tr>
                                 @endforeach
