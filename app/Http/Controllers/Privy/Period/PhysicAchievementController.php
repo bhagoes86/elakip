@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Privy\Period;
 
 use App\Http\Controllers\Privy\AdminController;
+use App\Models\Achievement;
 use App\Models\Activity;
 use App\Models\Agreement;
 use App\Models\Goal;
@@ -527,7 +528,23 @@ class PhysicAchievementController extends AdminController
         $goalId         = $request->get('goal');
 
         $indicator = Indicator::find($indicatorId);
-        $goal = Goal::find($goalId);
+        $achievement = Achievement::where('goal_id', $goalId)
+            ->where('quarter', 4)
+            ->first();
+        $goal = Goal::with([
+            'details' => function($query) use ($achievement) {
+                $query->with(['achievementValues' => function($query) use ($achievement) {
+                    $query->where('achievement_id', $achievement->id);
+                }]);
+            }/*,
+            'achievements' => function($query) {
+                $query->where('quarter', 4);
+            }*/
+        ])->find($goalId);
+
+
+
+        // dd($goal->toArray());
 
 
         return view('private.physic_achievement.goal_detail')
