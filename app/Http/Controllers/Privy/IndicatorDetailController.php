@@ -100,6 +100,8 @@ class IndicatorDetailController extends AdminController
     {
         $detail = GoalDetails::find($detailId);
         $detail->description = null;
+        $detail->action_plan = null;
+        $detail->dipa = null;
 
         return (int) $detail->save();
     }
@@ -123,7 +125,9 @@ class IndicatorDetailController extends AdminController
 
 
         return \Datatables::of($goal->details)
-
+            ->editColumn('dipa', function($data) {
+                return money_format('%.2n', $data->dipa);
+            })
             ->addColumn('action', function($data) use ($agreementId, $programId, $activityId, $targetId, $indicatorId) {
                 return view('private._partials.action.1')
                     ->with('edit_action', 'showEdit(this)')
