@@ -13,6 +13,8 @@
         <tr>
             <th>No</th>
             <th>Deskripsi</th>
+            <th>Rencana aksi</th>
+            <th>Pagu</th>
         </tr>
     </thead>
     <tbody>
@@ -22,10 +24,9 @@
     @foreach($details as $detail)
     <tr>
         <td>{{$i}}</td>
-        <td>
-            <h5><strong>{{$detail->description}}</strong></h5>
-            <div>{{$detail->action_plan}}</div>
-        </td>
+        <td>{{$detail->description}}</td>
+        <td>{{$detail->action_plan}}</td>
+        <td>{{money_format('%.2n', $detail->dipa)}}</td>
     </tr>
         <?php $i++; ?>
     @endforeach
