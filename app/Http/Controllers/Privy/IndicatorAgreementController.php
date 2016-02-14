@@ -129,7 +129,10 @@ class IndicatorAgreementController extends AdminController
             ->where('indicator_id', $indicatorId)
             ->first();
 
-        $goal->count = $request->get('count');
+
+        $count = $this->insertDetail($goal->id, $request->get('count'));
+        $goal->count = $count;
+
 
         if($request->has('with_detail')) {
             $goal->with_detail = true;
@@ -139,9 +142,6 @@ class IndicatorAgreementController extends AdminController
 
         $goalResult = $goal->save();
 
-        # dd($goal->toArray());
-
-        $this->insertDetail($goal->id, $goal->count);
 
         return (int) $goalResult;
     }
@@ -204,6 +204,9 @@ class IndicatorAgreementController extends AdminController
     {
         $details = GoalDetails::where('goal_id', $id)->get();
 
+        // Jika tidak ada detail
+        // maka tambahkan empty detail sesuai dengan
+        // jumlah countnya
         if(count($details) == 0)
         {
             $goal = Goal::find($id);
@@ -216,6 +219,10 @@ class IndicatorAgreementController extends AdminController
             $goal->details()->saveMany($goalDetails);
         }
 
+        // Jika angka detailnya bertambah
+        // maka tambah baris sesuai dengan
+        // selisih antara detail lama denagan
+        // angka detail baru
         elseif(count($details) < $count)
         {
             $goal = Goal::find($id);
@@ -228,9 +235,27 @@ class IndicatorAgreementController extends AdminController
             $goal->details()->saveMany($goalDetails);
 
         }
+
+        // Jika masukan detail lebih kecil
+        // dari jumlah baris record detail,
+        // maka hapus semua record yang null
         elseif(count($details) > $count)
         {
-            die();
+            $nullGoalDetails = GoalDetails::where('description', null)
+                ->where('goal_id', $id)
+                ->get();
+
+            $nullGoalDetailsSubtract = [];
+            foreach ($nullGoalDetails as $nullGoalDetail) {
+                array_push($nullGoalDetailsSubtract, $nullGoalDetail->id);
+
+                if(($details->count() - (int) $count) == count($nullGoalDetailsSubtract))
+                    break;
+            }
+
+            GoalDetails::destroy($nullGoalDetailsSubtract);
         }
+
+        return GoalDetails::where('goal_id', $id)->count();
     }
 }
