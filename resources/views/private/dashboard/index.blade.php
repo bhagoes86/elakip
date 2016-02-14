@@ -45,7 +45,7 @@
                             @foreach($schedules as $schedule)
                             <tr>
                                 <td>{{$schedule->task}}</td>
-                                <td>{{\Carbon\Carbon::parse($schedule->date)->format('j F Y')}}</td>
+                                <td>{{\Carbon\Carbon::parse($schedule->date)->formatLocalized('%e %B %Y')}}</td>
                             </tr>
                             @endforeach
                             </tbody>
