@@ -64,13 +64,12 @@ class QuarterDetailController extends AdminController
 
     public function update(Request $request)
     {
-        $name   = $request->get('name');
         $value  = $request->get('value');
         $field  = $request->get('field');
         $pk     = $request->get('pk');
 
-        $achievementId = $request->get('achievement_id');
-        $goalDetailId = $request->get('detail_id');
+        $achievementId  = $request->get('achievement_id');
+        $goalDetailId   = $request->get('detail_id');
 
         if($request->get('pk') == 0) {
             $achievementValue =  AchievementValue::create([
