@@ -3,7 +3,7 @@
     <thead>
     <tr>
         <th rowspan="2">Detail indikator</th>
-        <th rowspan="2">Pagu</th>
+        <th rowspan="2">Rencana</th>
         <th colspan="2">Fisik</th>
         <th colspan="2">Anggaran</th>
     </tr>
