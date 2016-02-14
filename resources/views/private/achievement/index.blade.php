@@ -93,22 +93,22 @@
                 ])
             @else
 
-                @include('private.achievement.quarter', [
+                @include('private.achievement.quarter_detail', [
                     'id' => 'tw1',
                     'panel_title' => 'Triwulan I',
                     'key' => 'first_quarter'
                 ])
-                @include('private.achievement.quarter', [
+                @include('private.achievement.quarter_detail', [
                     'id' => 'tw2',
                     'panel_title' => 'Triwulan II',
                     'key' => 'second_quarter'
                 ])
-                @include('private.achievement.quarter', [
+                @include('private.achievement.quarter_detail', [
                     'id' => 'tw3',
                     'panel_title' => 'Triwulan III',
                     'key' => 'third_quarter'
                 ])
-                @include('private.achievement.quarter', [
+                @include('private.achievement.quarter_detail', [
                     'id' => 'tw4',
                     'panel_title' => 'Triwulan IV',
                     'key' => 'fourth_quarter'
