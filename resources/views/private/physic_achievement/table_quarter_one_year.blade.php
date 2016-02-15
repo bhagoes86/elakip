@@ -59,7 +59,7 @@
                             {{--<a href="{{url('capaian/fisik/goal/'.$attribute['goal_id'].'/achievement')}}" target="_blank">{{$indicator}}</a>--}}
                             {{$indicator}}
                         </td>
-                        <td>{{$attribute['target']}} {{$attribute['satuan']}}</td>
+                        <td>{{$attribute['target']}}&nbsp;{{$attribute['satuan']}}</td>
                         <td>{{$attribute['quarter'][4]['capaian']}}&percnt;</td>
 
                         <td>{{$attribute['quarter'][1]['target']}}&percnt;</td>
