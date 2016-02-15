@@ -21,36 +21,67 @@
     $i = 1;
     ?>
     @foreach($documents as $doc)
-    <tr class="document item" data-id="{{ isset($doc['achievement_value'][$quarter]) ? $doc['achievement_value'][$quarter]['id'] : 0}}">
-        <td>{{$doc['description']}}</td>
-        <td>
-            {{money_format('%.2n',$doc['dipa'])}}
-        </td>
-        <td>
-            <a href="#" class="fsk-plan" id="fsk-plan-{{ isset($doc['achievement_value'][$quarter]) ? $doc['achievement_value'][$quarter]['id'] . '-' . $i : $doc['id'] . '-' . $i}}"
-            >
-                {{ isset($doc['achievement_value'][$quarter]) ? $doc['achievement_value'][$quarter]['fisik_plan'] : 0}}
-            </a>
-        </td>
-        <td>
-            <a href="#" class="fsk-real" id="fsk-real-{{ isset($doc['achievement_value'][$quarter]) ? $doc['achievement_value'][$quarter]['id'] . '-' . $i : $doc['id'] . '-' . $i}}"
-            >
-                {{ isset($doc['achievement_value'][$quarter]) ? $doc['achievement_value'][$quarter]['fisik_real'] : 0}}
-            </a>
-        </td>
-        <td>
-            <a href="#" class="bgt-plan" id="bgt-plan-{{ isset($doc['achievement_value'][$quarter]) ? $doc['achievement_value'][$quarter]['id'] . '-' . $i : $doc['id'] . '-' . $i}}"
-            >
-                {{ isset($doc['achievement_value'][$quarter]) ? $doc['achievement_value'][$quarter]['budget_plan'] : 0}}
-            </a>
-        </td>
-        <td>
-            <a href="#" class="bgt-real" id="bgt-real-{{ isset($doc['achievement_value'][$quarter]) ? $doc['achievement_value'][$quarter]['id'] . '-' . $i : $doc['id'] . '-' . $i}}"
-            >
-                {{ isset($doc['achievement_value'][$quarter]) ? $doc['achievement_value'][$quarter]['budget_real'] : 0}}
-            </a>
-        </td>
-    </tr>
+
+        @can('read-only')
+        <tr class="document item" data-id="{{ isset($doc['achievement_value'][$quarter]) ? $doc['achievement_value'][$quarter]['id'] : 0}}">
+            <td>{{$doc['description']}}</td>
+            <td>
+                {{money_format('%.2n',$doc['dipa'])}}
+            </td>
+            <td>
+                <span id="fsk-plan-{{ isset($doc['achievement_value'][$quarter]) ? $doc['achievement_value'][$quarter]['id'] . '-' . $i : $doc['id'] . '-' . $i}}">
+                    {{ isset($doc['achievement_value'][$quarter]) ? $doc['achievement_value'][$quarter]['fisik_plan'] : 0}}
+                </span>
+            </td>
+            <td>
+                <span id="fsk-real-{{ isset($doc['achievement_value'][$quarter]) ? $doc['achievement_value'][$quarter]['id'] . '-' . $i : $doc['id'] . '-' . $i}}">
+                    {{ isset($doc['achievement_value'][$quarter]) ? $doc['achievement_value'][$quarter]['fisik_real'] : 0}}
+                </span>
+            </td>
+            <td>
+                <span id="bgt-plan-{{ isset($doc['achievement_value'][$quarter]) ? $doc['achievement_value'][$quarter]['id'] . '-' . $i : $doc['id'] . '-' . $i}}">
+                    {{ isset($doc['achievement_value'][$quarter]) ? $doc['achievement_value'][$quarter]['budget_plan'] : 0}}
+                </span>
+            </td>
+            <td>
+                <span id="bgt-real-{{ isset($doc['achievement_value'][$quarter]) ? $doc['achievement_value'][$quarter]['id'] . '-' . $i : $doc['id'] . '-' . $i}}">
+                    {{ isset($doc['achievement_value'][$quarter]) ? $doc['achievement_value'][$quarter]['budget_real'] : 0}}
+                </span>
+            </td>
+        </tr>¡¡
+        @else
+        <tr class="document item" data-id="{{ isset($doc['achievement_value'][$quarter]) ? $doc['achievement_value'][$quarter]['id'] : 0}}">
+            <td>{{$doc['description']}}</td>
+            <td>
+                {{money_format('%.2n',$doc['dipa'])}}
+            </td>
+            <td>
+                <a href="#" class="fsk-plan" id="fsk-plan-{{ isset($doc['achievement_value'][$quarter]) ? $doc['achievement_value'][$quarter]['id'] . '-' . $i : $doc['id'] . '-' . $i}}"
+                >
+                    {{ isset($doc['achievement_value'][$quarter]) ? $doc['achievement_value'][$quarter]['fisik_plan'] : 0}}
+                </a>
+            </td>
+            <td>
+                <a href="#" class="fsk-real" id="fsk-real-{{ isset($doc['achievement_value'][$quarter]) ? $doc['achievement_value'][$quarter]['id'] . '-' . $i : $doc['id'] . '-' . $i}}"
+                >
+                    {{ isset($doc['achievement_value'][$quarter]) ? $doc['achievement_value'][$quarter]['fisik_real'] : 0}}
+                </a>
+            </td>
+            <td>
+                <a href="#" class="bgt-plan" id="bgt-plan-{{ isset($doc['achievement_value'][$quarter]) ? $doc['achievement_value'][$quarter]['id'] . '-' . $i : $doc['id'] . '-' . $i}}"
+                >
+                    {{ isset($doc['achievement_value'][$quarter]) ? $doc['achievement_value'][$quarter]['budget_plan'] : 0}}
+                </a>
+            </td>
+            <td>
+                <a href="#" class="bgt-real" id="bgt-real-{{ isset($doc['achievement_value'][$quarter]) ? $doc['achievement_value'][$quarter]['id'] . '-' . $i : $doc['id'] . '-' . $i}}"
+                >
+                    {{ isset($doc['achievement_value'][$quarter]) ? $doc['achievement_value'][$quarter]['budget_real'] : 0}}
+                </a>
+            </td>
+        </tr>
+        @endcan
+
     <?php
     $i++;
     ?>
@@ -60,6 +91,10 @@
 </div>
 
 <script>
+
+    @can('read-only')
+    @else
+
     <?php
     $i = 1;
     ?>
@@ -176,4 +211,6 @@
     });
     <?php $i++; ?>
     @endforeach
+
+    @endcan
 </script>

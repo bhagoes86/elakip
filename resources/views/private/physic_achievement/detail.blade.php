@@ -120,7 +120,7 @@
 
                     <div class="panel-heading">
                         <div class="pull-left">
-                            <h3 class="panel-title">Tabel Triwulan Per Tahun</h3>
+                            <h3 class="panel-title">Tabel Fisik Triwulan Per Tahun</h3>
                         </div>
                         <div class="clearfix"></div>
                     </div>
@@ -142,7 +142,7 @@
 
                     <div class="panel-heading">
                         <div class="pull-left">
-                            <h3 class="panel-title">Tabel Anggaran Triwulan Per Tahun</h3>
+                            <h3 class="panel-title">Tabel Keuangan Triwulan Per Tahun</h3>
                         </div>
                         <div class="clearfix"></div>
                     </div>
@@ -180,7 +180,7 @@
                                     <th rowspan="2" class="text-center">Satuan</th>
 
                                     <th colspan="{{count($indicators['header']['years'])+1}}" class="text-center">Target</th>
-                                    <th colspan="{{count($indicators['header']['years'])}}" class="text-center">Realisasi</th>
+                                    <th colspan="{{count($indicators['header']['years'])}}" class="text-center">Realisasi (&percnt;)</th>
                                 </tr>
                                 <tr>
                                     @foreach($indicators['header']['years'] as $year)

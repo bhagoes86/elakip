@@ -30,7 +30,7 @@
                 <tr>
                     <th>Indikator</th>
                     <th>Target</th>
-                    <th>Realisasi</th>
+                    <th>Realisasi&nbsp;(&percnt;)</th>
                 </tr>
             </thead>
             <tbody>

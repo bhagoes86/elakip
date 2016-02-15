@@ -13,7 +13,7 @@
 
         <div class="panel-body">
 
-            @can('read-only')
+           {{-- @can('read-only')
             <h4>Fisik</h4>
 
             <div class="form-group">
@@ -42,36 +42,36 @@
 
             </div>
 
-            @else
+            @else--}}
 
-                <h4>Fisik</h4>
+            <h4>Fisik</h4>
 
-                <div class="form-group">
-                    <label for="{{$id}}-rn">Rencana</label>
-                    <p class="form-control-static" id="{{$id}}-rn">{{$achievements[$key]['plan']}}%</p>
-                </div>
+            <div class="form-group">
+                <label for="{{$id}}-rn">Rencana</label>
+                <p class="form-control-static" id="{{$id}}-rn">{{$achievements[$key]['plan']}}%</p>
+            </div>
 
-                <div class="form-group">
-                    <label for="{{$id}}-rl">Realisasi</label>
-                    <p class="form-control-static" id="{{$id}}-rl">{{$achievements[$key]['realization']}}%</p>
-                </div>
-
-
-                <hr/>
-                <h4>Anggaran</h4>
-                <div class="form-group">
-                    <label for="budget-{{$id}}-rn">Pagu</label>
-                    <p class="form-control-static" id="budget-{{$id}}-rn">{{$achievements[$key]['budget_plan']}}%</p>
+            <div class="form-group">
+                <label for="{{$id}}-rl">Realisasi</label>
+                <p class="form-control-static" id="{{$id}}-rl">{{$achievements[$key]['realization']}}%</p>
+            </div>
 
 
-                </div>
-                <div class="form-group">
-                    <label for="budget-{{$id}}-rl">Realisasi</label>
-                    <p class="form-control-static" id="budget-{{$id}}-rl">{{$achievements[$key]['budget_realization']}}%</p>
+            <hr/>
+            <h4>Anggaran</h4>
+            <div class="form-group">
+                <label for="budget-{{$id}}-rn">Pagu</label>
+                <p class="form-control-static" id="budget-{{$id}}-rn">{{$achievements[$key]['budget_plan']}}%</p>
 
-                </div>
 
-                @endcan
+            </div>
+            <div class="form-group">
+                <label for="budget-{{$id}}-rl">Realisasi</label>
+                <p class="form-control-static" id="budget-{{$id}}-rl">{{$achievements[$key]['budget_realization']}}%</p>
+
+            </div>
+
+             {{--   @endcan--}}
 
                 <div class="attachment">
                     @if(!Gate::check('read-only'))
