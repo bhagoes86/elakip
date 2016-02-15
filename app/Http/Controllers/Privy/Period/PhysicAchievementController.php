@@ -451,12 +451,18 @@ class PhysicAchievementController extends AdminController
 
         $target = Target::with(['indicators' => function ($query)  use ($year) {
             $query->with(['goals' => function ($query) use ($year) {
-                $query->with('achievements');
+                $query->with(['achievements' => function($query) {
+                    $query->with('values');
+                    // $query->where('quarter', 4);
+                }]);
+
+                $query->with('details');
                 $query->where('year', $year);
             }]);
 
         }])->find($targetId);
 
+        #dd($target->toArray());
 
         $indicators = [];
         foreach ($target->indicators as $indicator) {
@@ -477,28 +483,44 @@ class PhysicAchievementController extends AdminController
                     4 => [
                         'target' => 0,
                         'capaian' => 0,
-                        'prosentase' => 0
                     ],
+                ],
+                'total_dipa' => 0,
+                'realization' => [
+                    'percent' => 0,
+                    'money' => 0
                 ]
             ];
 
             if(count($indicator->goals) > 0) {
 
+                $tmp_total_budget_real = 0;
 
                 foreach ($indicator->goals[0]->achievements as $achievement) {
-
-                    if($achievement->budget_plan > 0 )
-                        $prosentase = $achievement->budget_realization / $achievement->budget_plan * 100;
-                    else
-                        $prosentase = 0;
 
                     $indicators[$indicator->name]['quarter'][$achievement->quarter] = [
                         'target'    => $achievement->budget_plan,
                         'capaian'   => $achievement->budget_realization,
-                        'prosentase' => $prosentase
                     ];
 
+                    if($achievement->quarter == 4) {
+                        if (count($achievement->values) > 0) {
+                            foreach ($achievement->values as $value) {
+                                $tmp_total_budget_real = $tmp_total_budget_real + $value->budget_real;
+                            }
+                        }
+                    }
+
                 }
+
+                $tmp_total_dipa = 0;
+                foreach ($indicator->goals[0]->details as $detail) {
+                    $tmp_total_dipa = $tmp_total_dipa + $detail->dipa;
+                }
+
+                $indicators[$indicator->name]['total_dipa'] = $tmp_total_dipa;
+                $indicators[$indicator->name]['realization']['percent'] = $indicators[$indicator->name]['quarter'][4]['capaian'];
+                $indicators[$indicator->name]['realization']['money'] = $tmp_total_budget_real;//$indicators[$indicator->name]['quarter'][4]['capaian'];
 
             }
 
@@ -514,6 +536,7 @@ class PhysicAchievementController extends AdminController
                 'unit'
             ])->find($target->type_id);
         }
+        #dd($indicators);
 
 
         return view('private.physic_achievement.table_budget_quarter_one_year')

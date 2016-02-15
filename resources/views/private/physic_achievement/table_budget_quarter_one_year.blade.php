@@ -28,13 +28,16 @@
                 <tr>
                     <th rowspan="2">Indikator</th>
                     <th rowspan="2">Pagu</th>
-                    <th rowspan="2">Realisasi</th>
+                    <th colspan="2" class="text-center">Realisasi</th>
                     <th colspan="2" class="text-center">TW I</th>
                     <th colspan="2" class="text-center">TW II</th>
                     <th colspan="2" class="text-center">TW III</th>
                     <th colspan="2" class="text-center">TW IV</th>
                 </tr>
                 <tr>
+                    <th>(Rp.)</th>
+                    <th>(&percnt;)</th>
+
                     <th>RN</th>
                     <th>RL</th>
 
@@ -53,9 +56,10 @@
                 @foreach($indicators as $indicator => $attribute )
                     <tr>
                         <td>{{$indicator}}</td>
-                        <td></td>
+                        <td>{{money_format('%.2n', $attribute['total_dipa'])}}</td>
 
-                        <td>{{$attribute['quarter'][4]['capaian']}}%</td>
+                        <td>{{money_format('%.2n',$attribute['realization']['money'])}}</td>
+                        <td>{{$attribute['realization']['percent']}}%</td>
 
                         <td>{{$attribute['quarter'][1]['target']}}%</td>
                         <td>{{$attribute['quarter'][1]['capaian']}}%</td>
