@@ -376,22 +376,22 @@ class PhysicAchievementController extends AdminController
                     1   => [
                         'target'    => 0,
                         'capaian'   => 0,
-                        'prosentase'    => 0
+                        'prosentase' => 0
                     ],
                     2   => [
                         'target'    => 0,
                         'capaian'   => 0,
-                        'prosentase'    => 0
+                        'prosentase' => 0
                     ],
                     3   => [
                         'target'    => 0,
                         'capaian'   => 0,
-                        'prosentase'    => 0
+                        'prosentase' => 0
                     ],
                     4   => [
                         'target'    => 0,
                         'capaian'   => 0,
-                        'prosentase'    => 0
+                        'prosentase' => 0
                     ],
                 ]
             ];
@@ -410,20 +410,12 @@ class PhysicAchievementController extends AdminController
                         'capaian'   => $achievement->realization,
                     ];
 
-                    if($achievement->quarter == 4)
-                    {
-                        $indicators[$indicator->name]['quarter'][$achievement->quarter]['target'] = $indicator->goals[0]->count;
-                        $indicators[$indicator->name]['quarter'][$achievement->quarter]['prosentase'] = $achievement->percentation;
+                    if ($achievement->plan != 0) {
+                        $indicators[$indicator->name]['quarter'][$achievement->quarter]['prosentase'] = $achievement->realization / $achievement->plan * 100;
+                    } else {
+                        $indicators[$indicator->name]['quarter'][$achievement->quarter]['prosentase'] = '~';
                     }
-                    else {
 
-
-                        if ($achievement->plan != 0) {
-                            $indicators[$indicator->name]['quarter'][$achievement->quarter]['prosentase'] = $achievement->realization / $achievement->plan * 100;
-                        } else {
-                            $indicators[$indicator->name]['quarter'][$achievement->quarter]['prosentase'] = 0;
-                        }
-                    }
                 }
 
             }
