@@ -41,7 +41,8 @@
                         @if($val['pagu']['with_detail'])
                             <a href="#" class="btn btn-xs btn-info" onclick="showGoalDetail({{$val['id']}},{{$val['pagu']['id']}})">{{$val['pagu']['count']}}</a>
                         @else
-                            {{$val['pagu']['count']}}
+                            <a href="#" class="btn btn-xs btn-default" onclick="showGoalDetail({{$val['id']}},{{$val['pagu']['id']}})">{{$val['pagu']['count']}}</a>
+
                         @endif
                     </td>
                     <td>{{$val['real']}}</td>
