@@ -3,7 +3,8 @@
 ### Instalasi
 
 Sistem ini menggunakan Laravel 5.1. Sebelum melakukan instalasi pastikan server telah terinstall [composer](https://getcomposer.org/),
-[nodejs package manager (npm)](https://nodejs.org/en/) , MySql server, web server (apache).
+[nodejs package manager (npm)](https://nodejs.org/en/) , MySql server, web server (apache). Untuk melakukan instalasi
+pastikan terdapat KONEKSI INTERNET STABIL.
 
 #### Konfigurasi web server
 
