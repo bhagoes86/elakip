@@ -47,8 +47,13 @@ $ composer install
 $ php artisan migrate
 $ php artisan key:generate
 $ php artisan optimize
-$ npm install
-$ npm install -g bower
-$ bower install
 ```
 
+Kemudian export database menggunakan perintah berikut:
+
+```
+$ mysql -u usernamedb -p
+
+mysql > use namadatabase
+mysql > source /path/to/dump.sql
+```
